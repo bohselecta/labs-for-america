@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 interface Contribution {
   id: string;
@@ -21,11 +21,7 @@ export function ContributionsList({ labId }: ContributionsListProps) {
   const [loading, setLoading] = useState(true);
   const [voting, setVoting] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchContributions();
-  }, [labId]);
-
-  const fetchContributions = async () => {
+  const fetchContributions = useCallback(async () => {
     try {
       const response = await fetch(`/api/labs/${labId}/contributions`);
       if (response.ok) {
@@ -37,7 +33,11 @@ export function ContributionsList({ labId }: ContributionsListProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [labId]);
+
+  useEffect(() => {
+    fetchContributions();
+  }, [fetchContributions]);
 
   const handleVote = async (contributionId: string) => {
     setVoting(contributionId);
