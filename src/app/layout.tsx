@@ -28,16 +28,17 @@ export default async function RootLayout({
                         <div>
                           <div className="flex items-center gap-3 mb-4">
                             <div className="h-8 w-8 rounded bg-blue-600 flex items-center justify-center">
-                              <span className="text-white font-bold text-sm font-headline">LFA</span>
+                              <img 
+                                src="/lfa-logo.png" 
+                                alt="LabsForAmerica Logo" 
+                                className="h-5 w-5"
+                              />
                             </div>
                             <div className="text-gray-900 font-semibold font-headline">LabsForAmerica</div>
                           </div>
                           <p className="text-sm text-gray-600 font-body mb-4">
                             Sister sites for civic life — building together, for all of us.
                           </p>
-                          <div className="text-sm text-gray-500 font-body">
-                            <span className="font-medium">Mission:</span> Sister sites for civic life.
-                          </div>
                         </div>
                         
                         <div>
