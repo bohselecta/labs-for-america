@@ -23,7 +23,7 @@ export default function DeployPage() {
           <ol className="space-y-2 text-blue-800">
             <li>1. Choose your template</li>
             <li>2. Upload your logo</li>
-            <li>3. Click "Deploy to Vercel"</li>
+            <li>3. Click &quot;Deploy to Vercel&quot;</li>
             <li>4. Your site goes live instantly!</li>
           </ol>
         </div>
@@ -39,15 +39,15 @@ export default function DeployPage() {
         <ol className="space-y-3 mb-6">
           <li className="flex items-start">
             <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">1</span>
-            <span className="font-body">Click the "+" icon in the top right corner of GitHub</span>
+            <span className="font-body">Click the &quot;+&quot; icon in the top right corner of GitHub</span>
           </li>
           <li className="flex items-start">
             <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">2</span>
-            <span className="font-body">Select "New repository"</span>
+            <span className="font-body">Select &quot;New repository&quot;</span>
           </li>
           <li className="flex items-start">
             <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">3</span>
-            <span className="font-body">Name it something like "our-city-labs" or "department-portal"</span>
+            <span className="font-body">Name it something like &quot;our-city-labs&quot; or &quot;department-portal&quot;</span>
           </li>
           <li className="flex items-start">
             <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">4</span>
@@ -55,7 +55,7 @@ export default function DeployPage() {
           </li>
           <li className="flex items-start">
             <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">5</span>
-            <span className="font-body">Click "Create repository"</span>
+            <span className="font-body">Click &quot;Create repository&quot;</span>
           </li>
         </ol>
 
@@ -75,11 +75,11 @@ export default function DeployPage() {
           </li>
           <li className="flex items-start">
             <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">4</span>
-            <span className="font-body">Add a commit message like "Initial template upload"</span>
+            <span className="font-body">Add a commit message like &quot;Initial template upload&quot;</span>
           </li>
           <li className="flex items-start">
             <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">5</span>
-            <span className="font-body">Click "Commit changes"</span>
+            <span className="font-body">Click &quot;Commit changes&quot;</span>
           </li>
         </ol>
 
@@ -91,7 +91,7 @@ export default function DeployPage() {
           </li>
           <li className="flex items-start">
             <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">2</span>
-            <span className="font-body">Click "New Project"</span>
+            <span className="font-body">Click &quot;New Project&quot;</span>
           </li>
           <li className="flex items-start">
             <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">3</span>
@@ -99,7 +99,7 @@ export default function DeployPage() {
           </li>
           <li className="flex items-start">
             <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">4</span>
-            <span className="font-body">Click "Deploy" (no configuration needed!)</span>
+            <span className="font-body">Click &quot;Deploy&quot; (no configuration needed!)</span>
           </li>
           <li className="flex items-start">
             <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">5</span>
@@ -119,7 +119,7 @@ export default function DeployPage() {
           </li>
           <li className="flex items-start">
             <span className="text-blue-600 mr-3">•</span>
-            <span className="font-body">Click "Domains" and add your custom domain</span>
+            <span className="font-body">Click &quot;Domains&quot; and add your custom domain</span>
           </li>
           <li className="flex items-start">
             <span className="text-blue-600 mr-3">•</span>
@@ -161,7 +161,7 @@ export default function DeployPage() {
 
         <div className="bg-green-50 border border-green-200 rounded-lg p-6">
           <p className="text-green-800 font-medium">
-            🎉 <strong>That's it!</strong> Your civic portal is now live and ready to serve your community.
+            🎉 <strong>That&apos;s it!</strong> Your civic portal is now live and ready to serve your community.
           </p>
         </div>
       </div>

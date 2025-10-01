@@ -24,7 +24,7 @@ export default function AboutPage() {
           </li>
           <li className="flex items-start">
             <span className="text-blue-600 mr-3">•</span>
-            <span className="font-body"><strong>Every department deserves a portal that's modern, accessible, and human.</strong></span>
+            <span className="font-body"><strong>Every department deserves a portal that&apos;s modern, accessible, and human.</strong></span>
           </li>
           <li className="flex items-start">
             <span className="text-blue-600 mr-3">•</span>

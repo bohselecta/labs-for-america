@@ -146,7 +146,7 @@ export default function OrgPage() {
                   const newCssVars = themeToCssVars(theme, newPreset);
                   setCssVars(newCssVars);
                   const styleId = "org-theme-preview";
-                  let el = document.getElementById(styleId) as HTMLStyleElement | null;
+                  const el = document.getElementById(styleId) as HTMLStyleElement | null;
                   if (el) {
                     el.innerHTML = newCssVars;
                   }

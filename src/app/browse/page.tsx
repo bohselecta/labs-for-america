@@ -24,7 +24,7 @@ export default async function Browse() {
               <p className="font-medium mb-1">About National Labs</p>
               <p>
                 These are federally-sponsored challenges and innovation opportunities. 
-                They're designed for national participation and impact, separate from local 
+                They&apos;re designed for national participation and impact, separate from local 
                 community initiatives. Perfect for citizens, researchers, and organizations 
                 looking to contribute to federal priorities.
               </p>
