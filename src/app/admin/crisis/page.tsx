@@ -2,15 +2,19 @@ import { prisma } from "@/lib/prisma";
 
 export default async function CrisisPage() {
   // Handle case where database is not available (e.g., during build)
-  let org = {
-    crisisMode: "NORMAL" as const,
+  let org: {
+    crisisMode: "NORMAL" | "MANHUNT" | "EMERGENCY";
+    crisisTitle: string | null;
+    crisisMsg: string | null;
+  } = {
+    crisisMode: "NORMAL",
     crisisTitle: "",
     crisisMsg: ""
   };
   
   if (prisma) {
     try {
-      org = await prisma.org.upsert({
+      const dbOrg = await prisma.org.upsert({
         where: { slug: "city" },
         update: {},
         create: { 
@@ -20,6 +24,11 @@ export default async function CrisisPage() {
           crisisMode: "NORMAL"
         }
       });
+      org = {
+        crisisMode: dbOrg.crisisMode,
+        crisisTitle: dbOrg.crisisTitle,
+        crisisMsg: dbOrg.crisisMsg
+      };
     } catch (error) {
       console.warn("Database not available:", error);
     }
