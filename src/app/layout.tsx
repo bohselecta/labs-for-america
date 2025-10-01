@@ -31,7 +31,7 @@ export default async function RootLayout({
                               <img 
                                 src="/lfa-logo.png" 
                                 alt="LabsForAmerica Logo" 
-                                className="h-5 w-5"
+                                className="h-6 w-6"
                               />
                             </div>
                             <div className="text-gray-900 font-semibold font-headline">LabsForAmerica</div>

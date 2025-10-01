@@ -137,16 +137,27 @@ export default function TemplatesPage() {
                   <li key={feature}>• {feature}</li>
                 ))}
               </ul>
-              <div className="mt-4">
-                <input
-                  type="checkbox"
-                  checked={selected.includes(template.id)}
-                  onChange={() => {}}
-                  className="accent-blue-600"
-                />
-                <span className="ml-2 text-sm font-medium">
-                  {selected.includes(template.id) ? "Selected" : "Select"}
-                </span>
+              <div className="mt-4 space-y-3">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(`/preview/${template.id}`, '_blank');
+                  }}
+                  className="w-full px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 transition-colors"
+                >
+                  👁️ Preview Template
+                </button>
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={selected.includes(template.id)}
+                    onChange={() => {}}
+                    className="accent-blue-600"
+                  />
+                  <span className="ml-2 text-sm font-medium">
+                    {selected.includes(template.id) ? "Selected" : "Select"}
+                  </span>
+                </div>
               </div>
             </div>
           ))}
