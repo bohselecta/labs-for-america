@@ -18,6 +18,7 @@ export default function LabDetail({ params }: { params: Promise<{ slug: string }
     isBeginner: boolean;
   } | null>(null);
   const [isClient, setIsClient] = useState(false);
+  const [resolvedParams, setResolvedParams] = useState<{ slug: string } | null>(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -28,13 +29,18 @@ export default function LabDetail({ params }: { params: Promise<{ slug: string }
   }, []);
 
   useEffect(() => {
-    if (isClient) {
+    // Resolve params Promise
+    params.then(setResolvedParams);
+  }, [params]);
+
+  useEffect(() => {
+    if (isClient && resolvedParams) {
       // Find the lab by slug
       const config = TEMPLATE_CONFIGS[currentTemplate];
-      const foundLab = config.sampleLabs.find(l => l.slug === params.slug);
+      const foundLab = config.sampleLabs.find(l => l.slug === resolvedParams.slug);
       setLab(foundLab || null);
     }
-  }, [isClient, currentTemplate, params.slug]);
+  }, [isClient, currentTemplate, resolvedParams]);
 
   if (!isClient || !lab) {
     return <div>Loading...</div>;
