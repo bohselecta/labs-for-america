@@ -2,10 +2,29 @@ import { prisma } from "@/lib/prisma";
 import { getDaysLeft, getStatusBadge, getCategoryBadge, getBeginnerBadge } from "@/lib/badges";
 
 export default async function Browse() {
-  const labs = await prisma.lab.findMany({ 
-    include: { org: true }, 
-    orderBy: { deadline: "asc" } 
-  });
+  // Handle case where database is not available (e.g., during build)
+  let labs: Array<{
+    id: string;
+    title: string;
+    slug: string;
+    category: string;
+    prize: number;
+    deadline: Date;
+    status: string;
+    isBeginner: boolean;
+    org: { name: string };
+  }> = [];
+  
+  if (prisma) {
+    try {
+      labs = await prisma.lab.findMany({ 
+        include: { org: true }, 
+        orderBy: { deadline: "asc" } 
+      });
+    } catch (error) {
+      console.warn("Database not available:", error);
+    }
+  }
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-10">
@@ -49,50 +68,58 @@ export default async function Browse() {
         
         <section>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {labs.map(l => {
-              const daysLeft = getDaysLeft(l.deadline);
-              const statusBadge = getStatusBadge(l.status, daysLeft);
-              const categoryBadge = getCategoryBadge(l.category);
-              const beginnerBadge = getBeginnerBadge(l.isBeginner);
-              
-              return (
-                <a 
-                  key={l.id} 
-                  href={`/labs/${l.slug}`} 
-                  className="group rounded-xl bg-white border border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-md transition overflow-hidden"
-                >
-                  <div className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className={`text-xs rounded-full px-2 py-0.5 ${categoryBadge.color}`}>
-                        {categoryBadge.text}
-                      </span>
-                      {beginnerBadge && (
-                        <span className={`text-xs rounded-full px-2 py-0.5 ${beginnerBadge.color}`}>
-                          {beginnerBadge.text}
+            {labs.length > 0 ? (
+              labs.map(l => {
+                const daysLeft = getDaysLeft(l.deadline);
+                const statusBadge = getStatusBadge(l.status, daysLeft);
+                const categoryBadge = getCategoryBadge(l.category);
+                const beginnerBadge = getBeginnerBadge(l.isBeginner);
+                
+                return (
+                  <a 
+                    key={l.id} 
+                    href={`/labs/${l.slug}`} 
+                    className="group rounded-xl bg-white border border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-md transition overflow-hidden"
+                  >
+                    <div className="p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className={`text-xs rounded-full px-2 py-0.5 ${categoryBadge.color}`}>
+                          {categoryBadge.text}
                         </span>
-                      )}
+                        {beginnerBadge && (
+                          <span className={`text-xs rounded-full px-2 py-0.5 ${beginnerBadge.color}`}>
+                            {beginnerBadge.text}
+                          </span>
+                        )}
+                      </div>
+                      
+                      <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600">
+                        {l.title}
+                      </h3>
+                      
+                      <div className="mt-2 flex flex-wrap gap-2 text-xs">
+                        <span className="rounded-full bg-blue-50 text-blue-700 px-2 py-0.5">
+                          Prize ${l.prize.toLocaleString()}
+                        </span>
+                        <span className={`rounded-full px-2 py-0.5 ${statusBadge.color}`}>
+                          {statusBadge.text}
+                        </span>
+                      </div>
+                      
+                      <div className="mt-3 text-sm text-gray-600">
+                        Due {l.deadline.toLocaleDateString()}
+                      </div>
                     </div>
-                    
-                    <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600">
-                      {l.title}
-                    </h3>
-                    
-                    <div className="mt-2 flex flex-wrap gap-2 text-xs">
-                      <span className="rounded-full bg-blue-50 text-blue-700 px-2 py-0.5">
-                        Prize ${l.prize.toLocaleString()}
-                      </span>
-                      <span className={`rounded-full px-2 py-0.5 ${statusBadge.color}`}>
-                        {statusBadge.text}
-                      </span>
-                    </div>
-                    
-                    <div className="mt-3 text-sm text-gray-600">
-                      Due {l.deadline.toLocaleDateString()}
-                    </div>
-                  </div>
-                </a>
-              );
-            })}
+                  </a>
+                );
+              })
+            ) : (
+              <div className="col-span-full text-center py-12 text-gray-500">
+                <div className="text-4xl mb-4">🔍</div>
+                <h3 className="text-lg font-semibold mb-2">No Labs Found</h3>
+                <p>Check back soon for new federal innovation opportunities!</p>
+              </div>
+            )}
           </div>
         </section>
       </div>
