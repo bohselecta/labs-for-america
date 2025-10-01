@@ -2,9 +2,18 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
 export default async function JusticeDashboard() {
-  const org = await prisma.org.findFirst({
-    where: { slug: "city" }
-  });
+  // Handle case where database is not available (e.g., during build)
+  let org: { preset: "CITY" | "PD" | "FIRE" | "COUNTY" } | null = null;
+  
+  if (prisma) {
+    try {
+      org = await prisma.org.findFirst({
+        where: { slug: "city" }
+      });
+    } catch (error) {
+      console.warn("Database not available:", error);
+    }
+  }
 
   const preset = org?.preset || "PD";
   const presetName = preset === "PD" ? "Police Department" : 
