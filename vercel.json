@@ -1,4 +1,5 @@
 {
+  // Force rebuild with latest TypeScript fixes
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
   "framework": "nextjs",
