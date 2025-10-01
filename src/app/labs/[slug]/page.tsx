@@ -6,19 +6,8 @@ import { LabCollaboration } from "@/components/LabCollaboration";
 
 export default function LabDetail({ params }: { params: Promise<{ slug: string }> }) {
   const [currentTemplate, setCurrentTemplate] = useState<TemplateKey>("civic");
-  const [lab, setLab] = useState<{
-    title: string;
-    slug: string;
-    category: string;
-    summary: string;
-    bodyMd: string;
-    prize: number;
-    deadline: Date;
-    status: string;
-    isBeginner: boolean;
-  } | null>(null);
+  const [lab, setLab] = useState<any>(null);
   const [isClient, setIsClient] = useState(false);
-  const [resolvedParams, setResolvedParams] = useState<{ slug: string } | null>(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -29,18 +18,13 @@ export default function LabDetail({ params }: { params: Promise<{ slug: string }
   }, []);
 
   useEffect(() => {
-    // Resolve params Promise
-    params.then(setResolvedParams);
-  }, [params]);
-
-  useEffect(() => {
-    if (isClient && resolvedParams) {
+    if (isClient) {
       // Find the lab by slug
       const config = TEMPLATE_CONFIGS[currentTemplate];
-      const foundLab = config.sampleLabs.find(l => l.slug === resolvedParams.slug);
-      setLab(foundLab || null);
+      const foundLab = config.sampleLabs.find(l => l.slug === params.slug);
+      setLab(foundLab);
     }
-  }, [isClient, currentTemplate, resolvedParams]);
+  }, [isClient, currentTemplate, params.slug]);
 
   if (!isClient || !lab) {
     return <div>Loading...</div>;
@@ -48,10 +32,9 @@ export default function LabDetail({ params }: { params: Promise<{ slug: string }
 
   const config = TEMPLATE_CONFIGS[currentTemplate];
   const daysLeft = Math.ceil((lab.deadline.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-  const timelineProgress = Math.max(0, Math.min(100, 
-    ((new Date().getTime() - new Date(lab.createdAt || lab.deadline.getTime() - 30 * 24 * 60 * 60 * 1000).getTime()) / 
-     (lab.deadline.getTime() - new Date(lab.createdAt || lab.deadline.getTime() - 30 * 24 * 60 * 60 * 1000).getTime())) * 100
-  ));
+  // Calculate timeline progress based on days left (simplified for sample data)
+  const totalDays = 30; // Assume 30-day timeline for sample labs
+  const timelineProgress = Math.max(0, Math.min(100, ((totalDays - daysLeft) / totalDays) * 100));
 
   return (
     <main>
