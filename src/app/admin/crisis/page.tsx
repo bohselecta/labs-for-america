@@ -1,16 +1,29 @@
 import { prisma } from "@/lib/prisma";
 
 export default async function CrisisPage() {
-  const org = await prisma.org.upsert({
-    where: { slug: "city" },
-    update: {},
-    create: { 
-      slug: "city", 
-      name: "City of Example", 
-      logoUrl: "/logo.png",
-      crisisMode: "NORMAL"
+  // Handle case where database is not available (e.g., during build)
+  let org = {
+    crisisMode: "NORMAL" as const,
+    crisisTitle: "",
+    crisisMsg: ""
+  };
+  
+  if (prisma) {
+    try {
+      org = await prisma.org.upsert({
+        where: { slug: "city" },
+        update: {},
+        create: { 
+          slug: "city", 
+          name: "City of Example", 
+          logoUrl: "/logo.png",
+          crisisMode: "NORMAL"
+        }
+      });
+    } catch (error) {
+      console.warn("Database not available:", error);
     }
-  });
+  }
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-10">

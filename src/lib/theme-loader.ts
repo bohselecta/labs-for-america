@@ -2,6 +2,11 @@ import { prisma } from "@/lib/prisma";
 
 export async function loadTheme(): Promise<string | null> {
   try {
+    if (!prisma) {
+      console.warn("Prisma client not available, skipping theme load");
+      return null;
+    }
+
     const org = await prisma.org.findFirst({
       where: { slug: "city" }
     });
