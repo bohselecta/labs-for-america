@@ -2,7 +2,14 @@ import { prisma } from "@/lib/prisma";
 
 export default async function AdminLabs() {
   // Handle case where database is not available (e.g., during build)
-  let labs: any[] = [];
+  let labs: Array<{
+    id: string;
+    title: string;
+    category: string;
+    deadline: Date;
+    prize: number;
+    org: { name: string };
+  }> = [];
   
   if (prisma) {
     try {
