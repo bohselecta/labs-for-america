@@ -51,8 +51,9 @@ const templates = {
   }
 };
 
-export default function TemplatePreview({ params }: { params: { templateId: string } }) {
-  const template = templates[params.templateId as keyof typeof templates];
+export default async function TemplatePreview({ params }: { params: Promise<{ templateId: string }> }) {
+  const { templateId } = await params;
+  const template = templates[templateId as keyof typeof templates];
   
   if (!template) {
     return (

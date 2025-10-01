@@ -22,7 +22,7 @@ export function FakeAuthProvider({ children }: { children: React.ReactNode }) {
     if (raw) {
       try {
         setUser(JSON.parse(raw));
-      } catch (e) {
+      } catch {
         localStorage.removeItem("cl_user");
       }
     }
