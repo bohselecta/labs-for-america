@@ -1,127 +1,117 @@
-import { prisma } from "@/lib/prisma";
-import { getDaysLeft, getStatusBadge, getCategoryBadge, getBeginnerBadge } from "@/lib/badges";
+"use client";
+import { useState, useEffect } from "react";
+import { TEMPLATE_CONFIGS, TemplateKey } from "@/lib/template-configs";
+import Link from "next/link";
 
-export default async function Browse() {
-  // Handle case where database is not available (e.g., during build)
-  let labs: Array<{
-    id: string;
-    title: string;
-    slug: string;
-    category: string;
-    prize: number;
-    deadline: Date;
-    status: string;
-    isBeginner: boolean;
-    org: { name: string };
-  }> = [];
-  
-  if (prisma) {
-    try {
-      labs = await prisma.lab.findMany({ 
-        include: { org: true }, 
-        orderBy: { deadline: "asc" } 
-      });
-    } catch (error) {
-      console.warn("Database not available:", error);
+export default function BrowsePage() {
+  const [currentTemplate, setCurrentTemplate] = useState<TemplateKey>("civic");
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    const savedTemplate = localStorage.getItem("dev-template") as TemplateKey;
+    if (savedTemplate && TEMPLATE_CONFIGS[savedTemplate]) {
+      setCurrentTemplate(savedTemplate);
     }
+  }, []);
+
+  if (!isClient) {
+    return <div>Loading...</div>;
   }
 
+  const config = TEMPLATE_CONFIGS[currentTemplate];
+  const allLabs = config.sampleLabs;
+
   return (
-    <main className="mx-auto max-w-7xl px-6 py-10">
-      {/* Header Section */}
+    <main className="mx-auto max-w-6xl px-6 py-10">
+      {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 font-headline mb-2">
-          National Labs
+        <h1 className="text-3xl font-semibold font-headline mb-2">
+          {config.name} Challenges
         </h1>
-        <p className="text-lg text-gray-600 font-body mb-4">
-          Federal government challenges and innovation opportunities open to all citizens nationwide.
+        <p className="text-gray-600 font-body">
+          Browse all active challenges from {config.orgName}. Click any challenge to learn more and contribute.
         </p>
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <div className="flex items-start gap-3">
-            <div className="text-blue-600 text-xl">ℹ️</div>
-            <div className="text-sm text-blue-800">
-              <p className="font-medium mb-1">About National Labs</p>
-              <p>
-                These are federally-sponsored challenges and innovation opportunities. 
-                They&apos;re designed for national participation and impact, separate from local 
-                community initiatives. Perfect for citizens, researchers, and organizations 
-                looking to contribute to federal priorities.
-              </p>
-            </div>
-          </div>
+      </div>
+
+      {/* Filter Tabs */}
+      <div className="mb-8">
+        <div className="flex gap-2 border-b border-gray-200">
+          <button className="px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-600">
+            All Challenges
+          </button>
+          <button className="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">
+            Open
+          </button>
+          <button className="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">
+            Upcoming
+          </button>
+          <button className="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">
+            Closed
+          </button>
         </div>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-[260px_1fr]">
-        <aside className="bg-white border border-gray-200 rounded-xl p-4 h-fit sticky top-20">
-          <input 
-            placeholder="Search Labs" 
-            className="w-full rounded-md border border-gray-300 p-2"
-          />
-          <div className="mt-4 text-sm text-gray-700 font-medium">Categories</div>
-          {["Federal", "Civic", "Justice", "Health", "Mobility", "Energy"].map(c => (
-            <label key={c} className="mt-2 flex items-center gap-2 text-sm">
-              <input type="checkbox" className="accent-blue-600" /> {c}
-            </label>
-          ))}
-        </aside>
-        
-        <section>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {labs.length > 0 ? (
-              labs.map(l => {
-                const daysLeft = getDaysLeft(l.deadline);
-                const statusBadge = getStatusBadge(l.status, daysLeft);
-                const categoryBadge = getCategoryBadge(l.category);
-                const beginnerBadge = getBeginnerBadge(l.isBeginner);
-                
-                return (
-                  <a 
-                    key={l.id} 
-                    href={`/labs/${l.slug}`} 
-                    className="group rounded-xl bg-white border border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-md transition overflow-hidden"
-                  >
-                    <div className="p-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className={`text-xs rounded-full px-2 py-0.5 ${categoryBadge.color}`}>
-                          {categoryBadge.text}
-                        </span>
-                        {beginnerBadge && (
-                          <span className={`text-xs rounded-full px-2 py-0.5 ${beginnerBadge.color}`}>
-                            {beginnerBadge.text}
-                          </span>
-                        )}
-                      </div>
-                      
-                      <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600">
-                        {l.title}
-                      </h3>
-                      
-                      <div className="mt-2 flex flex-wrap gap-2 text-xs">
-                        <span className="rounded-full bg-blue-50 text-blue-700 px-2 py-0.5">
-                          Prize ${l.prize.toLocaleString()}
-                        </span>
-                        <span className={`rounded-full px-2 py-0.5 ${statusBadge.color}`}>
-                          {statusBadge.text}
-                        </span>
-                      </div>
-                      
-                      <div className="mt-3 text-sm text-gray-600">
-                        Due {l.deadline.toLocaleDateString()}
-                      </div>
-                    </div>
-                  </a>
-                );
-              })
-            ) : (
-              <div className="col-span-full text-center py-12 text-gray-500">
-                <div className="text-4xl mb-4">🔍</div>
-                <h3 className="text-lg font-semibold mb-2">No Labs Found</h3>
-                <p>Check back soon for new federal innovation opportunities!</p>
-              </div>
-            )}
-          </div>
-        </section>
+      {/* Challenges Grid */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {allLabs.map((lab) => (
+          <Link
+            key={lab.slug}
+            href={`/labs/${lab.slug}`}
+            className="card p-6 hover:shadow-lg transition cursor-pointer"
+          >
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-sm bg-blue-100 text-blue-700 px-2 py-1 rounded">
+                {lab.category}
+              </span>
+              <span className={`text-sm px-2 py-1 rounded ${
+                lab.status === "open" 
+                  ? "bg-green-100 text-green-700" 
+                  : lab.status === "upcoming"
+                  ? "bg-yellow-100 text-yellow-700"
+                  : "bg-gray-100 text-gray-700"
+              }`}>
+                {lab.status}
+              </span>
+              {lab.isBeginner && (
+                <span className="text-sm bg-green-100 text-green-700 px-2 py-1 rounded">
+                  Beginner
+                </span>
+              )}
+            </div>
+            
+            <h3 className="text-lg font-semibold font-headline mb-2">{lab.title}</h3>
+            <p className="text-sm text-gray-600 font-body mb-4 line-clamp-3">
+              {lab.summary}
+            </p>
+            
+            <div className="flex justify-between items-center text-sm text-gray-500">
+              <span className="font-medium">
+                {lab.prize > 0 ? `Prize $${lab.prize.toLocaleString()}` : "Recognition"}
+              </span>
+              <span>Due {lab.deadline.toLocaleDateString()}</span>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      {/* Empty State */}
+      {allLabs.length === 0 && (
+        <div className="text-center py-12">
+          <div className="text-gray-500 text-lg">No challenges available</div>
+          <p className="text-gray-400 mt-2">
+            Check back later for new challenges from {config.orgName}.
+          </p>
+        </div>
+      )}
+
+      {/* Info Box */}
+      <div className="mt-12 p-6 bg-blue-50 rounded-xl">
+        <h2 className="text-lg font-semibold mb-2">About {config.name}</h2>
+        <p className="text-gray-600 text-sm">
+          {config.description}. This template is designed for organizations like {config.orgName} 
+          to engage their community in collaborative problem-solving.
+        </p>
       </div>
     </main>
   );

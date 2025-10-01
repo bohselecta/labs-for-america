@@ -1,67 +1,78 @@
-import { prisma } from "@/lib/prisma";
-import { notFound } from "next/navigation";
-import { MDXRemote } from "next-mdx-remote/rsc";
-import { getDaysLeft, getStatusBadge, getCategoryBadge, getBeginnerBadge, getTimelineProgress } from "@/lib/badges";
+"use client";
+import { useState, useEffect } from "react";
+import { TEMPLATE_CONFIGS, TemplateKey } from "@/lib/template-configs";
+import Link from "next/link";
 import { LabCollaboration } from "@/components/LabCollaboration";
 
-export default async function LabDetail({ 
-  params 
-}: { 
-  params: Promise<{ slug: string }> 
-}) {
-  const { slug } = await params;
-  const lab = await prisma.lab.findUnique({ 
-    where: { slug }, 
-    include: { 
-      org: true, 
-      assets: true,
-      contributions: {
-        include: {
-          votes: true
-        },
-        orderBy: { createdAt: 'desc' }
-      }
-    } 
-  });
-  
-  if (!lab) return notFound();
+export default function LabDetail({ params }: { params: Promise<{ slug: string }> }) {
+  const [currentTemplate, setCurrentTemplate] = useState<TemplateKey>("civic");
+  const [lab, setLab] = useState<any>(null);
+  const [isClient, setIsClient] = useState(false);
 
-  const daysLeft = getDaysLeft(lab.deadline);
-  const statusBadge = getStatusBadge(lab.status, daysLeft);
-  const categoryBadge = getCategoryBadge(lab.category);
-  const beginnerBadge = getBeginnerBadge(lab.isBeginner);
-  const timelineProgress = getTimelineProgress(lab.deadline, lab.createdAt);
+  useEffect(() => {
+    setIsClient(true);
+    const savedTemplate = localStorage.getItem("dev-template") as TemplateKey;
+    if (savedTemplate && TEMPLATE_CONFIGS[savedTemplate]) {
+      setCurrentTemplate(savedTemplate);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isClient) {
+      // Find the lab by slug
+      const config = TEMPLATE_CONFIGS[currentTemplate];
+      const foundLab = config.sampleLabs.find(l => l.slug === params.slug);
+      setLab(foundLab);
+    }
+  }, [isClient, currentTemplate, params.slug]);
+
+  if (!isClient || !lab) {
+    return <div>Loading...</div>;
+  }
+
+  const config = TEMPLATE_CONFIGS[currentTemplate];
+  const daysLeft = Math.ceil((lab.deadline.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+  const timelineProgress = Math.max(0, Math.min(100, 
+    ((new Date().getTime() - new Date(lab.createdAt || lab.deadline.getTime() - 30 * 24 * 60 * 60 * 1000).getTime()) / 
+     (lab.deadline.getTime() - new Date(lab.createdAt || lab.deadline.getTime() - 30 * 24 * 60 * 60 * 1000).getTime())) * 100
+  ));
 
   return (
     <main>
       <section className="border-b border-gray-200 bg-white">
         <div className="mx-auto max-w-5xl px-6 py-10">
           <div className="flex items-center gap-3 mb-3">
-            <span className={`text-sm rounded-full px-3 py-1 ${categoryBadge.color}`}>
-              {categoryBadge.text}
+            <span className="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded">
+              {lab.category}
             </span>
-            {beginnerBadge && (
-              <span className={`text-sm rounded-full px-3 py-1 ${beginnerBadge.color}`}>
-                {beginnerBadge.text}
+            {lab.isBeginner && (
+              <span className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded">
+                Beginner Friendly
               </span>
             )}
           </div>
           
-          <h1 className="text-3xl font-semibold">{lab.title}</h1>
+          <h1 className="text-3xl font-semibold font-headline">{lab.title}</h1>
           
           <div className="mt-4 flex gap-3">
             <span className="text-sm rounded-full bg-blue-50 text-blue-700 px-3 py-1">
-              Prize ${lab.prize.toLocaleString()}
+              {lab.prize > 0 ? `Prize $${lab.prize.toLocaleString()}` : "Recognition"}
             </span>
-            <span className={`text-sm rounded-full px-3 py-1 ${statusBadge.color}`}>
-              {statusBadge.text}
+            <span className={`text-sm rounded-full px-3 py-1 ${
+              lab.status === "open" 
+                ? "bg-green-100 text-green-700" 
+                : lab.status === "upcoming"
+                ? "bg-yellow-100 text-yellow-700"
+                : "bg-gray-100 text-gray-700"
+            }`}>
+              {lab.status}
             </span>
           </div>
           
           {/* Timeline Progress Bar */}
           <div className="mt-6">
             <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
-              <span>Started {lab.createdAt.toLocaleDateString()}</span>
+              <span>Started {new Date().toLocaleDateString()}</span>
               <span>Due {lab.deadline.toLocaleDateString()}</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
@@ -73,14 +84,14 @@ export default async function LabDetail({
           </div>
           
           <div className="mt-6 flex gap-3">
-            <a 
+            <Link 
               href={`/labs/${lab.slug}/collab`} 
               className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-500"
             >
               Open Collab Canvas
-            </a>
+            </Link>
             {lab.status === "open" && (
-              <LabCollaboration labId={lab.id} />
+              <LabCollaboration labId={lab.slug} />
             )}
           </div>
         </div>
@@ -92,27 +103,19 @@ export default async function LabDetail({
           <p>{lab.summary}</p>
           <h3>Details</h3>
           <div className="prose-sm">
-            <MDXRemote source={lab.bodyMd} />
+            <div dangerouslySetInnerHTML={{ __html: lab.bodyMd.replace(/\n/g, '<br>') }} />
           </div>
         </article>
         
         <aside className="space-y-4">
           <div className="rounded-xl bg-white border border-gray-200 p-4">
-            <h4 className="font-medium">Assets</h4>
-            <ul className="mt-2 text-sm text-gray-600 space-y-1">
-              {lab.assets.map(a => (
-                <li key={a.id}>
-                  <a 
-                    className="underline" 
-                    href={a.url} 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {a.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <h4 className="font-medium">Challenge Info</h4>
+            <div className="mt-2 text-sm text-gray-600 space-y-1">
+              <div><strong>Category:</strong> {lab.category}</div>
+              <div><strong>Status:</strong> {lab.status}</div>
+              <div><strong>Deadline:</strong> {lab.deadline.toLocaleDateString()}</div>
+              <div><strong>Days Left:</strong> {daysLeft > 0 ? daysLeft : "Overdue"}</div>
+            </div>
           </div>
           
           <div className="rounded-xl bg-white border border-gray-200 p-4">
@@ -121,7 +124,7 @@ export default async function LabDetail({
               <a 
                 href={`data:text/calendar;charset=utf8,${encodeURIComponent(`BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//CivicLabs//Lab Deadline//EN
+PRODID:-//${config.name}//Lab Deadline//EN
 BEGIN:VEVENT
 DTSTART:${lab.deadline.toISOString().replace(/[-:]/g, '').split('.')[0]}Z
 DTEND:${lab.deadline.toISOString().replace(/[-:]/g, '').split('.')[0]}Z
