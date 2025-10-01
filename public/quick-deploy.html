@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Quick Deploy – Labs for America</title>
+<style>
+  :root{
+    --ink:#111827; --muted:#6B7280; --line:#E5E7EB;
+    --brand:#2563EB; --brand-ink:#fff; --bg:#FAFBFD; --card:#fff;
+  }
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial}
+  .wrap{max-width:880px;margin:auto;padding:32px}
+  header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+  header .tag{font-size:12px;color:var(--muted)}
+  h1{font-size:28px;margin:4px 0 16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin:12px 0}
+  .steps{counter-reset: s}
+  .step{display:flex;gap:16px;margin:16px 0}
+  .n{flex:0 0 32px;height:32px;border-radius:32px;background:var(--brand);color:var(--brand-ink);
+     display:grid;place-items:center;font-weight:700}
+  .body{flex:1}
+  .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);
+       padding:10px 14px;border-radius:10px;text-decoration:none}
+  .btn.primary{background:var(--brand);color:var(--brand-ink);border-color:transparent}
+  code,kbd{background:#F3F4F6;border:1px solid var(--line);border-radius:6px;padding:0 6px}
+  ul{margin:8px 0 0 18px}
+  footer{margin-top:28px;color:var(--muted);font-size:13px}
+  @media print{.btns{display:none}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="/logo.png" alt="" width="32" height="32" />
+      <div>
+        <div class="tag">Labs for America</div>
+        <h1>Quick Deploy – <span id="tplName">Your Template</span></h1>
+      </div>
+    </header>
+
+    <div class="card">
+      <p><strong>Goal:</strong> put your portal online in ~20 minutes, using only a web browser.</p>
+      <p>This page is a condensed version of the full docs at <code>/docs/deploy.md</code>.</p>
+    </div>
+
+    <div class="steps">
+
+      <section class="step card">
+        <div class="n">1</div>
+        <div class="body">
+          <h3>Create a GitHub account</h3>
+          <p>Go to <a class="btn" href="https://github.com/join" target="_blank" rel="noreferrer">github.com/join</a> and sign up. Verify your email.</p>
+        </div>
+      </section>
+
+      <section class="step card">
+        <div class="n">2</div>
+        <div class="body">
+          <h3>Create a new repository</h3>
+          <ul>
+            <li>Click the <strong>+</strong> (top-right in GitHub) → <em>New repository</em>.</li>
+            <li>Name it, e.g. <code>civiclabs</code> or <code>justicelabs</code>. Set <strong>Public</strong> → <em>Create</em>.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="step card">
+        <div class="n">3</div>
+        <div class="body">
+          <h3>Upload this template's files</h3>
+          <ul>
+            <li>Open your new repo → <em>Add file → Upload files</em>.</li>
+            <li><strong>Drag the unzipped files</strong> from this template folder into the page (not the <code>.zip</code> itself).</li>
+            <li>Scroll down → <em>Commit changes</em>.</li>
+          </ul>
+          <div class="btns">
+            <a class="btn" href="https://github.com/new" target="_blank" rel="noreferrer">Open "New repository"</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="step card">
+        <div class="n">4</div>
+        <div class="body">
+          <h3>Deploy on Vercel</h3>
+          <ul>
+            <li>Go to <a href="https://vercel.com/signup" target="_blank" rel="noreferrer">vercel.com/signup</a> and sign up with GitHub.</li>
+            <li><em>Add New → Project</em> → select your repo → <strong>Deploy</strong>.</li>
+            <li>After the build, your site is live at <code>yourname.vercel.app</code>.</li>
+          </ul>
+          <div class="btns">
+            <a class="btn primary" href="https://vercel.com/new" target="_blank" rel="noreferrer">Deploy on Vercel</a>
+            <a class="btn" href="/docs/deploy.md" target="_blank" rel="noreferrer">Full deploy guide</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="step card">
+        <div class="n">5</div>
+        <div class="body">
+          <h3>Brand & Admin (optional)</h3>
+          <ul>
+            <li>Visit <code>/admin</code> → upload your logo. The site auto-themes with your colors.</li>
+            <li>Pick a preset: <em>City</em>, <em>Police (PD)</em>, <em>School</em>, or <em>Health</em>.</li>
+            <li>Create your first Lab in <code>Admin → New Lab</code> (prize, deadline, description).</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="step card">
+        <div class="n">6</div>
+        <div class="body">
+          <h3>JusticeLabs extras (if applicable)</h3>
+          <ul>
+            <li>Open <code>/admin/crisis</code> for <strong>Manhunt</strong> / <strong>Emergency</strong> mode & public chat.</li>
+            <li>Use <code>/tips</code> for confidential tips (private channel).</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+
+    <footer>
+      Need help? See the full guide in <code>/docs/deploy.md</code>.  
+      © Labs for America — free civic templates for communities.
+    </footer>
+  </div>
+
+<script>
+  // optional: auto-set template name from a global your bundler injects
+  (function(){
+    // Replace "Your Template" via data attribute or global var if available
+    var name = (window.TEMPLATE_NAME || document.documentElement.getAttribute('data-template-name') || '').trim();
+    if(name){ document.getElementById('tplName').textContent = name; }
+  })();
+</script>
+</body>
+</html>

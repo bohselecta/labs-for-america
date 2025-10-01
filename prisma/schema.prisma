@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Org {
+  id         String   @id @default(cuid())
+  name       String
+  slug       String   @unique
+  logoUrl    String?
+  primaryHex String?  // computed from logo (fallback in env)
+  themeJson  String?  // JSON string of complete theme
+  preset     Preset   @default(CITY)
+  createdAt  DateTime @default(now())
+  labs       Lab[]
+  // NEW
+  crisisMode CrisisMode @default(NORMAL)
+  crisisTitle String?   // e.g., "MANHUNT ACTIVE" / "EMERGENCY NOTICE"
+  crisisMsg   String?   // short banner message
+  chatMessages ChatMessage[]
+}
+
+enum CrisisMode {
+  NORMAL
+  MANHUNT
+  EMERGENCY
+}
+
+enum Preset {
+  CITY
+  PD
+  FIRE
+  COUNTY
+}
+
+model Lab {
+  id          String   @id @default(cuid())
+  orgId       String
+  title       String
+  slug        String   @unique
+  category    String   // "Civic" | "Justice" | ...
+  prize       Int      // in dollars
+  deadline    DateTime
+  status      String   // "open" | "upcoming" | "closed"
+  summary     String
+  bodyMd      String
+  heroUrl     String?
+  isBeginner  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  org         Org      @relation(fields: [orgId], references: [id])
+  assets      Asset[]
+}
+
+model Asset {
+  id        String   @id @default(cuid())
+  labId     String
+  label     String
+  url       String
+  createdAt DateTime @default(now())
+  lab       Lab      @relation(fields: [labId], references: [id])
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  orgId     String
+  channel   String   // "public" (homepage), could add per-lab later
+  createdAt DateTime @default(now())
+  anonId    String   // hashed or random "User-4821"
+  text      String
+  lat       Float?   // optional user pin for heatmap
+  lon       Float?
+  approved  Boolean  @default(true) // set false if using pre-mod
+  org       Org      @relation(fields: [orgId], references: [id])
+}

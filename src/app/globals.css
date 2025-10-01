@@ -3,6 +3,33 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* LabsForAmerica Design Theme - Inclusive Patriotism */
+  --anchor-blue: #2563EB;        /* trust, civic duty, tech-forward */
+  --sky-white: #F9FAFB;          /* clean, open, inclusive */
+  --golden-accent: #FACC15;      /* optimism, energy, warmth */
+  --muted-red: #DC2626;          /* dignity, not aggression (use sparingly) */
+  --neutral-gray: #6B7280;       /* balance, accessibility, text legibility */
+  
+  /* Typography */
+  --font-headline: 'Inter', 'Manrope', 'IBM Plex Sans', system-ui, sans-serif;
+  --font-body: 'Source Sans Pro', 'Public Sans', 'Open Sans', system-ui, sans-serif;
+  --font-accent: 'Merriweather', 'IBM Plex Serif', Georgia, serif;
+  
+  /* Dynamic theme variables */
+  --brand:#2563EB; 
+  --brand-ink:#FFFFFF;
+  --surface:#FFFFFF; 
+  --surface-ink:#111827;
+  --canvas:#FAFBFD; 
+  --canvas-ink:#111827;
+  --muted:#F3F4F6; 
+  --muted-ink:#111827;
+  --accent:#10B981; 
+  --accent-ink:#FFFFFF;
+  --border-radius: 0.75rem;
+  --border-color: rgba(0,0,0,0.05);
+  --shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 @theme inline {
@@ -20,7 +47,223 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--canvas); 
+  color: var(--canvas-ink); 
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Theme utility classes */
+.btn-primary { 
+  background: var(--brand); 
+  color: var(--brand-ink); 
+  border-radius: var(--border-radius);
+}
+
+.card { 
+  background: var(--surface); 
+  color: var(--surface-ink); 
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+.btn-accent { 
+  background: var(--accent); 
+  color: var(--accent-ink); 
+  border-radius: var(--border-radius);
+}
+
+.bg-brand { 
+  background: var(--brand); 
+}
+
+.text-brand { 
+  color: var(--brand); 
+}
+
+.bg-surface { 
+  background: var(--surface); 
+}
+
+.text-surface { 
+  color: var(--surface-ink); 
+}
+
+.bg-canvas { 
+  background: var(--canvas); 
+}
+
+.text-canvas { 
+  color: var(--canvas-ink); 
+}
+
+.bg-muted { 
+  background: var(--muted); 
+}
+
+.text-muted { 
+  color: var(--muted-ink); 
+}
+
+.bg-accent { 
+  background: var(--accent); 
+}
+
+.text-accent { 
+  color: var(--accent); 
+}
+
+/* LabsForAmerica Enhanced Styling */
+
+/* Typography Classes */
+.font-headline {
+  font-family: var(--font-headline);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.font-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.font-accent {
+  font-family: var(--font-accent);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Enhanced Button Styles */
+.btn-primary { 
+  background: var(--brand); 
+  color: var(--brand-ink); 
+  border-radius: var(--border-radius);
+  font-family: var(--font-headline);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn-golden {
+  background: var(--golden-accent);
+  color: var(--accent-ink);
+  border-radius: var(--border-radius);
+  font-family: var(--font-headline);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-golden:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
+}
+
+/* Enhanced Card Styles */
+.card { 
+  background: var(--surface); 
+  color: var(--surface-ink); 
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* Civic-themed decorative elements */
+.civic-grid {
+  background-image: 
+    linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.constellation-bg {
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.1) 1px, transparent 1px),
+    radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+    radial-gradient(circle at 40% 60%, rgba(37, 99, 235, 0.08) 1px, transparent 1px);
+  background-size: 100px 100px, 150px 150px, 200px 200px;
+}
+
+/* Hero section styling */
+.hero-gradient {
+  background: linear-gradient(135deg, var(--sky-white) 0%, rgba(37, 99, 235, 0.02) 100%);
+}
+
+/* Navigation enhancements */
+.nav-link {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--golden-accent);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Footer styling */
+.footer-pattern {
+  background-image: 
+    linear-gradient(45deg, rgba(37, 99, 235, 0.02) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(37, 99, 235, 0.02) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(37, 99, 235, 0.02) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(37, 99, 235, 0.02) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  .font-headline {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+  
+  .font-body {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary,
+  .btn-golden,
+  .card,
+  .nav-link::after {
+    transition: none;
+  }
+  
+  .btn-primary:hover,
+  .btn-golden:hover,
+  .card:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border-color: rgba(0,0,0,0.2);
+    --shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
 }
