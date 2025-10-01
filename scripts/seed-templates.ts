@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Preset } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -20,7 +20,7 @@ async function seedTemplateData() {
       name: 'City of Springfield',
       logoUrl: '/logo.png',
       primaryHex: '#2563EB',
-      preset: 'CITY',
+      preset: Preset.CITY,
       themeJson: JSON.stringify({
         palette: ['#2563EB', '#10B981', '#F3F4F6'],
         theme: { brand: '#2563EB', brandInk: '#FFFFFF' },
@@ -32,7 +32,7 @@ async function seedTemplateData() {
       name: 'Springfield Police Department',
       logoUrl: '/logo.png',
       primaryHex: '#1E40AF',
-      preset: 'PD',
+      preset: Preset.PD,
       themeJson: JSON.stringify({
         palette: ['#1E40AF', '#DC2626', '#F3F4F6'],
         theme: { brand: '#1E40AF', brandInk: '#FFFFFF' },
@@ -44,7 +44,7 @@ async function seedTemplateData() {
       name: 'Springfield School District',
       logoUrl: '/logo.png',
       primaryHex: '#059669',
-      preset: 'CITY',
+      preset: Preset.CITY,
       themeJson: JSON.stringify({
         palette: ['#059669', '#10B981', '#F3F4F6'],
         theme: { brand: '#059669', brandInk: '#FFFFFF' },
@@ -56,7 +56,7 @@ async function seedTemplateData() {
       name: 'Springfield Health Department',
       logoUrl: '/logo.png',
       primaryHex: '#DC2626',
-      preset: 'FIRE',
+      preset: Preset.FIRE,
       themeJson: JSON.stringify({
         palette: ['#DC2626', '#F59E0B', '#F3F4F6'],
         theme: { brand: '#DC2626', brandInk: '#FFFFFF' },
