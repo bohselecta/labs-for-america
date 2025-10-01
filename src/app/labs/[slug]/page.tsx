@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getDaysLeft, getStatusBadge, getCategoryBadge, getBeginnerBadge, getTimelineProgress } from "@/lib/badges";
+import { LabCollaboration } from "@/components/LabCollaboration";
 
 export default async function LabDetail({ 
   params 
@@ -11,7 +12,16 @@ export default async function LabDetail({
   const { slug } = await params;
   const lab = await prisma.lab.findUnique({ 
     where: { slug }, 
-    include: { org: true, assets: true } 
+    include: { 
+      org: true, 
+      assets: true,
+      contributions: {
+        include: {
+          votes: true
+        },
+        orderBy: { createdAt: 'desc' }
+      }
+    } 
   });
   
   if (!lab) return notFound();
@@ -62,13 +72,16 @@ export default async function LabDetail({
             </div>
           </div>
           
-          <div className="mt-6">
+          <div className="mt-6 flex gap-3">
             <a 
               href={`/labs/${lab.slug}/collab`} 
               className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-500"
             >
               Open Collab Canvas
             </a>
+            {lab.status === "open" && (
+              <LabCollaboration labId={lab.id} />
+            )}
           </div>
         </div>
       </section>

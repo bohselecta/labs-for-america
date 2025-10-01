@@ -52,9 +52,12 @@ model Lab {
   isBeginner  Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  closedAt    DateTime? // When lab was closed
+  reportPath  String?   // Path to generated report
 
   org         Org      @relation(fields: [orgId], references: [id])
   assets      Asset[]
+  contributions Contribution[]
 }
 
 model Asset {
@@ -77,4 +80,33 @@ model ChatMessage {
   lon       Float?
   approved  Boolean  @default(true) // set false if using pre-mod
   org       Org      @relation(fields: [orgId], references: [id])
+}
+
+model Contribution {
+  id          String   @id @default(cuid())
+  labId       String
+  title       String
+  content     String
+  type        String   // "proposal" | "document" | "comment" | "design"
+  author      String   // contributor name
+  authorEmail String?  // optional contact
+  status      String   // "pending" | "accepted" | "rejected"
+  voteCount   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  lab         Lab      @relation(fields: [labId], references: [id])
+  votes       ContributionVote[]
+}
+
+model ContributionVote {
+  id             String   @id @default(cuid())
+  contributionId String
+  voterName      String
+  voterEmail     String?
+  createdAt      DateTime @default(now())
+  
+  contribution   Contribution @relation(fields: [contributionId], references: [id])
+  
+  @@unique([contributionId, voterEmail])
 }

@@ -28,6 +28,9 @@ export function Header() {
                   <a href="/templates" className="text-gray-700 hover:text-gray-900 nav-link font-body">
                     Templates
                   </a>
+                  <a href="/archive" className="text-gray-700 hover:text-gray-900 nav-link font-body">
+                    Archive
+                  </a>
                   <a href="/docs/about" className="text-gray-700 hover:text-gray-900 nav-link font-body">
                     About
                   </a>
@@ -94,6 +97,13 @@ export function Header() {
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Templates
+                    </a>
+                    <a
+                      href="/archive"
+                      className="block text-gray-700 hover:text-gray-900 font-body py-2"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Archive
                     </a>
             <a
               href="/docs/about"
