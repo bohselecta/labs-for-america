@@ -32,7 +32,7 @@ export default function DeployPage() {
         
         <h3 className="text-xl font-semibold mb-3 font-headline">Step 1: Create a GitHub Account</h3>
         <p className="text-gray-600 mb-4 font-body">
-          If you don't have one, visit <a href="https://github.com" className="text-blue-600 hover:text-blue-500">github.com</a> and sign up for a free account.
+          If you don&apos;t have one, visit <a href="https://github.com" className="text-blue-600 hover:text-blue-500">github.com</a> and sign up for a free account.
         </p>
 
         <h3 className="text-xl font-semibold mb-3 font-headline">Step 2: Create a New Repository</h3>
@@ -129,7 +129,7 @@ export default function DeployPage() {
 
         <h2 className="text-2xl font-semibold mb-4 font-headline">Setting Up Authentication (Optional)</h2>
         <p className="text-gray-600 mb-4 font-body">
-          For production use, you'll want to replace the demo authentication with a real system:
+          For production use, you&apos;ll want to replace the demo authentication with a real system:
         </p>
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-8">
           <h4 className="font-semibold mb-3">Quick Start with Clerk:</h4>
