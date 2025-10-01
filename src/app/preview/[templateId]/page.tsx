@@ -27,7 +27,7 @@ const templates = {
   },
   edu: {
     name: "EduLabs",
-    description: "Student innovation and research challenges for schools and universities", 
+    description: "Student innovation and research challenges for all school types and universities", 
     icon: "🎓",
     preset: "CITY" as PresetKey,
     features: ["Student innovation", "Hackathons", "Research Labs"],

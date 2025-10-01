@@ -120,16 +120,16 @@ export default async function Home() {
               </a>
             </div>
             
-            <div className="card p-6 text-center hover:shadow-lg transition">
-              <div className="text-4xl mb-4">🎓</div>
-              <h3 className="text-lg font-semibold font-headline mb-2">EduLabs</h3>
-              <p className="text-sm text-gray-600 font-body mb-4">
-                Student innovation and research challenges for schools and universities.
-              </p>
-              <a href="/templates" className="text-blue-600 hover:text-blue-500 text-sm font-medium">
-                Learn more →
-              </a>
-            </div>
+                    <div className="card p-6 text-center hover:shadow-lg transition">
+                      <div className="text-4xl mb-4">🎓</div>
+                      <h3 className="text-lg font-semibold font-headline mb-2">EduLabs</h3>
+                      <p className="text-sm text-gray-600 font-body mb-4">
+                        Student innovation and research challenges for all school types and universities.
+                      </p>
+                      <a href="/templates" className="text-blue-600 hover:text-blue-500 text-sm font-medium">
+                        Learn more →
+                      </a>
+                    </div>
             
             <div className="card p-6 text-center hover:shadow-lg transition">
               <div className="text-4xl mb-4">🏥</div>

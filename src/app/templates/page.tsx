@@ -22,7 +22,7 @@ const templates = [
   {
     id: "edu",
     name: "EduLabs", 
-    description: "For Schools & Universities",
+    description: "For All School Types & Universities",
     icon: "🎓",
     preset: "CITY" as PresetKey,
     features: ["Student innovation", "Hackathons", "Research Labs"]
