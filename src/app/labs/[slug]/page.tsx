@@ -38,7 +38,7 @@ export default function LabDetail({ params }: { params: Promise<{ slug: string }
       // Find the lab by slug
       const config = TEMPLATE_CONFIGS[currentTemplate];
       const foundLab = config.sampleLabs.find(l => l.slug === resolvedParams.slug);
-      setLab(foundLab);
+      setLab(foundLab || null);
     }
   }, [isClient, currentTemplate, resolvedParams]);
 
