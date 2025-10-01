@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { prisma } from "@/lib/prisma";
 
 export default function CrisisDashboard() {
   const [isActivating, setIsActivating] = useState<string | null>(null);

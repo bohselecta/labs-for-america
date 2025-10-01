@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function AdminHome() {
-  const { user, signIn } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
   
   useEffect(() => {

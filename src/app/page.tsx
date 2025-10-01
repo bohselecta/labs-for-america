@@ -2,10 +2,9 @@ import { prisma } from "@/lib/prisma";
 
 export default async function Home() {
   // Handle case where database is not available (e.g., during build)
-  let org = null;
   if (prisma) {
     try {
-      org = await prisma.org.upsert({
+      await prisma.org.upsert({
         where: { slug: "city" },
         update: {},
         create: { slug: "city", name: "City of Example" }

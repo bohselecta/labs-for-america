@@ -170,7 +170,7 @@ export default function TemplatePreview({ params }: { params: { templateId: stri
         <div className="mx-auto max-w-4xl px-6 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
           <p className="text-lg text-gray-600 mb-8">
-            This is just a preview. Download the full template to customize with your organization's branding and deploy your own {template.name} portal.
+            This is just a preview. Download the full template to customize with your organization&apos;s branding and deploy your own {template.name} portal.
           </p>
           <div className="flex justify-center gap-4">
             <button 

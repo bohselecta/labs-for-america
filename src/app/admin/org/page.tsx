@@ -6,7 +6,6 @@ import { PRESETS, PresetKey } from "@/lib/theme-presets";
 export default function OrgPage() {
   const [logoUrl, setLogoUrl] = useState("/logo.png");
   const [palette, setPalette] = useState<string[] | null>(null);
-  const [cssVars, setCssVars] = useState<string | null>(null);
   const [preset, setPreset] = useState<PresetKey>("CITY");
   const [isUploading, setIsUploading] = useState(false);
 
@@ -32,7 +31,6 @@ export default function OrgPage() {
       // Live preview
       const theme = generateTheme(data.palette);
       const newCssVars = themeToCssVars(theme, preset);
-      setCssVars(newCssVars);
       
       // Inject into page
       const styleId = "org-theme-preview";

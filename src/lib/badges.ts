@@ -1,4 +1,4 @@
-import { differenceInDays, format } from "date-fns";
+import { differenceInDays } from "date-fns";
 
 export function getDaysLeft(deadline: Date): number {
   return differenceInDays(deadline, new Date());

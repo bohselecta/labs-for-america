@@ -39,9 +39,9 @@ export async function GET(req: NextRequest) {
         return NextResponse.redirect(templateMap.templates[id]);
       }
     }
-  } catch (error) {
-    console.log("Failed to fetch dynamic template map, falling back to static URLs");
-  }
+          } catch {
+            console.log("Failed to fetch dynamic template map, falling back to static URLs");
+          }
 
   // Fallback to static URLs
   const downloadUrl = templateBlobs[id] || githubReleases[id];
@@ -54,15 +54,15 @@ export async function GET(req: NextRequest) {
 }
 
 // Optional: Track download analytics
-export async function POST(req: NextRequest) {
-  try {
-    const { templateId, userAgent, timestamp } = await req.json();
-    
-    // Log download for analytics
-    console.log(`Template download: ${templateId} at ${timestamp}`);
-    
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to track download" }, { status: 500 });
-  }
-}
+        export async function POST(req: NextRequest) {
+          try {
+            const { templateId, timestamp } = await req.json();
+            
+            // Log download for analytics
+            console.log(`Template download: ${templateId} at ${timestamp}`);
+            
+            return NextResponse.json({ success: true });
+          } catch {
+            return NextResponse.json({ error: "Failed to track download" }, { status: 500 });
+          }
+        }
