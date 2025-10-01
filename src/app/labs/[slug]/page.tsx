@@ -6,7 +6,17 @@ import { LabCollaboration } from "@/components/LabCollaboration";
 
 export default function LabDetail({ params }: { params: Promise<{ slug: string }> }) {
   const [currentTemplate, setCurrentTemplate] = useState<TemplateKey>("civic");
-  const [lab, setLab] = useState<any>(null);
+  const [lab, setLab] = useState<{
+    title: string;
+    slug: string;
+    category: string;
+    summary: string;
+    bodyMd: string;
+    prize: number;
+    deadline: Date;
+    status: string;
+    isBeginner: boolean;
+  } | null>(null);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -22,7 +32,7 @@ export default function LabDetail({ params }: { params: Promise<{ slug: string }
       // Find the lab by slug
       const config = TEMPLATE_CONFIGS[currentTemplate];
       const foundLab = config.sampleLabs.find(l => l.slug === params.slug);
-      setLab(foundLab);
+      setLab(foundLab || null);
     }
   }, [isClient, currentTemplate, params.slug]);
 
