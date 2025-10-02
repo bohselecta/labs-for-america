@@ -57,16 +57,16 @@ export default function Home() {
           <div className="mx-auto max-w-7xl px-6 grid md:grid-cols-2 gap-10">
             <div className="py-8 md:py-12 visual-hierarchy">
               <h1 className="text-3xl md:text-4xl font-semibold font-headline text-balance">
-                Welcome to <span className="text-blue-600">{config.name}</span>
+                Welcome to <span className="text-blue-600">LabsForAmerica</span>
               </h1>
               <p className="mt-2 text-lg text-gray-600 font-body text-pretty">
                 Sister sites for civic life. Free, open-source portals where communities build together.
               </p>
               <p className="mt-4 text-lg text-gray-700 font-body text-pretty">
-                {config.description}
+                Choose your template: {config.name} for {config.description.toLowerCase()}
               </p>
               <p className="mt-3 text-gray-600 font-body text-pretty">
-                Join {config.orgName} in solving community challenges through collaborative innovation.
+                Join communities in solving challenges through collaborative innovation.
               </p>
               
               {/* Impact Callout */}
@@ -293,10 +293,10 @@ export default function Home() {
           <div className="mx-auto max-w-6xl px-6">
             <div className="text-center visual-hierarchy mb-12">
               <h2 className="text-2xl font-semibold font-headline mb-4 text-balance">
-                About {config.name}
+                About LabsForAmerica
               </h2>
               <p className="text-lg text-gray-600 font-body mb-8 text-pretty">
-                {config.description}
+                Free, open-source civic engagement platforms for communities. Sister sites for civic life — building together, for all of us.
               </p>
             </div>
             
