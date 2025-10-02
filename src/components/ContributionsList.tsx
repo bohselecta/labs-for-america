@@ -14,7 +14,7 @@ interface Contribution {
   status: string;
   voteCount: number;
   createdAt: string;
-  tags?: string[];
+  tags?: string[] | any; // JSON field from database
   fileUrl?: string;
 }
 
@@ -190,9 +190,9 @@ export function ContributionsList({ labId }: ContributionsListProps) {
             </div>
 
             {/* Tags */}
-            {contribution.tags && contribution.tags.length > 0 && (
+            {contribution.tags && (
               <div className="flex flex-wrap gap-1 mb-3">
-                {contribution.tags.map((tag) => (
+                {(Array.isArray(contribution.tags) ? contribution.tags : []).map((tag) => (
                   <span key={tag} className="badge badge-secondary">
                     #{tag}
                   </span>

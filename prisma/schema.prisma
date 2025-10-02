@@ -92,7 +92,7 @@ model Contribution {
   authorEmail String?  // optional contact
   status      String   // "pending" | "in-review" | "accepted" | "rejected"
   voteCount   Int      @default(0)
-  tags        String[] // array of tags
+  tags        Json?    // array of tags stored as JSON
   fileUrl     String?  // optional file link
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
