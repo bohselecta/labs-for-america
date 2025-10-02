@@ -177,12 +177,12 @@ export function sanitizeContent(content: string): string {
 }
 
 // Generate moderation report
-export function generateModerationReport(content: string, author: string): {
+export async function generateModerationReport(content: string, author: string): Promise<{
   piiWarnings: string[];
   spamCheck: SpamCheckResult;
   sanitizedContent: string;
   recommendations: string[];
-} {
+}> {
   const { getPIIWarnings } = await import('./pii-masking');
   
   const piiWarnings = getPIIWarnings(content);
