@@ -6,3 +6,4 @@ export const STATUS_STYLES = {
 } as const;
 
 export type StatusKey = keyof typeof STATUS_STYLES;
+

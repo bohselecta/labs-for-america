@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { TEMPLATE_CONFIGS, TemplateKey } from "@/lib/template-configs";
 import Link from "next/link";
-import Image from "next/image";
+import { CardSkeleton, HeroSkeleton } from "@/components/LoadingSkeletons";
 
 export default function Home() {
   const [currentTemplate, setCurrentTemplate] = useState<TemplateKey>("civic");
@@ -18,7 +18,24 @@ export default function Home() {
   }, []);
 
   if (!isClient) {
-    return <div>Loading...</div>;
+    return (
+      <main>
+        <HeroSkeleton />
+        <section className="bg-gray-50 border-b border-gray-200">
+          <div className="mx-auto max-w-7xl px-6 py-16">
+            <div className="text-center mb-12 animate-pulse">
+              <div className="h-8 w-48 bg-gray-200 rounded mx-auto mb-4"></div>
+              <div className="h-6 w-96 bg-gray-200 rounded mx-auto"></div>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <CardSkeleton />
+              <CardSkeleton />
+              <CardSkeleton />
+            </div>
+          </div>
+        </section>
+      </main>
+    );
   }
 
   const config = TEMPLATE_CONFIGS[currentTemplate];
@@ -105,6 +122,11 @@ export default function Home() {
                       {daysLeft > 0 && daysLeft <= 7 && (
                         <span className="text-sm bg-orange-100 text-orange-700 px-2 py-1 rounded">
                           Ends soon
+                        </span>
+                      )}
+                      {daysLeft <= 0 && (
+                        <span className="text-sm bg-red-100 text-red-700 px-2 py-1 rounded">
+                          Overdue
                         </span>
                       )}
                     </div>
