@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import { PRESETS, PresetKey } from "@/lib/theme-presets";
+import { Icon } from "@/components/icons";
+import { HoverLift, ScrollReveal, StaggeredReveal } from "@/components/micro-interactions";
 
 const templates = [
   {
@@ -113,40 +115,52 @@ export default function TemplatesPage() {
       {/* Template Selection */}
       <div className="mb-12">
         <h2 className="text-2xl font-semibold mb-6 font-headline">Choose Your Template</h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <StaggeredReveal className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 grid-rhythm">
           {templates.map(template => (
-            <div
-              key={template.id}
-              className={`card p-6 cursor-pointer transition-all ${
-                selected.includes(template.id)
-                  ? "ring-2 ring-blue-500 bg-blue-50"
-                  : "hover:shadow-lg"
-              }`}
-              onClick={() => {
-                setSelected(selected.includes(template.id)
-                  ? selected.filter(id => id !== template.id)
-                  : [...selected, template.id]
-                );
-              }}
-            >
-              <div className="text-4xl mb-4">{template.icon}</div>
-              <h3 className="text-lg font-semibold mb-2 font-headline">{template.name}</h3>
-              <p className="text-sm text-gray-600 mb-4 font-body">{template.description}</p>
-              <ul className="text-xs text-gray-500 space-y-1 font-body">
-                {template.features.map(feature => (
-                  <li key={feature}>• {feature}</li>
-                ))}
-              </ul>
-              <div className="mt-4 space-y-3">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(`/preview/${template.id}`, '_blank');
-                  }}
-                  className="w-full px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 transition-colors"
-                >
-                  👁️ Preview Template
-                </button>
+            <HoverLift key={template.id}>
+              <div
+                className={`card card-enhanced p-6 cursor-pointer transition-all focus-enhanced ${
+                  selected.includes(template.id)
+                    ? "ring-2 ring-blue-500 bg-blue-50"
+                    : "hover:shadow-lg"
+                }`}
+                onClick={() => {
+                  setSelected(selected.includes(template.id)
+                    ? selected.filter(id => id !== template.id)
+                    : [...selected, template.id]
+                  );
+                }}
+              >
+                <div className="text-4xl mb-4">
+                  <Icon 
+                    name={`${template.id}-template` as any} 
+                    size="xl" 
+                    className="text-blue-600 icon-enhanced" 
+                  />
+                </div>
+                <h3 className="text-lg font-semibold mb-2 font-headline text-balance">{template.name}</h3>
+                <p className="text-sm text-gray-600 mb-4 font-body text-pretty">{template.description}</p>
+                <ul className="text-xs text-gray-500 space-y-1 font-body">
+                  {template.features.map(feature => (
+                    <li key={feature} className="flex items-center gap-2">
+                      <Icon name="chevron-right" size="xs" className="text-blue-500" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-4 space-y-3">
+                  <HoverLift>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(`/preview/${template.id}`, '_blank');
+                      }}
+                      className="w-full px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 btn-enhanced focus-enhanced"
+                    >
+                      <Icon name="external-link" size="sm" className="inline mr-1" />
+                      Preview Template
+                    </button>
+                  </HoverLift>
                 <div className="flex items-center">
                   <input
                     type="checkbox"
