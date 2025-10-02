@@ -327,11 +327,11 @@ export default function EduLabsAdmin() {
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-sm">New team "AI Innovators" created</span>
+                  <span className="text-sm">New team &quot;AI Innovators&quot; created</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <span className="text-sm">Submission round "Idea Submission" opened</span>
+                  <span className="text-sm">Submission round &quot;Idea Submission&quot; opened</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-purple-500 rounded-full"></div>

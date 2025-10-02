@@ -281,7 +281,7 @@ export default function JusticeLabsHome() {
               <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                 <h4 className="font-semibold text-blue-800 mb-2">For Sensitive Information</h4>
                 <p className="text-sm text-blue-700 mb-2">
-                  Use our secure tip system for sensitive information that shouldn't be public.
+                  Use our secure tip system for sensitive information that shouldn&apos;t be public.
                 </p>
                 <HoverLift>
                   <Link 

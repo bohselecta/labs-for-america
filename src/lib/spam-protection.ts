@@ -183,7 +183,7 @@ export function generateModerationReport(content: string, author: string): {
   sanitizedContent: string;
   recommendations: string[];
 } {
-  const { getPIIWarnings } = require('./pii-masking');
+  const { getPIIWarnings } = await import('./pii-masking');
   
   const piiWarnings = getPIIWarnings(content);
   const spamCheck = checkSpam(content);

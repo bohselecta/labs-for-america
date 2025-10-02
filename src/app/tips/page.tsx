@@ -5,7 +5,12 @@ import { SecureTipForm } from '@/components/justice/SecureTips';
 export default function SecureTipsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (tipData: any): Promise<string> => {
+  const handleSubmit = async (tipData: {
+    incident: string;
+    contact: string;
+    body: string;
+    attachments?: File[];
+  }): Promise<string> => {
     setIsSubmitting(true);
     try {
       // In real app, submit to secure API endpoint

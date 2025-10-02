@@ -157,7 +157,7 @@ export default function TemplatesPage() {
               >
                 <div className="text-4xl mb-4">
                   <Icon 
-                    name={`${template.id}-template` as any} 
+                    name={`${template.id}-template` as "civic" | "justice" | "edu" | "health"} 
                     size="xl" 
                     className="text-blue-600 icon-enhanced" 
                   />

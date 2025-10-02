@@ -5,7 +5,12 @@ import { CommunityIntake } from '@/components/health/CommunityIntake';
 export default function HealthIntakePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (submissionData: any): Promise<any> => {
+  const handleSubmit = async (submissionData: {
+    category: string;
+    contact: string;
+    consent: boolean;
+    body: string;
+  }): Promise<{ success: boolean; referenceId?: string }> => {
     setIsSubmitting(true);
     try {
       // In real app, submit to secure API endpoint
