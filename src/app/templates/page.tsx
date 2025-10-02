@@ -195,6 +195,7 @@ export default function TemplatesPage() {
                       Preview Template
                     </button>
                   </HoverLift>
+                </div>
                 <div className="flex items-center">
                   <input
                     type="checkbox"

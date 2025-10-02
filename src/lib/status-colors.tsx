@@ -1,3 +1,5 @@
+import React from 'react';
+
 // Status color tokens for consistent theming
 export const STATUS_COLORS = {
   // Lab status colors
