@@ -4,6 +4,7 @@ import { TEMPLATE_CONFIGS, TemplateKey } from "@/lib/template-configs";
 import Link from "next/link";
 import Image from "next/image";
 import { LabCloseModal } from "@/components/LabCloseModal";
+import { LabCloseBanner, ArchiveNotice } from '@/components/archiving/CloseBanner';
 import { LabCollaboration } from "@/components/LabCollaboration";
 import { STATUS_STYLES } from "@/lib/status-styles";
 import { ImpactCallout, QuickImpactCallout } from "@/components/ImpactCallout";
@@ -127,6 +128,18 @@ END:VCALENDAR`;
         { name: 'Browse Challenges', url: '/browse' },
         { name: lab.title, url: `/labs/${lab.slug}` }
       ]} />
+
+      {/* Archive Banner for Closed Labs */}
+      {lab.status === 'closed' && (
+        <LabCloseBanner
+          labId={lab.slug}
+          labTitle={lab.title}
+          closedAt={new Date(lab.closedAt || new Date())}
+          closedBy="Lab Organizer"
+          reportPath={`/archive/${lab.slug}`}
+          onViewReport={() => console.log('Viewing report for', lab.slug)}
+        />
+      )}
       
       <section className="border-b border-gray-200 bg-white">
         <div className="mx-auto max-w-5xl px-6 py-10">

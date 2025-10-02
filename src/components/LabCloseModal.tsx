@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { LabCloseBanner } from '@/components/archiving/CloseBanner';
 
 interface LabCloseModalProps {
   labId: string;
@@ -228,6 +229,17 @@ export function LabCloseModal({ labId, labTitle, isOpen, onClose, onSuccess }: L
                 >
                   Add
                 </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Archive Information */}
+          <div className="p-4 bg-blue-50 border border-blue-200 rounded-md">
+            <div className="flex items-start gap-2">
+              <span className="text-blue-600">📁</span>
+              <div className="text-sm text-blue-800">
+                <p className="font-medium">Archive Information</p>
+                <p>This lab will be archived at <code>/archive/{labId}</code> with a comprehensive report including all contributions, decisions, and outcomes.</p>
               </div>
             </div>
           </div>
