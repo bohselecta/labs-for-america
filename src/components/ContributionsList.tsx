@@ -1,5 +1,8 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
+import { LoadingState } from "@/components/LoadingStates";
+import { LineClamp } from "@/components/LineClamp";
+import { StatusBadge } from "@/lib/status-colors";
 
 interface Contribution {
   id: string;
@@ -111,17 +114,7 @@ export function ContributionsList({ labId }: ContributionsListProps) {
   );
 
   if (loading) {
-    return (
-      <div className="text-center py-8">
-        <div className="animate-pulse">
-          <div className="h-4 w-48 bg-gray-200 rounded mx-auto mb-4"></div>
-          <div className="space-y-4">
-            <div className="h-20 bg-gray-200 rounded"></div>
-            <div className="h-20 bg-gray-200 rounded"></div>
-          </div>
-        </div>
-      </div>
-    );
+    return <LoadingState type="card" count={3} className="space-y-4" />;
   }
 
   if (contributions.length === 0) {
@@ -181,9 +174,7 @@ export function ContributionsList({ labId }: ContributionsListProps) {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${STATUS_STYLES[contribution.status as keyof typeof STATUS_STYLES] || STATUS_STYLES.pending}`}>
-                  {contribution.status.replace("-", " ")}
-                </span>
+                <StatusBadge status={contribution.status as any} />
                 <select
                   value={contribution.status}
                   onChange={(e) => handleStatusChange(contribution.id, e.target.value)}
@@ -202,7 +193,7 @@ export function ContributionsList({ labId }: ContributionsListProps) {
             {contribution.tags && contribution.tags.length > 0 && (
               <div className="flex flex-wrap gap-1 mb-3">
                 {contribution.tags.map((tag) => (
-                  <span key={tag} className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs">
+                  <span key={tag} className="badge badge-secondary">
                     #{tag}
                   </span>
                 ))}
@@ -210,11 +201,9 @@ export function ContributionsList({ labId }: ContributionsListProps) {
             )}
 
             {/* Content */}
-            <div className="text-gray-600 mb-4">
-              {contribution.content.length > 300 
-                ? `${contribution.content.substring(0, 300)}...` 
-                : contribution.content}
-            </div>
+            <LineClamp lines={4} className="text-gray-600 mb-4">
+              {contribution.content}
+            </LineClamp>
 
             {/* File Link */}
             {contribution.fileUrl && (

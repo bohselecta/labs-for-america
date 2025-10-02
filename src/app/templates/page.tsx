@@ -207,9 +207,9 @@ export default function TemplatesPage() {
                   </span>
                 </div>
               </div>
-            </div>
+            </HoverLift>
           ))}
-        </div>
+        </StaggeredReveal>
       </div>
 
       {/* Logo Upload */}
