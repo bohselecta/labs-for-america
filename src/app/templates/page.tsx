@@ -3,11 +3,9 @@ import { useState } from "react";
 import { PRESETS, PresetKey } from "@/lib/theme-presets";
 import { Icon } from "@/components/icons";
 import { HoverLift, ScrollReveal, StaggeredReveal } from "@/components/micro-interactions";
-import { generateTemplateMetadata } from "@/lib/seo-metadata";
 import { StructuredData } from "@/components/StructuredData";
 import { BreadcrumbStructuredData } from "@/components/StructuredData";
 import { SoftwareApplicationStructuredData } from "@/components/StructuredData";
-import type { Metadata } from "next";
 
 const templates = [
   {
@@ -46,14 +44,7 @@ const templates = [
 
 import type { Metadata } from "next";
 
-// Generate metadata for this page
-export const metadata: Metadata = generateTemplateMetadata("civic", {
-  name: "CivicLabs",
-  description: "For City Councils & Communities",
-  orgName: "City Government",
-  features: ["Community challenges", "Civic projects", "Open calls for ideas"],
-  preset: "CITY"
-});
+// Note: Metadata generation moved to layout.tsx for client components
 
 export default function TemplatesPage() {
   const [selected, setSelected] = useState<string[]>([]);
