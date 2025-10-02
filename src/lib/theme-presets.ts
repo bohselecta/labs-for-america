@@ -34,6 +34,24 @@ export const PRESETS = {
     shadow: "0 2px 8px rgba(0,0,0,0.08)",
     buttonStyle: "rounded-2xl",
     cardStyle: "official"
+  },
+  EDU: {
+    name: "Education",
+    description: "Student-friendly, collaborative, innovative",
+    borderRadius: "0.5rem", // softer, friendlier
+    borderColor: "rgba(0,0,0,0.08)",
+    shadow: "0 2px 8px rgba(0,0,0,0.06)",
+    buttonStyle: "rounded-lg",
+    cardStyle: "friendly"
+  },
+  HEALTH: {
+    name: "Health",
+    description: "Calm, supportive, accessible",
+    borderRadius: "0.75rem", // soft, calming
+    borderColor: "rgba(0,0,0,0.06)",
+    shadow: "0 2px 10px rgba(0,0,0,0.05)",
+    buttonStyle: "rounded-xl",
+    cardStyle: "calm"
   }
 } as const;
 
