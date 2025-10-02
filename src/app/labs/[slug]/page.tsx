@@ -2,9 +2,11 @@
 import { useState, useEffect } from "react";
 import { TEMPLATE_CONFIGS, TemplateKey } from "@/lib/template-configs";
 import Link from "next/link";
+import Image from "next/image";
 import { LabCollaboration } from "@/components/LabCollaboration";
+import { STATUS_STYLES } from "@/lib/status-styles";
 
-export default function LabDetail({ params }: { params: Promise<{ slug: string }> }) {
+export default function LabDetail({ params }: { params: { slug: string } }) {
   const [currentTemplate, setCurrentTemplate] = useState<TemplateKey>("civic");
   const [lab, setLab] = useState<{
     title: string;
@@ -13,12 +15,11 @@ export default function LabDetail({ params }: { params: Promise<{ slug: string }
     summary: string;
     bodyMd: string;
     prize: number;
-    deadline: Date;
+    deadline: string;
     status: string;
     isBeginner: boolean;
   } | null>(null);
   const [isClient, setIsClient] = useState(false);
-  const [resolvedParams, setResolvedParams] = useState<{ slug: string } | null>(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -29,28 +30,40 @@ export default function LabDetail({ params }: { params: Promise<{ slug: string }
   }, []);
 
   useEffect(() => {
-    // Resolve params Promise
-    params.then(setResolvedParams);
-  }, [params]);
-
-  useEffect(() => {
-    if (isClient && resolvedParams) {
+    if (isClient) {
       // Find the lab by slug
       const config = TEMPLATE_CONFIGS[currentTemplate];
-      const foundLab = config.sampleLabs.find(l => l.slug === resolvedParams.slug);
+      const foundLab = config.sampleLabs.find(l => l.slug === params.slug);
       setLab(foundLab || null);
     }
-  }, [isClient, currentTemplate, resolvedParams]);
+  }, [isClient, currentTemplate, params.slug]);
 
   if (!isClient || !lab) {
     return <div>Loading...</div>;
   }
 
   const config = TEMPLATE_CONFIGS[currentTemplate];
-  const daysLeft = Math.ceil((lab.deadline.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-  // Calculate timeline progress based on days left (simplified for sample data)
-  const totalDays = 30; // Assume 30-day timeline for sample labs
+  const deadline = new Date(lab.deadline);
+  const daysLeft = Math.ceil((deadline.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+  const totalDays = 30;
   const timelineProgress = Math.max(0, Math.min(100, ((totalDays - daysLeft) / totalDays) * 100));
+
+  // Correct .ics formatting
+  const dtUtc = deadline.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+  const dtStamp = new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+  const ics = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//${config.name}//Lab Deadline//EN
+BEGIN:VEVENT
+UID:${lab.slug}@${config.orgSlug}
+DTSTAMP:${dtStamp}
+DTSTART:${dtUtc}
+DTEND:${dtUtc}
+SUMMARY:${lab.title} - Deadline
+DESCRIPTION:${lab.summary}
+LOCATION:Online
+END:VEVENT
+END:VCALENDAR`;
 
   return (
     <main>
@@ -73,22 +86,21 @@ export default function LabDetail({ params }: { params: Promise<{ slug: string }
             <span className="text-sm rounded-full bg-blue-50 text-blue-700 px-3 py-1">
               {lab.prize > 0 ? `Prize $${lab.prize.toLocaleString()}` : "Recognition"}
             </span>
-            <span className={`text-sm rounded-full px-3 py-1 ${
-              lab.status === "open" 
-                ? "bg-green-100 text-green-700" 
-                : lab.status === "upcoming"
-                ? "bg-yellow-100 text-yellow-700"
-                : "bg-gray-100 text-gray-700"
-            }`}>
+            <span className={`text-sm rounded-full px-3 py-1 ${STATUS_STYLES[lab.status as keyof typeof STATUS_STYLES] || STATUS_STYLES.closed}`}>
               {lab.status}
             </span>
+            {daysLeft > 0 && (
+              <span className="text-sm rounded-full bg-orange-100 text-orange-700 px-3 py-1">
+                {daysLeft} days left
+              </span>
+            )}
           </div>
           
           {/* Timeline Progress Bar */}
           <div className="mt-6">
             <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
               <span>Started {new Date().toLocaleDateString()}</span>
-              <span>Due {lab.deadline.toLocaleDateString()}</span>
+              <span>Due {deadline.toLocaleDateString()}</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div 
@@ -118,7 +130,7 @@ export default function LabDetail({ params }: { params: Promise<{ slug: string }
           <p>{lab.summary}</p>
           <h3>Details</h3>
           <div className="prose-sm">
-            <div dangerouslySetInnerHTML={{ __html: lab.bodyMd.replace(/\n/g, '<br>') }} />
+            <div dangerouslySetInnerHTML={{ __html: mdToSafeHtml(lab.bodyMd) }} />
           </div>
         </article>
         
@@ -128,7 +140,7 @@ export default function LabDetail({ params }: { params: Promise<{ slug: string }
             <div className="mt-2 text-sm text-gray-600 space-y-1">
               <div><strong>Category:</strong> {lab.category}</div>
               <div><strong>Status:</strong> {lab.status}</div>
-              <div><strong>Deadline:</strong> {lab.deadline.toLocaleDateString()}</div>
+              <div><strong>Deadline:</strong> {deadline.toLocaleDateString()}</div>
               <div><strong>Days Left:</strong> {daysLeft > 0 ? daysLeft : "Overdue"}</div>
             </div>
           </div>
@@ -137,17 +149,7 @@ export default function LabDetail({ params }: { params: Promise<{ slug: string }
             <h4 className="font-medium">Add to Calendar</h4>
             <div className="mt-2 space-y-2">
               <a 
-                href={`data:text/calendar;charset=utf8,${encodeURIComponent(`BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//${config.name}//Lab Deadline//EN
-BEGIN:VEVENT
-DTSTART:${lab.deadline.toISOString().replace(/[-:]/g, '').split('.')[0]}Z
-DTEND:${lab.deadline.toISOString().replace(/[-:]/g, '').split('.')[0]}Z
-SUMMARY:${lab.title} - Deadline
-DESCRIPTION:${lab.summary}
-LOCATION:Online
-END:VEVENT
-END:VCALENDAR`)}`}
+                href={`data:text/calendar;charset=utf8,${encodeURIComponent(ics)}`}
                 className="block w-full text-center px-3 py-2 bg-blue-50 text-blue-700 rounded-md hover:bg-blue-100 text-sm"
                 download={`${lab.slug}-deadline.ics`}
               >

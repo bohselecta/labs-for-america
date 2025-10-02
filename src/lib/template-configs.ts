@@ -28,7 +28,7 @@ Lake Springfield has been experiencing water quality issues due to runoff and de
 - Environmental consultant support
 - Community volunteer coordination`,
         prize: 5000,
-        deadline: new Date("2024-04-30"),
+        deadline: "2024-04-30T00:00:00Z",
         status: "open",
         isBeginner: true,
         slug: "lake-cleanup-concepts"
@@ -47,7 +47,7 @@ Downtown Springfield needs safer pedestrian crossings. We want community input o
 - Accessibility compliance
 - Visual design elements`,
         prize: 2000,
-        deadline: new Date("2024-06-01"),
+        deadline: "2024-06-01T00:00:00Z",
         status: "open",
         isBeginner: false,
         slug: "safer-crosswalks"
@@ -66,7 +66,7 @@ Upgrade our street lighting system with smart, energy-efficient technology.
 - Smart monitoring capabilities
 - Community input on placement`,
         prize: 3000,
-        deadline: new Date("2024-05-15"),
+        deadline: "2024-05-15T00:00:00Z",
         status: "upcoming",
         isBeginner: false,
         slug: "smart-lighting"
@@ -102,7 +102,7 @@ Upgrade our street lighting system with smart, energy-efficient technology.
 ## Confidential Reporting
 Use our secure tip form for sensitive information.`,
         prize: 0,
-        deadline: new Date("2025-12-31"),
+        deadline: "2025-12-31T00:00:00Z",
         status: "open",
         isBeginner: false,
         slug: "unidentified-person-2009"
@@ -126,7 +126,7 @@ Use our secure tip form for sensitive information.`,
 - Community awareness
 - Pattern analysis`,
         prize: 0,
-        deadline: new Date("2025-12-31"),
+        deadline: "2025-12-31T00:00:00Z",
         status: "open",
         isBeginner: false,
         slug: "missing-sarah-chen"
@@ -145,7 +145,7 @@ We want to improve community safety through better programs and outreach.
 - Crime prevention education
 - Community-police relations`,
         prize: 1000,
-        deadline: new Date("2024-05-30"),
+        deadline: "2024-05-30T00:00:00Z",
         status: "open",
         isBeginner: true,
         slug: "community-safety"
@@ -180,7 +180,7 @@ Create educational technology solutions that are accessible to all students.
 - Students with motor disabilities
 - Students with learning differences`,
         prize: 2500,
-        deadline: new Date("2024-04-25"),
+        deadline: "2024-04-25T00:00:00Z",
         status: "open",
         isBeginner: true,
         slug: "accessible-edtech"
@@ -204,7 +204,7 @@ Make our campus more environmentally sustainable.
 - Environmental data
 - Student research support`,
         prize: 1500,
-        deadline: new Date("2024-05-20"),
+        deadline: "2024-05-20T00:00:00Z",
         status: "open",
         isBeginner: false,
         slug: "campus-sustainability"
@@ -229,7 +229,7 @@ Design a mobile app to support student mental health.
 - Accessibility
 - Scalability`,
         prize: 3000,
-        deadline: new Date("2024-06-10"),
+        deadline: "2024-06-10T00:00:00Z",
         status: "upcoming",
         isBeginner: false,
         slug: "mental-health-app"
@@ -265,7 +265,7 @@ Expand telehealth services to reach underserved populations.
 - Improve health outcomes
 - Community engagement`,
         prize: 4000,
-        deadline: new Date("2024-05-05"),
+        deadline: "2024-05-05T00:00:00Z",
         status: "open",
         isBeginner: false,
         slug: "telehealth-innovation"
@@ -315,7 +315,7 @@ Develop comprehensive mental health resources for Springfield.
 - Better access
 - Cultural competence`,
         prize: 3500,
-        deadline: new Date("2024-06-15"),
+        deadline: "2024-06-15T00:00:00Z",
         status: "upcoming",
         isBeginner: false,
         slug: "mental-health-resources"

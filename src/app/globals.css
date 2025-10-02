@@ -267,3 +267,11 @@ body {
     --shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
 }
+
+/* Line clamp utilities */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
