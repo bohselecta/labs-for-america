@@ -3,9 +3,16 @@ import { useState, useEffect } from "react";
 import { TEMPLATE_CONFIGS, TemplateKey } from "@/lib/template-configs";
 import { STATUS_STYLES } from "@/lib/status-styles";
 import Link from "next/link";
+import { generateBrowseMetadata } from "@/lib/seo-metadata";
+import { StructuredData } from "@/components/StructuredData";
+import { BreadcrumbStructuredData } from "@/components/StructuredData";
+import type { Metadata } from "next";
 
 type FilterType = "all" | "open" | "upcoming" | "closed";
 type SortType = "deadline" | "prize" | "title";
+
+// Generate metadata for this page
+export const metadata: Metadata = generateBrowseMetadata("civic");
 
 export default function BrowsePage() {
   const [currentTemplate, setCurrentTemplate] = useState<TemplateKey>("civic");
@@ -61,6 +68,12 @@ export default function BrowsePage() {
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
+      {/* Structured Data */}
+      <BreadcrumbStructuredData items={[
+        { name: 'Home', url: '/' },
+        { name: 'Browse Challenges', url: '/browse' }
+      ]} />
+      
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-semibold font-headline mb-2">

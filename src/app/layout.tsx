@@ -4,19 +4,79 @@ import { FakeAuthProvider } from "@/lib/fake-auth";
 import { TemplateSwitcher } from "@/components/TemplateSwitcher";
 import "./globals.css";
 import { loadTheme } from "@/lib/theme-loader";
+import { StructuredData } from "@/components/StructuredData";
+import { generateWebsiteStructuredData } from "@/lib/seo-metadata";
 
 export const metadata: Metadata = {
-  title: process.env.NEXT_PUBLIC_APP_NAME,
-  description: "Civic Labs for community engagement - accessible, inclusive civic technology platform",
-  icons: "/favicon.ico",
-  viewport: "width=device-width, initial-scale=1",
-  robots: "index, follow",
+  title: {
+    default: "LabsForAmerica - Free Civic Engagement Platforms",
+    template: "%s | LabsForAmerica"
+  },
+  description: "Free, open-source civic engagement platforms for communities. Sister sites for civic life — building together, for all of us.",
+  keywords: [
+    "civic engagement",
+    "community platform",
+    "government innovation",
+    "civic technology",
+    "public participation",
+    "open source",
+    "free template",
+    "civic labs",
+    "community challenges",
+    "civic innovation"
+  ],
+  authors: [{ name: "LabsForAmerica" }],
+  creator: "LabsForAmerica",
+  publisher: "LabsForAmerica",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://labsforamerica.org'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    title: "LabsForAmerica - Civic Labs Platform",
-    description: "Sister sites for civic life — building together, for all of us.",
-    type: "website",
-    locale: "en_US"
-  }
+    type: 'website',
+    locale: 'en_US',
+    url: '/',
+    title: 'LabsForAmerica - Free Civic Engagement Platforms',
+    description: 'Free, open-source civic engagement platforms for communities. Sister sites for civic life — building together, for all of us.',
+    siteName: 'LabsForAmerica',
+    images: [
+      {
+        url: '/images/og-default.png',
+        width: 1200,
+        height: 630,
+        alt: 'LabsForAmerica - Civic Engagement Platform',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'LabsForAmerica - Free Civic Engagement Platforms',
+    description: 'Free, open-source civic engagement platforms for communities. Sister sites for civic life — building together, for all of us.',
+    images: ['/images/og-default.png'],
+    creator: '@labsforamerica',
+    site: '@labsforamerica',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+    yandex: process.env.YANDEX_VERIFICATION,
+    yahoo: process.env.YAHOO_VERIFICATION,
+  },
 };
 
 export default async function RootLayout({
@@ -35,14 +95,17 @@ export default async function RootLayout({
         <meta name="theme-color" content="#2563EB" />
         <meta name="color-scheme" content="light dark" />
       </head>
-      <body className="antialiased">
-        {/* Skip Links */}
-        <a href="#main-content" className="skip-link">
-          Skip to main content
-        </a>
-        <a href="#navigation" className="skip-link">
-          Skip to navigation
-        </a>
+              <body className="antialiased">
+                {/* Structured Data */}
+                <StructuredData data={generateWebsiteStructuredData()} />
+                
+                {/* Skip Links */}
+                <a href="#main-content" className="skip-link">
+                  Skip to main content
+                </a>
+                <a href="#navigation" className="skip-link">
+                  Skip to navigation
+                </a>
         
         <FakeAuthProvider>
           <TemplateSwitcher />

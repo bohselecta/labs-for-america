@@ -10,6 +10,40 @@ import { ImpactCallout, QuickImpactCallout } from "@/components/ImpactCallout";
 import { ResourcesBox } from "@/components/ResourcesBox";
 import { BeginnerSection, QuickExplanation } from "@/components/BeginnerFriendly";
 import { Icon } from "@/components/icons";
+import { generateLabMetadata, generateLabStructuredData, generateOrganizationStructuredData } from "@/lib/seo-metadata";
+import { StructuredData } from "@/components/StructuredData";
+import { BreadcrumbStructuredData } from "@/components/StructuredData";
+import type { Metadata } from "next";
+
+// Generate metadata for this page
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
+  
+  // Find the lab data
+  const config = TEMPLATE_CONFIGS["civic"]; // Default to civic for now
+  const lab = config.sampleLabs.find(l => l.slug === slug);
+  
+  if (!lab) {
+    return {
+      title: "Lab Not Found",
+      description: "The requested lab could not be found."
+    };
+  }
+  
+  const labSEOData = {
+    title: lab.title,
+    description: lab.summary,
+    category: lab.category,
+    deadline: lab.deadline,
+    prize: lab.prize,
+    status: lab.status,
+    slug: lab.slug,
+    isBeginner: lab.isBeginner
+  };
+  
+  return generateLabMetadata(labSEOData, "civic");
+}
 
 export default function LabDetail({ params }: { params: { slug: string } }) {
   const [currentTemplate, setCurrentTemplate] = useState<TemplateKey>("civic");
@@ -74,6 +108,26 @@ END:VCALENDAR`;
 
   return (
     <main>
+      {/* Structured Data */}
+      <StructuredData data={generateLabStructuredData({
+        title: lab.title,
+        description: lab.summary,
+        category: lab.category,
+        deadline: lab.deadline,
+        prize: lab.prize,
+        status: lab.status,
+        slug: lab.slug,
+        isBeginner: lab.isBeginner
+      }, currentTemplate)} />
+      
+      <StructuredData data={generateOrganizationStructuredData(currentTemplate)} />
+      
+      <BreadcrumbStructuredData items={[
+        { name: 'Home', url: '/' },
+        { name: 'Browse Challenges', url: '/browse' },
+        { name: lab.title, url: `/labs/${lab.slug}` }
+      ]} />
+      
       <section className="border-b border-gray-200 bg-white">
         <div className="mx-auto max-w-5xl px-6 py-10">
           <div className="flex items-center gap-3 mb-3">

@@ -230,6 +230,7 @@ export default function Home() {
           )}
         </div>
       </section>
+      </ScrollReveal>
 
       {/* How It Works Section */}
       <ScrollReveal>

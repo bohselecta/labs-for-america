@@ -3,6 +3,11 @@ import { useState } from "react";
 import { PRESETS, PresetKey } from "@/lib/theme-presets";
 import { Icon } from "@/components/icons";
 import { HoverLift, ScrollReveal, StaggeredReveal } from "@/components/micro-interactions";
+import { generateTemplateMetadata } from "@/lib/seo-metadata";
+import { StructuredData } from "@/components/StructuredData";
+import { BreadcrumbStructuredData } from "@/components/StructuredData";
+import { SoftwareApplicationStructuredData } from "@/components/StructuredData";
+import type { Metadata } from "next";
 
 const templates = [
   {
@@ -38,6 +43,17 @@ const templates = [
     features: ["Health challenges", "Access improvement", "Community health"]
   }
 ];
+
+import type { Metadata } from "next";
+
+// Generate metadata for this page
+export const metadata: Metadata = generateTemplateMetadata("civic", {
+  name: "CivicLabs",
+  description: "For City Councils & Communities",
+  orgName: "City Government",
+  features: ["Community challenges", "Civic projects", "Open calls for ideas"],
+  preset: "CITY"
+});
 
 export default function TemplatesPage() {
   const [selected, setSelected] = useState<string[]>([]);
@@ -92,6 +108,24 @@ export default function TemplatesPage() {
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
+      {/* Structured Data */}
+      <BreadcrumbStructuredData items={[
+        { name: 'Home', url: '/' },
+        { name: 'Templates', url: '/templates' }
+      ]} />
+      
+      {templates.map(template => (
+        <SoftwareApplicationStructuredData
+          key={template.id}
+          name={template.name}
+          description={template.description}
+          applicationCategory="Civic Engagement Platform"
+          operatingSystem="Web Browser"
+          url={`/templates`}
+          screenshot={`/images/screenshot-${template.id}.png`}
+        />
+      ))}
+      
       {/* Hero */}
       <div className="text-center mb-12 hero-gradient py-16 rounded-xl relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
