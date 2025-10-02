@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { TEMPLATE_CONFIGS, TemplateKey } from "@/lib/template-configs";
 import Link from "next/link";
 import Image from "next/image";
+import { LabCloseModal } from "@/components/LabCloseModal";
 import { LabCollaboration } from "@/components/LabCollaboration";
 import { STATUS_STYLES } from "@/lib/status-styles";
 
@@ -20,6 +21,8 @@ export default function LabDetail({ params }: { params: { slug: string } }) {
     isBeginner: boolean;
   } | null>(null);
   const [isClient, setIsClient] = useState(false);
+  const [resolvedParams, setResolvedParams] = useState<{ slug: string } | null>(null);
+  const [isCloseModalOpen, setIsCloseModalOpen] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -110,17 +113,25 @@ END:VCALENDAR`;
             </div>
           </div>
           
-          <div className="mt-6 flex gap-3">
-            <Link 
-              href={`/labs/${lab.slug}/collab`} 
-              className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-500"
-            >
-              Open Collab Canvas
-            </Link>
-            {lab.status === "open" && (
-              <LabCollaboration labId={lab.slug} />
-            )}
-          </div>
+                  <div className="mt-6 flex gap-3">
+                    <Link 
+                      href={`/labs/${lab.slug}/collab`} 
+                      className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-500"
+                    >
+                      Open Collab Canvas
+                    </Link>
+                    {lab.status === "open" && (
+                      <LabCollaboration labId={lab.slug} />
+                    )}
+                    {lab.status === "open" && (
+                      <button
+                        onClick={() => setIsCloseModalOpen(true)}
+                        className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
+                      >
+                        Close Lab
+                      </button>
+                    )}
+                  </div>
         </div>
       </section>
 
@@ -159,6 +170,18 @@ END:VCALENDAR`;
           </div>
         </aside>
       </section>
+
+      {/* Lab Close Modal */}
+      <LabCloseModal
+        labId={lab.slug}
+        labTitle={lab.title}
+        isOpen={isCloseModalOpen}
+        onClose={() => setIsCloseModalOpen(false)}
+        onSuccess={() => {
+          // Refresh the page to show updated status
+          window.location.reload();
+        }}
+      />
     </main>
   );
 }

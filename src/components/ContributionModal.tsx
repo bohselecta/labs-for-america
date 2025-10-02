@@ -8,15 +8,46 @@ interface ContributionModalProps {
   onSuccess: () => void;
 }
 
+const CONTRIBUTION_TYPES = [
+  { value: "idea", label: "💡 Idea", description: "Share a creative solution or approach" },
+  { value: "document", label: "📄 Document", description: "Upload a document, report, or analysis" },
+  { value: "design", label: "🎨 Design", description: "Share a design, diagram, or visual concept" },
+  { value: "data", label: "📊 Data", description: "Provide data, research, or evidence" },
+  { value: "link", label: "🔗 Link", description: "Share a relevant resource or reference" }
+] as const;
+
+const COMMON_TAGS = [
+  "safety", "cost", "accessibility", "sustainability", "community", 
+  "technology", "education", "health", "transportation", "environment"
+];
+
 export function ContributionModal({ labId, isOpen, onClose, onSuccess }: ContributionModalProps) {
   const [formData, setFormData] = useState({
     title: "",
     content: "",
-    type: "proposal",
+    type: "idea",
     author: "",
-    authorEmail: ""
+    authorEmail: "",
+    tags: [] as string[],
+    fileUrl: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [customTag, setCustomTag] = useState("");
+
+  const handleTagToggle = (tag: string) => {
+    if (formData.tags.includes(tag)) {
+      setFormData({ ...formData, tags: formData.tags.filter(t => t !== tag) });
+    } else if (formData.tags.length < 5) {
+      setFormData({ ...formData, tags: [...formData.tags, tag] });
+    }
+  };
+
+  const handleAddCustomTag = () => {
+    if (customTag.trim() && !formData.tags.includes(customTag.trim()) && formData.tags.length < 5) {
+      setFormData({ ...formData, tags: [...formData.tags, customTag.trim()] });
+      setCustomTag("");
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +63,15 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
       if (response.ok) {
         onSuccess();
         onClose();
-        setFormData({ title: "", content: "", type: "proposal", author: "", authorEmail: "" });
+        setFormData({ 
+          title: "", 
+          content: "", 
+          type: "idea", 
+          author: "", 
+          authorEmail: "", 
+          tags: [],
+          fileUrl: ""
+        });
       } else {
         const error = await response.text();
         alert(`Failed to submit contribution: ${error}`);
@@ -54,31 +93,40 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
           <h2 className="text-xl font-semibold">Submit a Contribution</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-gray-500 hover:text-gray-700 text-xl"
             aria-label="Close modal"
           >
             ✕
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Contribution Type */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Contribution Type
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Contribution Type *
             </label>
-            <select
-              value={formData.type}
-              onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-              className="w-full border border-gray-300 rounded-md p-2"
-              required
-            >
-              <option value="proposal">Proposal</option>
-              <option value="document">Document</option>
-              <option value="comment">Comment</option>
-              <option value="design">Design/Diagram</option>
-            </select>
+            <div className="grid grid-cols-1 gap-2">
+              {CONTRIBUTION_TYPES.map((type) => (
+                <label key={type.value} className="flex items-center p-3 border border-gray-200 rounded-md hover:bg-gray-50 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="type"
+                    value={type.value}
+                    checked={formData.type === type.value}
+                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                    className="mr-3"
+                  />
+                  <div>
+                    <div className="font-medium">{type.label}</div>
+                    <div className="text-sm text-gray-600">{type.description}</div>
+                  </div>
+                </label>
+              ))}
+            </div>
           </div>
 
+          {/* Title */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Title *
@@ -88,52 +136,119 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               className="w-full border border-gray-300 rounded-md p-2"
-              placeholder="Brief title for your contribution"
+              placeholder="Brief, descriptive title for your contribution"
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Your Name *
-            </label>
-            <input
-              type="text"
-              value={formData.author}
-              onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-              className="w-full border border-gray-300 rounded-md p-2"
-              placeholder="Your full name"
-              required
-            />
+          {/* Author Info */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Your Name *
+              </label>
+              <input
+                type="text"
+                value={formData.author}
+                onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                className="w-full border border-gray-300 rounded-md p-2"
+                placeholder="Your full name"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Email (optional)
+              </label>
+              <input
+                type="email"
+                value={formData.authorEmail}
+                onChange={(e) => setFormData({ ...formData, authorEmail: e.target.value })}
+                className="w-full border border-gray-300 rounded-md p-2"
+                placeholder="your.email@example.com"
+              />
+            </div>
           </div>
 
+          {/* Tags */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email (optional)
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Tags (up to 5) - Help categorize your contribution
             </label>
-            <input
-              type="email"
-              value={formData.authorEmail}
-              onChange={(e) => setFormData({ ...formData, authorEmail: e.target.value })}
-              className="w-full border border-gray-300 rounded-md p-2"
-              placeholder="your.email@example.com"
-            />
+            <div className="flex flex-wrap gap-2 mb-3">
+              {COMMON_TAGS.map((tag) => (
+                <button
+                  key={tag}
+                  type="button"
+                  onClick={() => handleTagToggle(tag)}
+                  className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                    formData.tags.includes(tag)
+                      ? "bg-blue-100 text-blue-700 border border-blue-300"
+                      : "bg-gray-100 text-gray-700 border border-gray-300 hover:bg-gray-200"
+                  }`}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={customTag}
+                onChange={(e) => setCustomTag(e.target.value)}
+                className="flex-1 border border-gray-300 rounded-md p-2 text-sm"
+                placeholder="Add custom tag..."
+                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddCustomTag())}
+              />
+              <button
+                type="button"
+                onClick={handleAddCustomTag}
+                className="px-3 py-2 bg-gray-100 text-gray-700 rounded-md text-sm hover:bg-gray-200"
+              >
+                Add
+              </button>
+            </div>
+            {formData.tags.length > 0 && (
+              <div className="mt-2 text-sm text-gray-600">
+                Selected: {formData.tags.join(", ")}
+              </div>
+            )}
           </div>
 
+          {/* File URL */}
+          {(formData.type === "document" || formData.type === "design" || formData.type === "data") && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                File URL (optional)
+              </label>
+              <input
+                type="url"
+                value={formData.fileUrl}
+                onChange={(e) => setFormData({ ...formData, fileUrl: e.target.value })}
+                className="w-full border border-gray-300 rounded-md p-2"
+                placeholder="https://example.com/your-file.pdf"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Share a link to your document, design, or data file
+              </p>
+            </div>
+          )}
+
+          {/* Content */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Content *
+              Description *
             </label>
             <textarea
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               className="w-full border border-gray-300 rounded-md p-2 h-32"
-              placeholder="Describe your contribution in detail..."
+              placeholder="Describe your contribution in detail. What problem does it solve? How does it work?"
               required
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-4">
+          <div className="flex justify-end gap-3 pt-4 border-t">
             <button
               type="button"
               onClick={onClose}

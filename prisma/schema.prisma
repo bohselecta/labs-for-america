@@ -87,11 +87,13 @@ model Contribution {
   labId       String
   title       String
   content     String
-  type        String   // "proposal" | "document" | "comment" | "design"
+  type        String   // "idea" | "document" | "design" | "data" | "link"
   author      String   // contributor name
   authorEmail String?  // optional contact
-  status      String   // "pending" | "accepted" | "rejected"
+  status      String   // "pending" | "in-review" | "accepted" | "rejected"
   voteCount   Int      @default(0)
+  tags        String[] // array of tags
+  fileUrl     String?  // optional file link
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   
