@@ -1,183 +1,198 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from 'react';
+import { ColdCaseVault, ColdCase, CaseAsset, CaseTimelineEvent } from '@/components/justice/ColdCaseVault';
 
-export default function ColdCasesPage() {
-  const [isUploading, setIsUploading] = useState(false);
+export default function JusticeColdCasesAdmin() {
+  const [cases, setCases] = useState<ColdCase[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setIsUploading(true);
-    
-    // Simulate upload process
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    alert("Case files uploaded successfully! A new Lab will be created for community review.");
-    setIsUploading(false);
+  useEffect(() => {
+    const fetchCases = async () => {
+      try {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // Mock data for demo
+        const mockCases: ColdCase[] = [
+          {
+            id: 'case-1',
+            title: 'Missing Person - Sarah Johnson',
+            description: 'Cold case investigation into the disappearance of Sarah Johnson in 2019.',
+            caseNumber: 'MP-2019-001',
+            dateOpened: new Date('2019-03-15'),
+            lastActivity: new Date('2024-12-10'),
+            status: 'active',
+            isPublic: false,
+            assets: [
+              {
+                id: 'asset-1',
+                caseId: 'case-1',
+                title: 'Last Known Photo',
+                description: 'Photo of Sarah taken 2 days before disappearance',
+                publicUrl: '/assets/case-1/photo-redacted.jpg',
+                privateUrl: '/assets/case-1/photo-original.jpg',
+                isRedacted: true,
+                hash: 'sha256:abc123def456',
+                uploadedAt: new Date('2024-12-01'),
+                uploadedBy: 'Detective Smith',
+                fileType: 'image',
+                fileSize: 2048576
+              }
+            ],
+            timeline: [
+              {
+                id: 'event-1',
+                date: new Date('2019-03-13'),
+                title: 'Last Seen',
+                description: 'Sarah was last seen leaving work at 5:30 PM',
+                type: 'incident',
+                isPublic: true
+              },
+              {
+                id: 'event-2',
+                date: new Date('2019-03-15'),
+                title: 'Missing Person Report',
+                description: 'Report filed by family after 48 hours',
+                type: 'investigation',
+                isPublic: true
+              }
+            ]
+          },
+          {
+            id: 'case-2',
+            title: 'Unsolved Homicide - Downtown District',
+            description: 'Investigation into unsolved homicide from 2020.',
+            caseNumber: 'HOM-2020-003',
+            dateOpened: new Date('2020-07-22'),
+            lastActivity: new Date('2024-12-05'),
+            status: 'active',
+            isPublic: true,
+            publishedAt: new Date('2024-11-15'),
+            assets: [
+              {
+                id: 'asset-2',
+                caseId: 'case-2',
+                title: 'Crime Scene Photos',
+                description: 'Redacted crime scene photographs',
+                publicUrl: '/assets/case-2/scene-redacted.jpg',
+                privateUrl: '/assets/case-2/scene-original.jpg',
+                isRedacted: true,
+                hash: 'sha256:def456ghi789',
+                uploadedAt: new Date('2024-11-10'),
+                uploadedBy: 'Detective Johnson',
+                fileType: 'image',
+                fileSize: 5120000
+              }
+            ],
+            timeline: [
+              {
+                id: 'event-3',
+                date: new Date('2020-07-22'),
+                title: 'Incident Reported',
+                description: 'Homicide reported at 2:30 AM',
+                type: 'incident',
+                isPublic: true
+              }
+            ]
+          }
+        ];
+        
+        setCases(mockCases);
+      } catch (error) {
+        console.error('Failed to fetch cases:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCases();
+  }, []);
+
+  const handlePublishCase = async (caseId: string) => {
+    try {
+      // In real app, make API call to publish case
+      setCases(cases.map(case_ => 
+        case_.id === caseId 
+          ? { ...case_, isPublic: true, publishedAt: new Date() }
+          : case_
+      ));
+    } catch (error) {
+      console.error('Failed to publish case:', error);
+    }
+  };
+
+  const handleUploadAsset = async (caseId: string, file: File) => {
+    try {
+      // In real app, upload file and create asset record
+      const newAsset: CaseAsset = {
+        id: `asset-${Date.now()}`,
+        caseId,
+        title: file.name,
+        description: `Uploaded file: ${file.name}`,
+        isRedacted: false,
+        hash: `sha256:${Math.random().toString(36).substring(7)}`,
+        uploadedAt: new Date(),
+        uploadedBy: 'Current User',
+        fileType: file.type.startsWith('image/') ? 'image' : 
+                  file.type.includes('pdf') ? 'pdf' : 'document',
+        fileSize: file.size
+      };
+
+      setCases(cases.map(case_ => 
+        case_.id === caseId 
+          ? { ...case_, assets: [...case_.assets, newAsset], lastActivity: new Date() }
+          : case_
+      ));
+    } catch (error) {
+      console.error('Failed to upload asset:', error);
+    }
+  };
+
+  const handleAddTimelineEvent = async (caseId: string, event: Omit<CaseTimelineEvent, 'id'>) => {
+    try {
+      // In real app, create timeline event
+      const newEvent: CaseTimelineEvent = {
+        ...event,
+        id: `event-${Date.now()}`
+      };
+
+      setCases(cases.map(case_ => 
+        case_.id === caseId 
+          ? { ...case_, timeline: [...case_.timeline, newEvent], lastActivity: new Date() }
+          : case_
+      ));
+    } catch (error) {
+      console.error('Failed to add timeline event:', error);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="max-w-7xl mx-auto p-6">
+        <div className="animate-pulse">
+          <div className="h-8 w-64 bg-gray-200 rounded mb-4"></div>
+          <div className="h-4 w-96 bg-gray-200 rounded mb-8"></div>
+          <div className="grid lg:grid-cols-3 gap-6">
+            <div className="space-y-3">
+              <div className="h-24 bg-gray-200 rounded"></div>
+              <div className="h-24 bg-gray-200 rounded"></div>
+            </div>
+            <div className="lg:col-span-2 space-y-4">
+              <div className="h-32 bg-gray-200 rounded"></div>
+              <div className="h-32 bg-gray-200 rounded"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10">
-      <div className="mb-8">
-        <h1 className="text-2xl font-semibold">Cold Case Vault</h1>
-        <p className="text-gray-600 mt-1">
-          Upload redacted documents, evidence packets, and case files for public community Labs.
-        </p>
-      </div>
-
-      <div className="grid gap-8 lg:grid-cols-2">
-        {/* Upload Form */}
-        <div className="card p-6">
-          <h2 className="text-lg font-semibold mb-4">Upload Case Files</h2>
-          
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm text-gray-700 mb-2">
-                Case Files (PDF, Images, Documents)
-              </label>
-              <input 
-                type="file" 
-                multiple 
-                accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-                className="w-full border border-gray-300 rounded-md p-2"
-                aria-label="Upload case files"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                Upload redacted documents, photos, timelines, and evidence packets
-              </p>
-            </div>
-
-            <div>
-              <label className="block text-sm text-gray-700 mb-2">
-                Case Title
-              </label>
-              <input 
-                type="text" 
-                placeholder="e.g., Unidentified Person 1987 - Doe Street"
-                className="w-full border border-gray-300 rounded-md p-2"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm text-gray-700 mb-2">
-                Case Summary
-              </label>
-              <textarea 
-                rows={4}
-                placeholder="Brief description of the case, what information is needed, and how the community can help..."
-                className="w-full border border-gray-300 rounded-md p-2"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm text-gray-700 mb-2">
-                Contact Information
-              </label>
-              <input 
-                type="text" 
-                placeholder="Detective name, badge number, or tip line"
-                className="w-full border border-gray-300 rounded-md p-2"
-              />
-            </div>
-
-            <button 
-              type="submit"
-              disabled={isUploading}
-              className="w-full px-5 py-2.5 rounded-md bg-blue-600 text-white hover:bg-blue-500 disabled:opacity-50"
-            >
-              {isUploading ? "Uploading..." : "Publish as Community Lab"}
-            </button>
-          </form>
-        </div>
-
-        {/* Guidelines */}
-        <div className="space-y-6">
-          <div className="card p-6">
-            <h3 className="font-semibold mb-3">📋 Upload Guidelines</h3>
-            <ul className="text-sm text-gray-600 space-y-2">
-              <li>• Redact all personal information (names, addresses, SSNs)</li>
-              <li>• Remove sensitive investigative details</li>
-              <li>• Include only information safe for public viewing</li>
-              <li>• Provide clear instructions for community assistance</li>
-              <li>• Include contact information for tips</li>
-            </ul>
-          </div>
-
-          <div className="card p-6">
-            <h3 className="font-semibold mb-3">🔒 Privacy & Safety</h3>
-            <ul className="text-sm text-gray-600 space-y-2">
-              <li>• All uploads are reviewed before publication</li>
-              <li>• Community responses are monitored</li>
-              <li>• Secure tip form available for sensitive information</li>
-              <li>• Anonymous chat with PII filtering enabled</li>
-              <li>• Heatmap data is clustered and jittered</li>
-            </ul>
-          </div>
-
-          <div className="card p-6">
-            <h3 className="font-semibold mb-3">📊 Community Impact</h3>
-            <div className="text-sm text-gray-600 space-y-2">
-              <div className="flex justify-between">
-                <span>Cases Published:</span>
-                <span className="font-medium">12</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Community Tips:</span>
-                <span className="font-medium">47</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Cases Resolved:</span>
-                <span className="font-medium">3</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Existing Cases */}
-      <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4">Recent Cold Cases</h2>
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="card p-4">
-            <div className="flex items-start justify-between">
-              <div>
-                <h3 className="font-medium">Unidentified Person 2009-A</h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  Found March 15, 2009 in Riverside Park
-                </p>
-                <div className="mt-2 flex gap-2">
-                  <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded text-xs">
-                    Cold Case
-                  </span>
-                  <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">
-                    Active
-                  </span>
-                </div>
-              </div>
-              <div className="text-2xl">📁</div>
-            </div>
-          </div>
-
-          <div className="card p-4">
-            <div className="flex items-start justify-between">
-              <div>
-                <h3 className="font-medium">Missing Person: Sarah Chen</h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  Last seen March 8, 2024
-                </p>
-                <div className="mt-2 flex gap-2">
-                  <span className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs">
-                    Missing Person
-                  </span>
-                  <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">
-                    Active
-                  </span>
-                </div>
-              </div>
-              <div className="text-2xl">🔍</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
+    <ColdCaseVault
+      cases={cases}
+      onPublishCase={handlePublishCase}
+      onUploadAsset={handleUploadAsset}
+      onAddTimelineEvent={handleAddTimelineEvent}
+    />
   );
 }
