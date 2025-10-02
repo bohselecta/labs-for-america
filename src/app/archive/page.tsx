@@ -98,7 +98,13 @@ export default function ArchiveIndexPage() {
     loadArchivedLabs();
   }, []);
 
-  const handleFilterChange = (filters: any) => {
+  const handleFilterChange = (filters: {
+    platform: string;
+    category: string;
+    status: string;
+    dateRange: string;
+    tags: string[];
+  }) => {
     // In real app, this would trigger API calls with filters
     console.log('Filters changed:', filters);
   };

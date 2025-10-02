@@ -125,14 +125,14 @@ export default function Home() {
               
               {/* Beginner-friendly explanation */}
               <div className="mt-6 max-w-2xl mx-auto">
-                <BeginnerSection title="New to Labs? Here's how it works:">
+                <BeginnerSection title="New to Labs? Here&apos;s how it works:">
                   <p className="mb-2">
                     A <strong>Lab</strong> is a community challenge where people work together to solve a problem. 
                     Anyone can participate by sharing ideas, voting on solutions, or helping refine proposals.
                   </p>
                   <p>
                     Contributing is easy: read the challenge, think about solutions, and share your ideas. 
-                    You can also vote on other people's contributions and add helpful comments.
+                    You can also vote on other people&apos;s contributions and add helpful comments.
                   </p>
                 </BeginnerSection>
               </div>

@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { PRESETS, PresetKey } from "@/lib/theme-presets";
 import { Icon } from "@/components/icons";
-import { HoverLift, ScrollReveal, StaggeredReveal } from "@/components/micro-interactions";
-import { StructuredData } from "@/components/StructuredData";
+import { HoverLift, StaggeredReveal } from "@/components/micro-interactions";
 import { BreadcrumbStructuredData } from "@/components/StructuredData";
 import { SoftwareApplicationStructuredData } from "@/components/StructuredData";
 

@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { TEMPLATE_CONFIGS, TemplateKey } from "@/lib/template-configs";
 import { STATUS_STYLES } from "@/lib/status-styles";
 import Link from "next/link";
-import { StructuredData } from "@/components/StructuredData";
 import { BreadcrumbStructuredData } from "@/components/StructuredData";
 
 type FilterType = "all" | "open" | "upcoming" | "closed";

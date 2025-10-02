@@ -28,9 +28,9 @@ export function Header() {
                   <a href="/templates" className="text-gray-700 hover:text-gray-900 nav-link font-body focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded">
                     Templates
                   </a>
-                  <a href="/archive" className="text-gray-700 hover:text-gray-900 nav-link font-body focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded">
+                  <Link href="/archive" className="text-gray-700 hover:text-gray-900 nav-link font-body focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded">
                     Archive
-                  </a>
+                  </Link>
                   <a href="/docs/about" className="text-gray-700 hover:text-gray-900 nav-link font-body focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded">
                     About
                   </a>
@@ -106,13 +106,13 @@ export function Header() {
                     >
                       Templates
                     </a>
-                    <a
+                    <Link
                       href="/archive"
                       className="block text-gray-700 hover:text-gray-900 font-body py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Archive
-                    </a>
+                    </Link>
             <a
               href="/docs/about"
               className="block text-gray-700 hover:text-gray-900 font-body py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"

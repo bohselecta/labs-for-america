@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
+import Link from "next/link";
 import { IndividualArchivePage } from '@/components/archiving/IndividualArchive';
 import { ArchiveReport } from '@/components/archiving/IndividualArchive';
 
@@ -112,9 +113,9 @@ export default function IndividualArchivePage({ params }: { params: { labId: str
         <div className="text-center py-12">
           <h1 className="text-2xl font-semibold text-gray-900 mb-4">Archive Not Found</h1>
           <p className="text-gray-600 mb-4">The requested archive could not be found.</p>
-          <a href="/archive" className="btn-primary">
+          <Link href="/archive" className="btn-primary">
             Back to Archive
-          </a>
+          </Link>
         </div>
       </div>
     );
