@@ -6,6 +6,10 @@ import Image from "next/image";
 import { LabCloseModal } from "@/components/LabCloseModal";
 import { LabCollaboration } from "@/components/LabCollaboration";
 import { STATUS_STYLES } from "@/lib/status-styles";
+import { ImpactCallout, QuickImpactCallout } from "@/components/ImpactCallout";
+import { ResourcesBox } from "@/components/ResourcesBox";
+import { BeginnerSection, QuickExplanation } from "@/components/BeginnerFriendly";
+import { Icon } from "@/components/icons";
 
 export default function LabDetail({ params }: { params: { slug: string } }) {
   const [currentTemplate, setCurrentTemplate] = useState<TemplateKey>("civic");
@@ -77,9 +81,9 @@ END:VCALENDAR`;
               {lab.category}
             </span>
             {lab.isBeginner && (
-              <span className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded">
-                Beginner Friendly
-              </span>
+              <QuickImpactCallout type="beginner">
+                No experience needed
+              </QuickImpactCallout>
             )}
           </div>
           
@@ -146,6 +150,22 @@ END:VCALENDAR`;
         </article>
         
         <aside className="space-y-4">
+          {/* Beginner-friendly explanation */}
+          {lab.isBeginner && (
+            <BeginnerSection title="Perfect for Getting Started">
+              <p className="mb-2">
+                This challenge is designed for people with no prior experience. 
+                Just share your ideas and help your community.
+              </p>
+              <p>
+                Your contributions help shape real decisions that affect everyone.
+              </p>
+            </BeginnerSection>
+          )}
+          
+          {/* Impact callout */}
+          <ImpactCallout type="community" />
+          
           <div className="rounded-xl bg-white border border-gray-200 p-4">
             <h4 className="font-medium">Challenge Info</h4>
             <div className="mt-2 text-sm text-gray-600 space-y-1">
@@ -156,6 +176,9 @@ END:VCALENDAR`;
             </div>
           </div>
           
+          {/* Resources */}
+          <ResourcesBox context="gettingStarted" title="Need Help?" />
+          
           <div className="rounded-xl bg-white border border-gray-200 p-4">
             <h4 className="font-medium">Add to Calendar</h4>
             <div className="mt-2 space-y-2">
@@ -164,6 +187,7 @@ END:VCALENDAR`;
                 className="block w-full text-center px-3 py-2 bg-blue-50 text-blue-700 rounded-md hover:bg-blue-100 text-sm"
                 download={`${lab.slug}-deadline.ics`}
               >
+                <Icon name="calendar" size="sm" className="inline mr-1" />
                 Download .ics
               </a>
             </div>

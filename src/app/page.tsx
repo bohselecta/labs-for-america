@@ -2,9 +2,13 @@
 import { useState, useEffect } from "react";
 import { TEMPLATE_CONFIGS, TemplateKey } from "@/lib/template-configs";
 import Link from "next/link";
+import Image from "next/image";
 import { CardSkeleton, HeroSkeleton } from "@/components/LoadingSkeletons";
 import { Icon } from "@/components/icons";
 import { HoverLift, ScrollReveal, StaggeredReveal } from "@/components/micro-interactions";
+import { ImpactCallout, QuickImpactCallout } from "@/components/ImpactCallout";
+import { ResourcesBox, CompactResources } from "@/components/ResourcesBox";
+import { BeginnerSection, QuickExplanation, StepGuide } from "@/components/BeginnerFriendly";
 
 export default function Home() {
   const [currentTemplate, setCurrentTemplate] = useState<TemplateKey>("civic");
@@ -62,6 +66,16 @@ export default function Home() {
               <p className="mt-3 text-gray-600 font-body text-pretty">
                 Join {config.orgName} in solving community challenges through collaborative innovation.
               </p>
+              
+              {/* Impact Callout */}
+              <div className="mt-6">
+                <ImpactCallout type="community" />
+              </div>
+              
+              {/* Quick Resources */}
+              <div className="mt-4">
+                <CompactResources context="gettingStarted" />
+              </div>
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <HoverLift>
                   <Link 
@@ -106,6 +120,20 @@ export default function Home() {
               <p className="text-lg text-gray-600 font-body max-w-2xl mx-auto text-pretty">
                 Current challenges from {config.orgName}. Click any challenge to learn more and contribute.
               </p>
+              
+              {/* Beginner-friendly explanation */}
+              <div className="mt-6 max-w-2xl mx-auto">
+                <BeginnerSection title="New to Labs? Here's how it works:">
+                  <p className="mb-2">
+                    A <strong>Lab</strong> is a community challenge where people work together to solve a problem. 
+                    Anyone can participate by sharing ideas, voting on solutions, or helping refine proposals.
+                  </p>
+                  <p>
+                    Contributing is easy: read the challenge, think about solutions, and share your ideas. 
+                    You can also vote on other people's contributions and add helpful comments.
+                  </p>
+                </BeginnerSection>
+              </div>
             </div>
           
           {sampleLabs.length > 0 ? (
@@ -126,10 +154,9 @@ export default function Home() {
                           {lab.category}
                         </span>
                         {lab.isBeginner && (
-                          <span className="text-sm bg-green-100 text-green-700 px-2 py-1 rounded badge-enhanced">
-                            <Icon name="award" size="xs" className="inline mr-1" />
-                            No experience required
-                          </span>
+                          <QuickImpactCallout type="beginner">
+                            No experience needed
+                          </QuickImpactCallout>
                         )}
                         {daysLeft > 0 && daysLeft <= 7 && (
                           <span className="text-sm bg-orange-100 text-orange-700 px-2 py-1 rounded badge-enhanced">
@@ -207,51 +234,52 @@ export default function Home() {
       {/* How It Works Section */}
       <ScrollReveal>
         <section id="how-it-works" className="py-16 bg-white section-rhythm">
-          <div className="mx-auto max-w-4xl px-6 text-center visual-hierarchy">
-            <h2 className="text-2xl font-semibold font-headline mb-4 text-balance">
-              How It Works
-            </h2>
-            <p className="text-lg text-gray-600 font-body mb-8 text-pretty">
-              Simple, transparent, and community-driven problem solving.
-            </p>
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="text-center visual-hierarchy mb-12">
+              <h2 className="text-2xl font-semibold font-headline mb-4 text-balance">
+                How It Works
+              </h2>
+              <p className="text-lg text-gray-600 font-body mb-8 text-pretty">
+                Simple, transparent, and community-driven problem solving.
+              </p>
+            </div>
             
-            <StaggeredReveal className="grid md:grid-cols-3 gap-6 text-left grid-rhythm">
-              <HoverLift>
-                <div className="card card-enhanced p-6">
-                  <div className="text-2xl mb-3">
-                    <Icon name="innovation" size="lg" className="text-blue-600" />
-                  </div>
-                  <h3 className="font-semibold text-lg mb-2 font-headline text-balance">Submit Ideas</h3>
-                  <p className="text-gray-600 text-sm font-body text-pretty">
-                    Share your solutions, documents, or designs. Everything gets proper attribution.
-                  </p>
-                </div>
-              </HoverLift>
+            <div className="grid lg:grid-cols-2 gap-8">
+              {/* Step Guide */}
+              <div>
+                <StepGuide
+                  title="Get Started in 3 Easy Steps"
+                  steps={[
+                    {
+                      number: 1,
+                      title: "Read the Challenge",
+                      description: "Browse active Labs and find one that interests you. Read the details to understand what we're looking for.",
+                      icon: "civic"
+                    },
+                    {
+                      number: 2,
+                      title: "Share Your Ideas",
+                      description: "Submit your solutions, documents, or designs. You can also vote on other people's contributions.",
+                      icon: "innovation"
+                    },
+                    {
+                      number: 3,
+                      title: "See the Impact",
+                      description: "Watch as the community votes and experts review ideas. The best solutions get implemented.",
+                      icon: "impact"
+                    }
+                  ]}
+                />
+              </div>
               
-              <HoverLift>
-                <div className="card card-enhanced p-6">
-                  <div className="text-2xl mb-3">
-                    <Icon name="vote" size="lg" className="text-blue-600" />
-                  </div>
-                  <h3 className="font-semibold text-lg mb-2 font-headline text-balance">Community Review</h3>
-                  <p className="text-gray-600 text-sm font-body text-pretty">
-                    Vote on contributions, add comments, and help refine the best ideas.
-                  </p>
+              {/* Resources */}
+              <div>
+                <ResourcesBox context="gettingStarted" title="Need Help Getting Started?" />
+                <div className="mt-4">
+                  <ResourcesBox context="community" title="Community Guidelines" />
                 </div>
-              </HoverLift>
-              
-              <HoverLift>
-                <div className="card card-enhanced p-6">
-                  <div className="text-2xl mb-3">
-                    <Icon name="democracy" size="lg" className="text-blue-600" />
-                  </div>
-                  <h3 className="font-semibold text-lg mb-2 font-headline text-balance">Generate Reports</h3>
-                  <p className="text-gray-600 text-sm font-body text-pretty">
-                    When Labs close, we automatically create comprehensive reports for your records.
-                  </p>
-                </div>
-              </HoverLift>
-            </StaggeredReveal>
+              </div>
+            </div>
           </div>
         </section>
       </ScrollReveal>
@@ -259,51 +287,33 @@ export default function Home() {
       {/* Template Info Section */}
       <ScrollReveal>
         <section className="py-16 bg-gray-50 section-rhythm">
-          <div className="mx-auto max-w-4xl px-6 text-center visual-hierarchy">
-            <h2 className="text-2xl font-semibold font-headline mb-4 text-balance">
-              About {config.name}
-            </h2>
-            <p className="text-lg text-gray-600 font-body mb-8 text-pretty">
-              {config.description}
-            </p>
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="text-center visual-hierarchy mb-12">
+              <h2 className="text-2xl font-semibold font-headline mb-4 text-balance">
+                About {config.name}
+              </h2>
+              <p className="text-lg text-gray-600 font-body mb-8 text-pretty">
+                {config.description}
+              </p>
+            </div>
             
-            <StaggeredReveal className="grid md:grid-cols-3 gap-6 text-left grid-rhythm">
-              <HoverLift>
-                <div className="card card-enhanced p-6">
-                  <div className="text-2xl mb-3">
-                    <Icon name="community" size="lg" className="text-blue-600" />
-                  </div>
-                  <h3 className="font-semibold text-lg mb-2 font-headline text-balance">Community Focus</h3>
-                  <p className="text-gray-600 text-sm font-body text-pretty">
-                    Designed specifically for {config.orgName} and similar organizations.
-                  </p>
-                </div>
-              </HoverLift>
+            <div className="grid lg:grid-cols-2 gap-8">
+              {/* Impact Callouts */}
+              <div className="space-y-4">
+                <ImpactCallout type="community" />
+                <ImpactCallout type="government" />
+                <ImpactCallout type="expert" />
+              </div>
               
-              <HoverLift>
-                <div className="card card-enhanced p-6">
-                  <div className="text-2xl mb-3">
-                    <Icon name="collaboration" size="lg" className="text-blue-600" />
-                  </div>
-                  <h3 className="font-semibold text-lg mb-2 font-headline text-balance">Collaborative Innovation</h3>
-                  <p className="text-gray-600 text-sm font-body text-pretty">
-                    Bring together community members, experts, and stakeholders to solve real challenges.
-                  </p>
+              {/* Quick Explanations */}
+              <div className="space-y-4">
+                <QuickExplanation term="whatIsLab" />
+                <QuickExplanation term="whyParticipate" />
+                <div className="mt-4">
+                  <ResourcesBox context="technical" title="Technical Resources" />
                 </div>
-              </HoverLift>
-              
-              <HoverLift>
-                <div className="card card-enhanced p-6">
-                  <div className="text-2xl mb-3">
-                    <Icon name="impact" size="lg" className="text-blue-600" />
-                  </div>
-                  <h3 className="font-semibold text-lg mb-2 font-headline text-balance">Measurable Impact</h3>
-                  <p className="text-gray-600 text-sm font-body text-pretty">
-                    Track contributions, generate reports, and build institutional memory.
-                  </p>
-                </div>
-              </HoverLift>
-            </StaggeredReveal>
+              </div>
+            </div>
           </div>
         </section>
       </ScrollReveal>
