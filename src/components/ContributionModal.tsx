@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { createSafeDisplay, containsPII, getPIIWarnings } from "@/lib/pii-masking";
+import { checkSpam, sanitizeContent } from "@/lib/spam-protection";
 
 interface ContributionModalProps {
   labId: string;
@@ -33,6 +35,21 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [customTag, setCustomTag] = useState("");
+  const [piiWarnings, setPiiWarnings] = useState<string[]>([]);
+  const [spamCheck, setSpamCheck] = useState<any>(null);
+  const [showPreview, setShowPreview] = useState(false);
+
+  const handleContentChange = (content: string) => {
+    setFormData({ ...formData, content });
+    
+    // Check for PII
+    const warnings = getPIIWarnings(content);
+    setPiiWarnings(warnings);
+    
+    // Check for spam
+    const spamResult = checkSpam(content);
+    setSpamCheck(spamResult);
+  };
 
   const handleTagToggle = (tag: string) => {
     if (formData.tags.includes(tag)) {
@@ -51,13 +68,34 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Final safety checks
+    if (spamCheck?.action === 'block') {
+      alert('Your contribution was flagged as spam and cannot be submitted. Please revise your content.');
+      return;
+    }
+    
+    if (piiWarnings.length > 0) {
+      const proceed = confirm(
+        `Your contribution contains personal information: ${piiWarnings.join(', ')}. ` +
+        'This will be automatically masked for public display. Do you want to proceed?'
+      );
+      if (!proceed) return;
+    }
+    
     setIsSubmitting(true);
 
     try {
+      // Sanitize content before submission
+      const sanitizedContent = sanitizeContent(formData.content);
+      
       const response = await fetch(`/api/labs/${labId}/contributions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({
+          ...formData,
+          content: sanitizedContent
+        })
       });
 
       if (response.ok) {
@@ -72,6 +110,8 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
           tags: [],
           fileUrl: ""
         });
+        setPiiWarnings([]);
+        setSpamCheck(null);
       } else {
         const error = await response.text();
         alert(`Failed to submit contribution: ${error}`);
@@ -99,6 +139,34 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
             ✕
           </button>
         </div>
+
+        {/* Safety Warnings */}
+        {piiWarnings.length > 0 && (
+          <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+            <div className="flex items-start gap-2">
+              <span className="text-yellow-600">⚠️</span>
+              <div className="text-sm text-yellow-800">
+                <p className="font-medium">Personal Information Detected</p>
+                <p>Your content contains: {piiWarnings.join(', ')}. This will be automatically masked for public display.</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {spamCheck?.isSpam && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
+            <div className="flex items-start gap-2">
+              <span className="text-red-600">🚫</span>
+              <div className="text-sm text-red-800">
+                <p className="font-medium">Content Flagged for Review</p>
+                <p>Issues: {spamCheck.reasons.join(', ')}</p>
+                {spamCheck.action === 'block' && (
+                  <p className="font-medium mt-1">This content cannot be submitted.</p>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Contribution Type */}
@@ -236,16 +304,36 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
 
           {/* Content */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Description *
-            </label>
-            <textarea
-              value={formData.content}
-              onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-              className="w-full border border-gray-300 rounded-md p-2 h-32"
-              placeholder="Describe your contribution in detail. What problem does it solve? How does it work?"
-              required
-            />
+            <div className="flex justify-between items-center mb-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Description *
+              </label>
+              <button
+                type="button"
+                onClick={() => setShowPreview(!showPreview)}
+                className="text-sm text-blue-600 hover:text-blue-800"
+              >
+                {showPreview ? 'Edit' : 'Preview'}
+              </button>
+            </div>
+            
+            {showPreview ? (
+              <div className="border border-gray-300 rounded-md p-3 h-32 bg-gray-50 overflow-y-auto">
+                <div className="prose prose-sm">
+                  <div dangerouslySetInnerHTML={{ 
+                    __html: createSafeDisplay(formData.content) 
+                  }} />
+                </div>
+              </div>
+            ) : (
+              <textarea
+                value={formData.content}
+                onChange={(e) => handleContentChange(e.target.value)}
+                className="w-full border border-gray-300 rounded-md p-2 h-32"
+                placeholder="Describe your contribution in detail. What problem does it solve? How does it work?"
+                required
+              />
+            )}
           </div>
 
           <div className="flex justify-end gap-3 pt-4 border-t">
@@ -260,7 +348,7 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
             <button
               type="submit"
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
-              disabled={isSubmitting}
+              disabled={isSubmitting || spamCheck?.action === 'block'}
             >
               {isSubmitting ? "Submitting..." : "Submit Contribution"}
             </button>

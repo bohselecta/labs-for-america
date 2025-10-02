@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { checkSpam, checkRateLimit, sanitizeContent } from "@/lib/spam-protection";
+import { getPIIWarnings } from "@/lib/pii-masking";
 
 export async function GET(
   request: NextRequest,
@@ -49,22 +51,70 @@ export async function POST(
       );
     }
 
+    // Rate limiting check
+    const rateLimitKey = `${author}:${authorEmail || 'anonymous'}`;
+    const rateLimit = checkRateLimit(rateLimitKey, 5, 3600000); // 5 submissions per hour
+    
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { 
+          error: "Rate limit exceeded", 
+          resetTime: rateLimit.resetTime,
+          message: "Too many submissions. Please wait before submitting again."
+        },
+        { status: 429 }
+      );
+    }
+
+    // Spam protection
+    const spamCheck = checkSpam(content);
+    if (spamCheck.action === 'block') {
+      return NextResponse.json(
+        { 
+          error: "Content blocked", 
+          reasons: spamCheck.reasons,
+          message: "Your contribution was flagged as spam and cannot be submitted."
+        },
+        { status: 400 }
+      );
+    }
+
+    // PII detection
+    const piiWarnings = getPIIWarnings(content);
+    
+    // Sanitize content
+    const sanitizedContent = sanitizeContent(content);
+
     // Create contribution
     const contribution = await prisma.contribution.create({
       data: {
         labId,
-        title,
-        content,
+        title: sanitizeContent(title),
+        content: sanitizedContent,
         type,
-        author,
-        authorEmail: authorEmail || null,
+        author: sanitizeContent(author),
+        authorEmail: authorEmail ? sanitizeContent(authorEmail) : null,
         tags: tags || [],
         fileUrl: fileUrl || null,
-        status: "pending"
+        status: spamCheck.action === 'flag' ? 'pending' : 'pending' // Flagged content goes to pending for review
       }
     });
 
-    return NextResponse.json({ contribution }, { status: 201 });
+    // Log moderation info
+    console.log(`Contribution ${contribution.id} created:`, {
+      spamCheck: spamCheck.isSpam,
+      piiWarnings: piiWarnings.length,
+      rateLimitRemaining: rateLimit.remaining
+    });
+
+    return NextResponse.json({ 
+      contribution,
+      moderation: {
+        spamCheck: spamCheck.isSpam,
+        piiWarnings: piiWarnings.length > 0,
+        flagged: spamCheck.action === 'flag'
+      }
+    }, { status: 201 });
 
   } catch (error) {
     console.error("Error creating contribution:", error);
