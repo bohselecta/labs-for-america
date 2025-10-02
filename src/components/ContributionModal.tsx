@@ -203,9 +203,10 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full border border-gray-300 rounded-md p-2"
+              className="form-field"
               placeholder="Brief, descriptive title for your contribution"
               required
+              aria-describedby="title-error"
             />
           </div>
 
@@ -219,9 +220,10 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
                 type="text"
                 value={formData.author}
                 onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                className="w-full border border-gray-300 rounded-md p-2"
+                className="form-field"
                 placeholder="Your full name"
                 required
+                aria-describedby="author-error"
               />
             </div>
             <div>
@@ -232,8 +234,9 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
                 type="email"
                 value={formData.authorEmail}
                 onChange={(e) => setFormData({ ...formData, authorEmail: e.target.value })}
-                className="w-full border border-gray-300 rounded-md p-2"
+                className="form-field"
                 placeholder="your.email@example.com"
+                aria-describedby="email-error"
               />
             </div>
           </div>
@@ -264,9 +267,10 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
                 type="text"
                 value={customTag}
                 onChange={(e) => setCustomTag(e.target.value)}
-                className="flex-1 border border-gray-300 rounded-md p-2 text-sm"
+                className="form-field text-sm"
                 placeholder="Add custom tag..."
                 onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddCustomTag())}
+                aria-label="Add custom tag"
               />
               <button
                 type="button"
@@ -293,10 +297,11 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
                 type="url"
                 value={formData.fileUrl}
                 onChange={(e) => setFormData({ ...formData, fileUrl: e.target.value })}
-                className="w-full border border-gray-300 rounded-md p-2"
+                className="form-field"
                 placeholder="https://example.com/your-file.pdf"
+                aria-describedby="file-url-help"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p id="file-url-help" className="text-xs text-gray-500 mt-1">
                 Share a link to your document, design, or data file
               </p>
             </div>
@@ -329,9 +334,10 @@ export function ContributionModal({ labId, isOpen, onClose, onSuccess }: Contrib
               <textarea
                 value={formData.content}
                 onChange={(e) => handleContentChange(e.target.value)}
-                className="w-full border border-gray-300 rounded-md p-2 h-32"
+                className="form-field h-32 resize-y"
                 placeholder="Describe your contribution in detail. What problem does it solve? How does it work?"
                 required
+                aria-describedby="content-help"
               />
             )}
           </div>
