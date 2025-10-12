@@ -799,71 +799,13 @@
                             {activeTab === 'emergency' && config.features.enableEmergencyMode && (
                                 <section className="section">
                                     <div className="container">
-                                        <div className="section-header">
-                                            <h2 className="section-title">Emergency Response Center</h2>
-                                            <p className="section-subtitle">Real-time incident management and coordination</p>
-                                        </div>
-
-                                        <div className="emergency-container">
-                                            {config.emergencyMode ? (
-                                                <div>
-                                                    <div style={{textAlign: 'center', marginBottom: '2rem'}}>
-                                                        <div style={{fontSize: '4rem', marginBottom: '1rem'}}>🚨</div>
-                                                        <h3 style={{fontSize: '2rem', fontWeight: '700', color: '#dc2626', marginBottom: '0.5rem'}}>
-                                                            EMERGENCY MODE ACTIVE
-                                                        </h3>
-                                                        <p style={{color: '#dc2626', fontSize: '1.1rem'}}>
-                                                            Critical incident response in progress
-                                                        </p>
-                                                    </div>
-
-                                                    {/* Emergency Dashboard */}
-                                                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem'}}>
-                                                        <div className="card">
-                                                            <h4>🚔 Active Incidents</h4>
-                                                            <div style={{color: '#dc2626', fontSize: '2rem', fontWeight: '700'}}>
-                                                                {config.activeIncidents.length}
-                                                            </div>
-                                                            <p>Critical incidents requiring immediate attention</p>
-                                                        </div>
-
-                                                        <div className="card">
-                                                            <h4>📍 Response Units</h4>
-                                                            <div style={{color: '#f59e0b', fontSize: '2rem', fontWeight: '700'}}>
-                                                                12
-                                                            </div>
-                                                            <p>Officers and units deployed</p>
-                                                        </div>
-
-                                                        <div className="card">
-                                                            <h4>💬 Public Tips</h4>
-                                                            <div style={{color: '#059669', fontSize: '2rem', fontWeight: '700'}}>
-                                                                8
-                                                            </div>
-                                                            <p>Community tips received</p>
-                                                        </div>
-                                                    </div>
-
-                                                    <div style={{marginTop: '2rem', textAlign: 'center'}}>
-                                                        <button className="btn btn-secondary" style={{background: '#dc2626', color: 'white'}}>
-                                                            End Emergency Mode
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            ) : (
-                                                <div style={{textAlign: 'center'}}>
-                                                    <div style={{fontSize: '4rem', marginBottom: '1rem'}}>🛡️</div>
-                                                    <h3 style={{fontSize: '1.5rem', fontWeight: '600', color: 'var(--gray-900)', marginBottom: '0.5rem'}}>
-                                                        Emergency Response Ready
-                                                    </h3>
-                                                    <p style={{color: 'var(--gray-600)', marginBottom: '2rem'}}>
-                                                        Activate emergency mode for critical incident coordination and real-time response management.
-                                                    </p>
-                                                    <button className="btn btn-primary" style={{background: '#dc2626', color: 'white'}}>
-                                                        🚨 Activate Emergency Mode
-                                                    </button>
-                                                </div>
-                                            )}
+                                        <h2>Emergency Response Center</h2>
+                                        <p>Real-time incident management and coordination</p>
+                                        
+                                        <div className="card">
+                                            <h3>Emergency Status</h3>
+                                            <p>Emergency mode is {config.emergencyMode ? 'ACTIVE' : 'READY'}</p>
+                                            <p>Active Incidents: {config.activeIncidents.length}</p>
                                         </div>
                                     </div>
                                 </section>
