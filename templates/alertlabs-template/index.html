@@ -893,7 +893,7 @@
                 const handleCreateAlert = async (alertData) => {
                     try {
                         const alertType = config.alertTypes.find(t => t.id === alertData.alertType);
-                        const alertId = \`\${alertData.alertType.toUpperCase()}-\${Date.now()}\`;
+                        const alertId = alertData.alertType.toUpperCase() + "-" + Date.now();
 
                         const { submit } = database.useDocument({
                             id: alertId,
@@ -1089,7 +1089,7 @@
                                                 {alerts.filter(a => a.status === 'Active').map(alert => {
                                                     const alertType = config.alertTypes.find(t => t.id === alert.alertType);
                                                     return (
-                                                        <div key={alert.id} className={\`alert-card \${alert.alertType}-alert\`}>
+                                                        <div key={alert.id} className={"alert-card " + alert.alertType + "-alert"}>
                                                             <div className="alert-header">
                                                                 <div>
                                                                     <div className="alert-title">{alert.title}</div>
@@ -1097,7 +1097,7 @@
                                                                         {alertType?.name}
                                                                     </div>
                                                                 </div>
-                                                                <div className={\`alert-status \${alert.status.toLowerCase()}\`}>
+                                                                <div className={"alert-status " + alert.status.toLowerCase()}>
                                                                     {alert.status}
                                                                 </div>
                                                             </div>
