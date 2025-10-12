@@ -1,6 +1,6 @@
 # LabsForAmerica
 
-One-click civic templates for communities, departments, schools, clinics, and emergency managers. Fork a template on Replit, customize branding in the built-in admin panel, and share a link with your community.
+One-click civic templates for communities, departments, schools, clinics, and emergency managers. Deploy to GitHub Pages, customize branding in the built-in admin panel, and share a link with your community.
 
 ## Templates
 
@@ -14,7 +14,7 @@ One-click civic templates for communities, departments, schools, clinics, and em
 
 1. Visit [labsforamerica.org](https://labsforamerica.org)
 2. Choose a template that fits your needs
-3. Click "Fork on Replit" (when links are configured)
+3. Click "Deploy to GitHub Pages"
 4. Customize branding in the admin panel
 5. Share your community engagement link
 
@@ -43,7 +43,7 @@ Deploy to any static host:
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) file for details.
+Public Domain - see [UNLICENSE](UNLICENSE) file for details.
 
 ---
 
