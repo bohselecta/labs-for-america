@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Links</title>
+</head>
+<body>
+    <h1>Test Preview Links</h1>
+    <p>Click these links to test if they work:</p>
+    <ul>
+        <li><a href="./static-previews/civic-preview.html" target="_blank">Civic Preview</a></li>
+        <li><a href="./static-previews/justice-preview.html" target="_blank">Justice Preview</a></li>
+        <li><a href="./static-previews/edu-preview.html" target="_blank">Edu Preview</a></li>
+        <li><a href="./static-previews/health-preview.html" target="_blank">Health Preview</a></li>
+        <li><a href="./static-previews/alert-preview.html" target="_blank">Alert Preview</a></li>
+    </ul>
+
+    <h2>Templates JSON Test</h2>
+    <pre id="templates"></pre>
+
+    <script>
+        fetch('./templates.json')
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('templates').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(e => {
+                document.getElementById('templates').textContent = 'Error loading templates: ' + e;
+            });
+    </script>
+</body>
+</html>
