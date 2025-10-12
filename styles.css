@@ -14,12 +14,22 @@ img{max-width:100%;display:block}
 .row{display:flex;gap:16px;align-items:center}
 .spread{justify-content:space-between}
 
-.site-header{border-bottom:1px solid var(--line);background:#fff}
+.site-header{border-bottom:1px solid var(--line);background:#fff;position:relative}
 .brand{display:flex;align-items:center;gap:.6rem;padding:14px 0}
 .logo{width:28px;height:28px}
 .brand-text{font-weight:700}
 
-.nav a{color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:8px}
+.hamburger{display:flex;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:8px;border-radius:4px;transition:background 0.2s}
+.hamburger:hover{background:var(--alt)}
+.hamburger span{width:20px;height:2px;background:var(--ink);transition:all 0.3s;border-radius:1px}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-6px)}
+
+.nav{position:absolute;top:100%;right:0;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);padding:8px;min-width:200px;transform:translateY(-10px);opacity:0;visibility:hidden;transition:all 0.3s;z-index:1000}
+.nav.active{transform:translateY(0);opacity:1;visibility:visible}
+.nav{display:flex;flex-direction:column;gap:4px}
+.nav a{color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:8px;display:block}
 .nav a:hover{background:var(--alt);color:var(--ink)}
 
 .hero{background:linear-gradient(135deg,#f8fbff,#eef3ff);border-bottom:1px solid var(--line)}

@@ -1,4 +1,30 @@
 (async function(){
+  // Hamburger menu functionality
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav');
+  
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    nav.classList.toggle('active');
+  });
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+      hamburger.classList.remove('active');
+      nav.classList.remove('active');
+    }
+  });
+  
+  // Close menu when clicking nav links
+  nav.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      hamburger.classList.remove('active');
+      nav.classList.remove('active');
+    }
+  });
+
+  // Template loading
   const grid = document.getElementById('templates-grid');
   try {
     const res = await fetch('./templates.json', { cache: 'no-store' });
