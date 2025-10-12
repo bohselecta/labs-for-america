@@ -352,24 +352,18 @@
     </div>
 
     <script type="text/babel">
-        // Load Fireproof from ESM.sh
-        const script = document.createElement('script');
-        script.type = 'module';
-        script.textContent = `
-            import { useFireproof } from "https://esm.sh/use-fireproof";
-
-            // Initialize Fireproof database
-            const { database, useDocument, useLiveQuery } = useFireproof('civiclabs');
-
-            // Configuration
-            let config = {
-                orgName: "My Civic Organization",
-                primaryColor: "#2563eb",
-                contactEmail: "contact@example.com",
-                logoUrl: "",
-                welcomeMessage: "Welcome to our community engagement platform. Help us shape the future of our community by sharing your ideas and participating in local initiatives.",
-                tagline: "Your voice matters in building a stronger community",
-                organizationType: "Local Government",
+        // Simple version without Fireproof for now
+        console.log('Loading CivicLabs template...');
+        
+        // Configuration
+        let config = {
+            orgName: "My Civic Organization",
+            primaryColor: "#2563eb",
+            contactEmail: "contact@example.com",
+            logoUrl: "",
+            welcomeMessage: "Welcome to our community engagement platform. Help us shape the future of our community by sharing your ideas and participating in local initiatives.",
+            tagline: "Your voice matters in building a stronger community",
+            organizationType: "Local Government",
                 currentCampaigns: [
                     "Community Garden Initiative",
                     "Public Transit Survey",
@@ -1159,8 +1153,6 @@
                         '</div>';
                 }
             }, 30000);
-        `;
-        document.head.appendChild(script);
     </script>
 </body>
 </html>
