@@ -1146,18 +1146,17 @@
             setTimeout(() => {
                 const rootElement = document.getElementById('root');
                 if (rootElement && rootElement.innerHTML.includes('Loading CivicLabs')) {
-                    rootElement.innerHTML = `
-                        <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
-                            <h2 style="color: #dc2626;">Loading Error</h2>
-                            <p>The application failed to load. This might be due to:</p>
-                            <ul style="text-align: left; max-width: 400px; margin: 20px auto;">
-                                <li>Slow internet connection</li>
-                                <li>JavaScript disabled</li>
-                                <li>Browser compatibility issues</li>
-                            </ul>
-                            <p><button onclick="location.reload()" style="padding: 10px 20px; background: #2563eb; color: white; border: none; border-radius: 5px; cursor: pointer;">Try Again</button></p>
-                        </div>
-                    `;
+                    rootElement.innerHTML = 
+                        '<div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">' +
+                            '<h2 style="color: #dc2626;">Loading Error</h2>' +
+                            '<p>The application failed to load. This might be due to:</p>' +
+                            '<ul style="text-align: left; max-width: 400px; margin: 20px auto;">' +
+                                '<li>Slow internet connection</li>' +
+                                '<li>JavaScript disabled</li>' +
+                                '<li>Browser compatibility issues</li>' +
+                            '</ul>' +
+                            '<p><button onclick="location.reload()" style="padding: 10px 20px; background: #2563eb; color: white; border: none; border-radius: 5px; cursor: pointer;">Try Again</button></p>' +
+                        '</div>';
                 }
             }, 30000);
         `;
