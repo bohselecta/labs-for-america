@@ -585,7 +585,7 @@
                                                                 overflow: 'hidden'
                                                             }}>
                                                                 <div style={{
-                                                                    width: `${Math.min((challenge.responses / challenge.targetResponses) * 100, 100)}%`,
+                                                                    width: Math.min((challenge.responses / challenge.targetResponses) * 100, 100) + '%',
                                                                     height: '100%',
                                                                     background: 'var(--primary-color)',
                                                                     transition: 'width 0.3s'
@@ -608,7 +608,7 @@
                                                                 overflow: 'hidden'
                                                             }}>
                                                                 <div style={{
-                                                                    width: `${Math.min((challenge.currentVolunteers / challenge.volunteerSlots) * 100, 100)}%`,
+                                                                    width: Math.min((challenge.currentVolunteers / challenge.volunteerSlots) * 100, 100) + '%',
                                                                     height: '100%',
                                                                     background: 'var(--success-color)',
                                                                     transition: 'width 0.3s'
