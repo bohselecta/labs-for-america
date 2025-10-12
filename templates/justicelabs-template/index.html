@@ -386,16 +386,10 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        // Load Fireproof from ESM.sh
-        const script = document.createElement('script');
-        script.type = 'module';
-        script.textContent = `
-            import { useFireproof } from "https://esm.sh/use-fireproof";
-
-            // Initialize Fireproof database
-            const { database, useDocument, useLiveQuery } = useFireproof('justicelabs');
-
-            // Configuration
+        // Simple version without Fireproof for now
+        console.log('Loading JusticeLabs template...');
+        
+        // Configuration
             let config = {
                 orgName: "Justice Department",
                 primaryColor: "#dc2626",
@@ -1475,8 +1469,6 @@
             // Render the app
             const root = ReactDOM.createRoot(document.getElementById('root'));
             root.render(<JusticeLabsApp />);
-        `;
-        document.head.appendChild(script);
     </script>
 </body>
 </html>

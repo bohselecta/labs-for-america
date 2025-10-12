@@ -378,16 +378,10 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        // Load Fireproof from ESM.sh
-        const script = document.createElement('script');
-        script.type = 'module';
-        script.textContent = `
-            import { useFireproof } from "https://esm.sh/use-fireproof";
-
-            // Initialize Fireproof database
-            const { database, useDocument, useLiveQuery } = useFireproof('healthlabs');
-
-            // Configuration
+        // Simple version without Fireproof for now
+        console.log('Loading HealthLabs template...');
+        
+        // Configuration
             let config = {
                 orgName: "HealthLabs",
                 primaryColor: "#7c3aed",
@@ -1435,8 +1429,6 @@
             // Render the app
             const root = ReactDOM.createRoot(document.getElementById('root'));
             root.render(<HealthLabsApp />);
-        `;
-        document.head.appendChild(script);
     </script>
 </body>
 </html>
