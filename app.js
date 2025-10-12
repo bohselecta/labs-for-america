@@ -21,7 +21,7 @@
         <p style="color:#475569">${t.description}</p>
         <p style="margin-top:8px;color:#64748b;font-size:14px">${features}</p>
         <div class="template-actions">
-          <a class="btn small" href="./preview.html?id=${encodeURIComponent(t.id)}">View Template</a>
+          <a class="btn small" href="./static-previews/${t.id}-preview.html" target="_blank" rel="noopener">View Template</a>
           ${
             hasReplit
               ? `<a class="btn small btn-primary" href="${t.replitUrl}" target="_blank" rel="noopener">Fork on Replit</a>`
