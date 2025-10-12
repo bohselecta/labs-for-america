@@ -1,65 +1,369 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Preview — LabsForAmerica</title>
+  <title>Template Preview — LabsForAmerica</title>
+  <meta name="description" content="Preview and deploy a LabsForAmerica template in seconds." />
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0f172a" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Template Preview — LabsForAmerica" />
+  <meta property="og:description" content="One-click civic templates for communities, departments, schools, and clinics." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./public/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <link rel="stylesheet" href="./styles.css" />
   <style>
-    .bar{border-bottom:1px solid var(--line);background:#fff}
-    .bar .container{display:flex;align-items:center;gap:12px;padding:10px 0}
-    .info{color:var(--muted)}
-    .preview-note{background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:16px;margin:16px 0;max-width:600px}
+    /* Lightweight local styles to avoid touching your global file */
+    :root {
+      --ink:#0f172a; --muted:#64748b; --brand:#2563eb; --line:#e2e8f0; --bg:#ffffff; --bg-alt:#f8fafc;
+      --radius:14px;
+    }
+    body { color:var(--ink); background:var(--bg); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; }
+    .container { max-width:1100px; margin:0 auto; padding:24px; }
+    .skip-link { position:absolute; left:-9999px; top:auto; }
+    .skip-link:focus { left:16px; top:12px; background:#fff; border:1px solid var(--line); padding:8px 12px; border-radius:8px; z-index:1000; }
+    header { border-bottom:1px solid var(--line); background:var(--bg); position:sticky; top:0; z-index:10; }
+    .row { display:flex; align-items:center; gap:16px; }
+    .spread { justify-content:space-between; }
+    .brand { gap:10px; }
+    .brand img { height:28px; width:auto; }
+    .pill { display:inline-flex; align-items:center; gap:8px; font-size:12px; padding:6px 10px; border-radius:999px; background:#eff6ff; color:#1d4ed8; }
+    main { padding-block:12px 48px; }
+    .lead { color:var(--muted); margin-top:8px; }
+    .hero { display:grid; grid-template-columns:1.1fr 0.9fr; gap:24px; margin-top:24px; }
+    .hero .card { border:1px solid var(--line); border-radius:var(--radius); padding:20px; background:var(--bg-alt); }
+    .hero .shot { border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:#000; min-height:240px; }
+    .shot img { width:100%; height:100%; object-fit:cover; display:block; }
+    h1 { font-size:28px; line-height:1.2; }
+    h2 { font-size:22px; margin-top:8px; }
+    h3 { font-size:18px; margin-top:0; }
+    .muted { color:var(--muted); }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .card { border:1px solid var(--line); border-radius:var(--radius); padding:16px; background:#fff; }
+    .btn-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 14px; border-radius:10px; font-weight:600; text-decoration:none; cursor:pointer; border:1px solid transparent; }
+    .btn.primary { background:var(--brand); color:#fff; }
+    .btn.secondary { background:#fff; color:var(--ink); border-color:var(--line); }
+    .btn.ghost { background:transparent; color:var(--ink); border-color:var(--line); }
+    .list { display:grid; gap:8px; margin-top:8px; }
+    .list li { display:flex; gap:10px; }
+    .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; background:#f1f5f9; padding:2px 6px; border-radius:6px; border:1px solid var(--line); font-size:12px; }
+    .small { font-size:13px; }
+    .note { background:#f8fafc; border:1px dashed var(--line); padding:10px 12px; border-radius:10px; color:var(--muted); }
+    footer { border-top:1px solid var(--line); margin-top:36px; }
+    .qr { width:124px; height:124px; background:#fff; border:1px solid var(--line); border-radius:12px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .tag { display:inline-block; font-size:12px; background:#eef2ff; color:#3730a3; padding:4px 8px; border-radius:999px; }
+    @media (max-width: 900px){
+      .hero { grid-template-columns:1fr; }
+      .grid-2 { grid-template-columns:1fr; }
+      .grid-3 { grid-template-columns:1fr; }
+    }
   </style>
+
+  <!-- Client-side ZIP helper -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js" defer></script>
 </head>
 <body>
-  <div class="bar">
-    <div class="container">
-      <a class="btn" href="./">← Back</a>
-      <div class="info" id="info">Loading…</div>
-      <a id="openNew" class="btn btn-primary" href="#" target="_blank" rel="noopener">Open Template</a>
-    </div>
-  </div>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <div class="container">
-    <div class="preview-note">
-      <h3>Preview Mode</h3>
-      <p>These templates are full React applications that work best when opened directly. Click "Open Template" above to experience the full functionality.</p>
-      <p><strong>Note:</strong> The templates include admin panels, forms, and interactive features that require full page access.</p>
+  <header>
+    <div class="container row spread">
+      <div class="row brand">
+        <img src="./assets/logo.svg" alt="LabsForAmerica logo" />
+        <strong>LabsForAmerica</strong>
+        <span class="pill">Template Preview</span>
+      </div>
+      <nav class="row" aria-label="Primary">
+        <a class="small" href="./index.html#templates">← All templates</a>
+      </nav>
     </div>
-  </div>
+  </header>
+
+  <main id="main">
+    <div class="container" id="view" hidden>
+      <!-- Populated by script -->
+    </div>
+    <div class="container" id="error" hidden>
+      <div class="card">
+        <h1>Template not found</h1>
+        <p class="lead">Use a valid id: <code class="kbd">?id=civic</code>, <code class="kbd">?id=justice</code>, <code class="kbd">?id=edu</code>, <code class="kbd">?id=health</code>, <code class="kbd">?id=alert</code>.</p>
+        <div class="btn-row">
+          <a class="btn secondary" href="./index.html#templates">Browse templates</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container row spread">
+      <span class="small muted">© 2025 LabsForAmerica — sister sites for civic life</span>
+      <a class="small" href="mailto:hello@labsforamerica.org">Contact</a>
+    </div>
+  </footer>
 
   <script>
-    async function load() {
-      const params = new URLSearchParams(location.search);
-      const id = params.get('id');
-      if (!id) return fail('Missing ?id=');
+    // ---- Template registry (extend freely) -------------------------------
+    const TEMPLATES = {
+      civic: {
+        id: "civic",
+        name: "CivicLabs",
+        tagline: "Community engagement for cities & towns",
+        color: "#2563eb",
+        folder: "./templates/civiclabs-template",
+        img: "./public/preview-civic.webp",
+        features: [
+          "Challenge hub with submissions & voting",
+          "Events & signups",
+          "Printable summaries + CSV/JSON exports",
+          "Admin theming (logo, colors, contact)"
+        ],
+        goodFor: ["City staff", "Civic orgs", "Public works", "Neighborhood coalitions"]
+      },
+      justice: {
+        id: "justice",
+        name: "JusticeLabs",
+        tagline: "Secure community dialogue & anonymous tips",
+        color: "#dc2626",
+        folder: "./templates/justicelabs-template",
+        img: "./public/preview-justice.webp",
+        features: [
+          "Anonymous tip intake (privacy-first)",
+          "Community alerts feed",
+          "Discussion threads with moderation",
+          "Export for records workflows"
+        ],
+        goodFor: ["Police & Sheriff", "Legal aid", "Community justice boards"]
+      },
+      edu: {
+        id: "edu",
+        name: "EduLabs",
+        tagline: "Student projects, mentorship & resource sharing",
+        color: "#0ea5e9",
+        folder: "./templates/edulabs-template",
+        img: "./public/preview-edu.webp",
+        features: [
+          "Project submissions + team work",
+          "Mentor office hours",
+          "Resource library",
+          "FERPA-friendly privacy modes"
+        ],
+        goodFor: ["Universities", "K-12 districts", "Student orgs", "Labs & research groups"]
+      },
+      health: {
+        id: "health",
+        name: "HealthLabs",
+        tagline: "Community intake, programs & multilingual resources",
+        color: "#7c3aed",
+        folder: "./templates/healthlabs-template",
+        img: "./public/preview-health.webp",
+        features: [
+          "Multilingual resource library",
+          "Community health intake (anonymous option)",
+          "Program directory",
+          "CSV/JSON export for referrals"
+        ],
+        goodFor: ["Public health", "Free clinics", "Health nonprofits"]
+      },
+      alert: {
+        id: "alert",
+        name: "AlertLabs",
+        tagline: "Crisis pages for shareable, scannable public alerts",
+        color: "#f59e0b",
+        folder: "./templates/alertlabs-template",
+        img: "./public/preview-alert.webp",
+        features: [
+          "Single-purpose alert pages (AMBER, Silver, Severe WX, etc.)",
+          "Short URLs + QR share",
+          "Auto-expire & archive",
+          "Fast deploy for incident comms"
+        ],
+        goodFor: ["Emergency mgmt", "LEO/PIO", "Campus safety", "City comms"]
+      }
+    };
 
-      const res = await fetch('./templates.json', { cache:'no-store' });
-      const list = await res.json();
-      const t = list.find(x => x.id === id);
-      if (!t) return fail('Unknown template id');
-
-      const info = document.getElementById('info');
-      const openNew = document.getElementById('openNew');
-
-      info.textContent = `${t.title} — ${t.tagline}`;
-
-      // Link to static preview instead of complex React template
-      const previewMap = {
-        'civic': './static-previews/civic-preview.html',
-        'justice': './static-previews/justice-preview.html',
-        'edu': './static-previews/edu-preview.html',
-        'health': './static-previews/health-preview.html',
-        'alert': './static-previews/alert-preview.html'
-      };
-
-      openNew.href = previewMap[id] || t.previewPath;
+    // ---- Utilities -------------------------------------------------------
+    function qs(k){ return new URLSearchParams(location.search).get(k); }
+    function el(html){
+      const t = document.createElement("template");
+      t.innerHTML = html.trim();
+      return t.content.firstElementChild;
     }
-    function fail(msg){
-      document.getElementById('info').textContent = msg;
+
+    function showLoadingMessage() {
+      alert("Loading template... If you see a blank page, the React app may be loading. Please wait a moment and refresh if needed.");
     }
-    load();
+
+    // Client-side packer: tries to fetch common files and zip them
+    async function downloadZip(tpl){
+      const filesToTry = [
+        "index.html","README.md","config.json","styles.css","app.js","/assets","/images"
+      ];
+      const base = tpl.folder.replace(/\/$/,'');
+      const zip = new JSZip();
+      let added = 0;
+
+      // Helper to fetch a file and add if ok
+      async function addFile(path){
+        try{
+          const res = await fetch(path, {cache:"no-store"});
+          if(!res.ok || res.status >= 400) return false;
+          const blob = await res.blob();
+          const arr = await blob.arrayBuffer();
+          zip.file(path.replace(base+"/",""), arr);
+          return true;
+        }catch(_){ return false; }
+      }
+
+      // Single files
+      for(const f of filesToTry.slice(0,5)){
+        const ok = await addFile(`${base}/${f}`);
+        if(ok) added++;
+      }
+
+      // Folders (shallow): assets, images (optional)
+      async function addFolder(folder){
+        // If you keep a small manifest later, replace this with walking that list.
+        const candidates = [
+          "hero.png","hero.webp","logo.svg","logo.png",
+          "screenshot.png","screenshot.webp","icon.svg"
+        ];
+        let hits = 0;
+        await Promise.all(candidates.map(async name=>{
+          const ok = await addFile(`${base}/${folder}/${name}`);
+          if(ok) hits++;
+        }));
+        return hits;
+      }
+      added += await addFolder("assets");
+      added += await addFolder("images");
+
+      if(added === 0){
+        alert("Could not find template files to package. You can still open the template folder directly.");
+        return;
+      }
+      const blob = await zip.generateAsync({type:"blob"});
+      saveAs(blob, `${tpl.id}-template.zip`);
+    }
+
+    // ---- Render ----------------------------------------------------------
+    (function init(){
+      const id = (qs("id")||"").toLowerCase();
+      const tpl = TEMPLATES[id];
+      const view = document.getElementById("view");
+      const error = document.getElementById("error");
+
+      if(!tpl){
+        error.hidden = false;
+        return;
+      }
+
+      // Build view
+      const heading = `
+        <section aria-labelledby="t-h">
+          <div class="row" style="gap:12px;">
+            <h1 id="t-h" style="margin:0;">${tpl.name}</h1>
+            <span class="tag" style="border:1px solid #e2e8f0;">${tpl.id}</span>
+          </div>
+          <p class="lead">${tpl.tagline}</p>
+        </section>
+      `;
+
+      const hero = `
+        <section class="hero" style="margin-top:18px;">
+          <div class="card" style="background:#fff;">
+            <h2 style="margin-top:0;">What's inside</h2>
+            <ul class="list" role="list">
+              ${tpl.features.map(f=>`<li>• ${f}</li>`).join("")}
+            </ul>
+            <div class="btn-row">
+              <a class="btn primary" style="--brand:${tpl.color}"
+                 href="${tpl.folder}/index.html" target="_blank" rel="noopener"
+                 onclick="showLoadingMessage()">
+                Preview live
+              </a>
+              <a class="btn secondary"
+                 href="https://github.com/bohselecta/labs-for-america/generate"
+                 target="_blank" rel="noopener">
+                Deploy to GitHub Pages
+              </a>
+              <button class="btn ghost" id="zipBtn">Download .zip</button>
+            </div>
+            <p class="small muted" style="margin-top:8px;">
+              Tip: open preview, then use <span class="kbd">⚙ Admin</span> to brand colors, logo, and contact.
+              <br><strong>Note:</strong> Templates may take a moment to load as they include React components.
+            </p>
+          </div>
+
+          <div class="shot">
+            <picture>
+              <source srcset="${tpl.img}" type="image/webp" />
+              <img src="${tpl.img.replace('.webp','.png')}" alt="${tpl.name} preview screenshot" loading="eager" decoding="async" />
+            </picture>
+          </div>
+        </section>
+      `;
+
+      const info = `
+        <section class="grid-2" style="margin-top:16px;">
+          <div class="card">
+            <h3>Who it's for</h3>
+            <p class="muted">Designed for:</p>
+            <ul class="list" role="list">${tpl.goodFor.map(g=>`<li>• ${g}</li>`).join("")}</ul>
+            <div class="note" style="margin-top:12px;">
+              Optional exports (CSV/JSON) let you attach results to your existing ticketing or records systems.
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>How to deploy</h3>
+            <ol class="list" style="margin-top:8px;">
+              <li>Click <strong>Preview live</strong> to verify it fits.</li>
+              <li>Click <strong>Deploy to GitHub Pages</strong> to fork instantly (free).</li>
+              <li>Click the <span class="kbd">⚙ Admin</span> button in the app to set name, colors, logo, and email.</li>
+              <li>Share the link with your community. Done.</li>
+            </ol>
+            <p class="small muted" style="margin-top:8px;">
+              Prefer GitHub Pages? Download the zip and upload to a new repo → Settings → Pages → Deploy from <em>main</em>.
+            </p>
+          </div>
+        </section>
+      `;
+
+      const a11y = `
+        <section class="grid-3" style="margin-top:16px;">
+          <div class="card">
+            <h3>Privacy & Consent</h3>
+            <p class="small muted">Anonymous modes, minimal PII, and clear consent language baked in.</p>
+          </div>
+          <div class="card">
+            <h3>Moderation</h3>
+            <p class="small muted">Rate limits, profanity filter, and role gates. Print or export for audit.</p>
+          </div>
+          <div class="card">
+            <h3>Offline-capable</h3>
+            <p class="small muted">Local-first storage with exportable summaries for records and FOIA.</p>
+          </div>
+        </section>
+      `;
+
+      view.append(
+        el(heading),
+        el(hero),
+        el(info),
+        el(a11y)
+      );
+      view.hidden = false;
+
+      // Wire up ZIP
+      const zipBtn = document.getElementById("zipBtn");
+      zipBtn?.addEventListener("click", ()=>downloadZip(tpl));
+    })();
   </script>
 </body>
 </html>

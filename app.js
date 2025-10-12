@@ -4,23 +4,27 @@
   const nav = document.getElementById('nav');
   
   hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    nav.classList.toggle('active');
+    const open = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', String(!open));
+    hamburger.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
+    nav.classList.toggle('is-open', !open);
   });
   
   // Close menu when clicking outside
   document.addEventListener('click', (e) => {
     if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
-      hamburger.classList.remove('active');
-      nav.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open menu');
+      nav.classList.remove('is-open');
     }
   });
   
   // Close menu when clicking nav links
   nav.addEventListener('click', (e) => {
     if (e.target.tagName === 'A') {
-      hamburger.classList.remove('active');
-      nav.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open menu');
+      nav.classList.remove('is-open');
     }
   });
 
@@ -35,7 +39,7 @@
         const color = t.color || '#2563EB';
         const features = (t.features || []).slice(0, 3).join(' • ');
         const hasGithubPages = t.githubPagesUrl && t.githubPagesUrl.length > 4;
-        const previewUrl = `./static-previews/${t.id}-preview.html`;
+        const previewUrl = `./preview.html?id=${t.id}`;
 
         console.log('Template:', t.id, 'Preview URL:', previewUrl);
 
@@ -68,7 +72,7 @@
     };
 
     templates.forEach(t => {
-      console.log('Creating card for template:', t.id, 'with URL:', `./static-previews/${t.id}-preview.html`);
+      console.log('Creating card for template:', t.id, 'with URL:', `./preview.html?id=${t.id}`);
       grid.appendChild(tpl(t));
     });
   } catch (e) {
