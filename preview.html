@@ -44,7 +44,17 @@
       const openNew = document.getElementById('openNew');
 
       info.textContent = `${t.title} — ${t.tagline}`;
-      openNew.href = t.previewPath;
+
+      // Link to static preview instead of complex React template
+      const previewMap = {
+        'civic': './static-previews/civic-preview.html',
+        'justice': './static-previews/justice-preview.html',
+        'edu': './static-previews/edu-preview.html',
+        'health': './static-previews/health-preview.html',
+        'alert': './static-previews/alert-preview.html'
+      };
+
+      openNew.href = previewMap[id] || t.previewPath;
     }
     function fail(msg){
       document.getElementById('info').textContent = msg;

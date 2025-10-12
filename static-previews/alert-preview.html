@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlertLabs Preview - Emergency Communication Platform</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1f2937; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .hero { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 60px 0; text-align: center; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+
+        .section { padding: 60px 0; }
+        .section h2 { text-align: center; font-size: 2rem; margin-bottom: 3rem; color: #1f2937; }
+
+        .nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #f59e0b; color: white; }
+
+        .alerts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+
+        .alert-card { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border-left: 4px solid #f59e0b; }
+        .alert-priority { background: #f59e0b; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-bottom: 1rem; }
+
+        .alert-title { font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem; }
+        .alert-content { color: #6b7280; margin-bottom: 1.5rem; line-height: 1.6; }
+
+        .alert-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .btn { background: #f59e0b; color: white; padding: 0.5rem 1rem; border: none; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 600; cursor: pointer; display: inline-block; text-decoration: none; }
+        .btn-secondary { background: #6b7280; }
+        .btn-outline { background: transparent; color: #f59e0b; border: 1px solid #f59e0b; }
+
+        .create-alert { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto; }
+
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; }
+
+        .qr-section { text-align: center; margin-top: 2rem; }
+        .qr-placeholder { width: 150px; height: 150px; background: #f3f4f6; border: 2px dashed #d1d5db; border-radius: 0.5rem; display: inline-flex; align-items: center; justify-content: center; color: #6b7280; font-size: 0.875rem; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .alerts-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav">
+        <div class="logo">AlertLabs</div>
+        <nav>Dashboard • Create Alert • Templates • Analytics</nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Emergency Communication Hub</h1>
+            <p>Create shareable alerts with facts pages, QR codes, and printable materials. Reach your community quickly and effectively.</p>
+            <div style="margin-top: 2rem;">
+                <a href="#create" class="btn">Create New Alert</a>
+                <a href="#alerts" class="btn" style="background: rgba(255,255,255,0.2); margin-left: 1rem;">View Active Alerts</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Active Alerts -->
+    <section id="alerts" class="section">
+        <div class="container">
+            <h2>Active Community Alerts</h2>
+            <div class="alerts-grid">
+                <div class="alert-card">
+                    <div class="alert-priority">HIGH PRIORITY</div>
+                    <div class="alert-title">🚨 Water Boil Advisory</div>
+                    <div class="alert-content">
+                        <strong>Effective immediately:</strong> Boil all tap water for at least 1 minute before drinking, cooking, or brushing teeth. This affects all residents in the downtown area.
+                    </div>
+                    <div class="alert-meta" style="margin-bottom: 1rem; font-size: 0.875rem; color: #6b7280;">
+                        Posted: 2 hours ago • Expires: Dec 15, 2024 • Views: 1,247
+                    </div>
+                    <div class="alert-actions">
+                        <button class="btn">View Details</button>
+                        <button class="btn-outline">Print Sheet</button>
+                        <button class="btn-secondary">Edit Alert</button>
+                    </div>
+                </div>
+
+                <div class="alert-card">
+                    <div class="alert-priority">MEDIUM PRIORITY</div>
+                    <div class="alert-title">🏗️ Road Construction - Main Street</div>
+                    <div class="alert-content">
+                        Lane closures on Main Street between 1st and 3rd Avenue starting Monday. Expect delays during morning and evening rush hours. Detour routes available.
+                    </div>
+                    <div class="alert-meta" style="margin-bottom: 1rem; font-size: 0.875rem; color: #6b7280;">
+                        Posted: 1 day ago • Expires: Jan 30, 2025 • Views: 892
+                    </div>
+                    <div class="alert-actions">
+                        <button class="btn">View Details</button>
+                        <button class="btn-outline">Print Sheet</button>
+                        <button class="btn-secondary">Edit Alert</button>
+                    </div>
+                </div>
+
+                <div class="alert-card">
+                    <div class="alert-priority">INFORMATION</div>
+                    <div class="alert-title">📅 Community Meeting - Budget Discussion</div>
+                    <div class="alert-content">
+                        Public forum to discuss next year's budget priorities. All residents welcome. Light refreshments provided. Sign up to speak during the meeting.
+                    </div>
+                    <div class="alert-meta" style="margin-bottom: 1rem; font-size: 0.875rem; color: #6b7280;">
+                        Posted: 3 days ago • Event: Dec 18, 7PM • RSVPs: 34
+                    </div>
+                    <div class="alert-actions">
+                        <button class="btn">RSVP Now</button>
+                        <button class="btn-outline">Print Sheet</button>
+                        <button class="btn-secondary">Edit Alert</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-grid">
+                <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); text-align: center;">
+                    <div style="font-size: 2rem; color: #f59e0b; margin-bottom: 1rem;">📊</div>
+                    <div style="font-size: 2rem; font-weight: bold; color: #1f2937;">2,341</div>
+                    <div style="color: #6b7280;">Alerts Sent This Month</div>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); text-align: center;">
+                    <div style="font-size: 2rem; color: #10b981; margin-bottom: 1rem;">👁️</div>
+                    <div style="font-size: 2rem; font-weight: bold; color: #1f2937;">18,492</div>
+                    <div style="color: #6b7280;">Total Views</div>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); text-align: center;">
+                    <div style="font-size: 2rem; color: #3b82f6; margin-bottom: 1rem;">📱</div>
+                    <div style="font-size: 2rem; font-weight: bold; color: #1f2937;">94%</div>
+                    <div style="color: #6b7280;">Mobile Access Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Create Alert -->
+    <section id="create" class="section" style="background: white;">
+        <div class="container">
+            <h2>Create New Alert</h2>
+            <div class="create-alert">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">🚨 Create Emergency Alert</h3>
+                    <p>Design alerts that inform and protect your community</p>
+                </div>
+
+                <form>
+                    <div class="form-group">
+                        <label>Alert Type</label>
+                        <select>
+                            <option>🚨 Emergency - Immediate Action Required</option>
+                            <option>⚠️ Warning - Potential Risk</option>
+                            <option>ℹ️ Information - General Notice</option>
+                            <option>📅 Event - Community Gathering</option>
+                            <option>🏗️ Construction - Road Work</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Alert Title</label>
+                        <input type="text" placeholder="Clear, urgent headline">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Alert Message</label>
+                        <textarea rows="4" placeholder="Detailed information about the alert..."></textarea>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div class="form-group">
+                            <label>Start Date/Time</label>
+                            <input type="datetime-local">
+                        </div>
+
+                        <div class="form-group">
+                            <label>End Date/Time</label>
+                            <input type="datetime-local">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Distribution Options</label>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem;">
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="checkbox" checked style="margin-right: 0.5rem;"> Website
+                            </label>
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="checkbox" checked style="margin-right: 0.5rem;"> Email
+                            </label>
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="checkbox" checked style="margin-right: 0.5rem;"> SMS
+                            </label>
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="checkbox" style="margin-right: 0.5rem;"> Social Media
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Attach Resources</label>
+                        <input type="file" multiple accept=".pdf,.doc,.jpg,.png">
+                        <small style="color: #6b7280;">Upload maps, contact info, or additional documents</small>
+                    </div>
+
+                    <div class="qr-section">
+                        <h4>QR Code & Print Materials</h4>
+                        <p style="color: #6b7280; margin-bottom: 1rem;">Automatically generated for easy sharing</p>
+                        <div class="qr-placeholder">
+                            QR Code<br>Will Generate
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn" style="padding: 0.75rem 2rem;">Create Alert</button>
+                        <button class="btn-secondary" style="margin-left: 1rem; padding: 0.75rem 2rem;">Save as Draft</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

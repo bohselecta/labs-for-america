@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CivicLabs Preview - Community Engagement Platform</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1f2937; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .hero { background: linear-gradient(135deg, #2563eb, #1e40af); color: white; padding: 60px 0; text-align: center; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+
+        .section { padding: 60px 0; }
+        .section h2 { text-align: center; font-size: 2rem; margin-bottom: 3rem; color: #1f2937; }
+
+        .nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #2563eb; color: white; }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+
+        .challenges-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+
+        .challenge-card { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        .challenge-card:hover { transform: translateY(-5px); }
+
+        .challenge-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: #2563eb; }
+        .challenge-description { color: #6b7280; margin-bottom: 1.5rem; }
+
+        .btn { background: #2563eb; color: white; padding: 0.75rem 2rem; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; display: inline-block; text-decoration: none; }
+
+        .contribute-form { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto; }
+
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; }
+
+        .admin-panel { position: fixed; top: 1rem; right: 1rem; background: white; border-radius: 0.5rem; padding: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .challenges-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav">
+        <div class="logo">My Civic Organization</div>
+        <nav>Home • Challenges • Contribute • Community</nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Welcome to CivicLabs</h1>
+            <p>Your voice matters in building a stronger community. Join active challenges, share your ideas, and participate in civic decision-making.</p>
+            <div style="margin-top: 2rem;">
+                <a href="#challenges" class="btn">Explore Challenges</a>
+                <a href="#contribute" class="btn" style="background: rgba(255,255,255,0.2); margin-left: 1rem;">Share Your Ideas</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Active Challenges -->
+    <section id="challenges" class="section">
+        <div class="container">
+            <h2>Active Community Challenges</h2>
+            <div class="challenges-grid">
+                <div class="challenge-card">
+                    <div class="challenge-title">Community Garden Initiative</div>
+                    <div class="challenge-description">Help us plan and implement community gardens across the city to improve food security and green spaces.</div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <span>👥 24 participants</span>
+                        <span>📅 Due: Dec 31, 2024</span>
+                    </div>
+                    <div style="background: #e5e7eb; height: 8px; border-radius: 4px; margin-bottom: 1rem;">
+                        <div style="width: 60%; height: 100%; background: #2563eb; border-radius: 4px;"></div>
+                    </div>
+                    <div>Expected Impact: Improve food access for 500+ families</div>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn">Join Initiative</button>
+                        <button class="btn" style="background: #6b7280; margin-left: 0.5rem;">Take Survey</button>
+                    </div>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-title">Public Transit Survey</div>
+                    <div class="challenge-description">Share your experiences with public transportation to help improve routes and schedules.</div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <span>👥 156 participants</span>
+                        <span>📅 Due: Nov 15, 2024</span>
+                    </div>
+                    <div style="background: #e5e7eb; height: 8px; border-radius: 4px; margin-bottom: 1rem;">
+                        <div style="width: 80%; height: 100%; background: #10b981; border-radius: 4px;"></div>
+                    </div>
+                    <div>Expected Impact: Shape transportation for 50,000+ daily riders</div>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn">Take Survey</button>
+                    </div>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-title">Youth Mentorship Program</div>
+                    <div class="challenge-description">Connect experienced professionals with young people seeking career guidance.</div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <span>👥 8 participants</span>
+                        <span>📅 Due: Oct 30, 2024</span>
+                    </div>
+                    <div style="background: #e5e7eb; height: 8px; border-radius: 4px; margin-bottom: 1rem;">
+                        <div style="width: 25%; height: 100%; background: #f59e0b; border-radius: 4px;"></div>
+                    </div>
+                    <div>Expected Impact: Provide guidance to 100+ young people</div>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn">Join as Mentor</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contribute Section -->
+    <section id="contribute" class="section" style="background: white;">
+        <div class="container">
+            <h2>Share Your Ideas & Feedback</h2>
+            <div class="contribute-form">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">💡 Share Your Thoughts</h3>
+                    <p>Your ideas help shape our community's future</p>
+                </div>
+
+                <form>
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" placeholder="Enter your name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contribution Title</label>
+                        <input type="text" placeholder="Brief title for your contribution">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select>
+                            <option>💡 Idea</option>
+                            <option>💬 Feedback</option>
+                            <option>❓ Question</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Contribution</label>
+                        <textarea rows="4" placeholder="Share your thoughts, ideas, or feedback..."></textarea>
+                    </div>
+
+                    <button class="btn">Submit Contribution</button>
+                </form>
+
+                <div style="background: #f9fafb; border-radius: 0.75rem; padding: 1rem; margin-top: 1.5rem; font-size: 0.9rem; color: #6b7280; text-align: center;">
+                    <strong>Privacy Note:</strong> You can choose to submit anonymously. All contributions are reviewed before publication.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel">
+        <button style="background: #f59e0b; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.25rem;">⚙️ Admin</button>
+    </div>
+</body>
+</html>

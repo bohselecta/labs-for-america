@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthLabs Preview - Community Health Intake Platform</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1f2937; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .hero { background: linear-gradient(135deg, #7c3aed, #6d28d9); color: white; padding: 60px 0; text-align: center; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+
+        .section { padding: 60px 0; }
+        .section h2 { text-align: center; font-size: 2rem; margin-bottom: 3rem; color: #1f2937; }
+
+        .nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #7c3aed; color: white; }
+
+        .intake-form { background: white; border-radius: 1rem; padding: 3rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); max-width: 900px; margin: 0 auto; }
+
+        .language-selector { text-align: center; margin-bottom: 2rem; }
+        .lang-btn { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; padding: 0.5rem 1rem; border-radius: 0.5rem; margin: 0 0.25rem; cursor: pointer; }
+        .lang-btn.active { background: #7c3aed; color: white; }
+
+        .btn { background: #7c3aed; color: white; padding: 0.75rem 2rem; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; display: inline-block; text-decoration: none; }
+        .btn-secondary { background: #6b7280; }
+
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; }
+
+        .resources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+
+        .resource-card { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); text-align: center; }
+        .resource-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .resource-title { font-size: 1.25rem; font-weight: 600; color: #7c3aed; margin-bottom: 1rem; }
+        .resource-description { color: #6b7280; }
+
+        .privacy-notice { background: #fef3c7; border: 1px solid #f59e0b; border-radius: 0.75rem; padding: 1rem; margin-top: 2rem; font-size: 0.9rem; color: #92400e; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .resources-grid { grid-template-columns: 1fr; }
+            .intake-form { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav">
+        <div class="logo">HealthLabs</div>
+        <nav>Intake • Resources • Support • Español</nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Community Health Support</h1>
+            <p>Accessible health intake and multilingual resources. Connect with care providers while maintaining your privacy and dignity.</p>
+            <div style="margin-top: 2rem;">
+                <a href="#intake" class="btn">Start Health Intake</a>
+                <a href="#resources" class="btn" style="background: rgba(255,255,255,0.2); margin-left: 1rem;">Find Resources</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Health Intake -->
+    <section id="intake" class="section" style="background: white;">
+        <div class="container">
+            <h2>Health Intake Form</h2>
+            <div class="intake-form">
+                <div class="language-selector">
+                    <h3 style="margin-bottom: 1rem;">🌐 Select Language / Seleccionar Idioma</h3>
+                    <button class="lang-btn active">English</button>
+                    <button class="lang-btn">Español</button>
+                    <button class="lang-btn">中文</button>
+                    <button class="lang-btn">Tiếng Việt</button>
+                    <button class="lang-btn">العربية</button>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏥 Health Support Intake</h3>
+                    <p>All information is confidential and secure. No personal identifiers required.</p>
+                </div>
+
+                <form>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div class="form-group">
+                            <label>Primary Concern</label>
+                            <select>
+                                <option>Medical Care</option>
+                                <option>Mental Health</option>
+                                <option>Dental Care</option>
+                                <option>Vision Care</option>
+                                <option>Nutrition</option>
+                                <option>Housing Support</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Urgency Level</label>
+                            <select>
+                                <option>🟢 Routine care needed</option>
+                                <option>🟡 Soon (within weeks)</option>
+                                <option>🟠 Urgent (within days)</option>
+                                <option>🔴 Emergency (immediate)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Describe Your Health Needs</label>
+                        <textarea rows="4" placeholder="Please describe your symptoms, concerns, or health needs..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred Contact Method</label>
+                        <select>
+                            <option>Phone call</option>
+                            <option>Text message</option>
+                            <option>Email</option>
+                            <option>No contact preferred</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Additional Support Needed</label>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem;">
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="checkbox" style="margin-right: 0.5rem;"> Transportation
+                            </label>
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="checkbox" style="margin-right: 0.5rem;"> Childcare
+                            </label>
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="checkbox" style="margin-right: 0.5rem;"> Translation
+                            </label>
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="checkbox" style="margin-right: 0.5rem;"> Financial assistance
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="privacy-notice">
+                        <strong>🔒 Privacy & Confidentiality:</strong> Your health information is protected by HIPAA and state privacy laws. You can withdraw at any time. No immigration status questions will be asked.
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn">Submit Intake Form</button>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: #6b7280;">
+                            Expected response time: 1-3 business days
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources -->
+    <section id="resources" class="section">
+        <div class="container">
+            <h2>Health Resources & Support</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">🏥</div>
+                    <div class="resource-title">Free Clinics</div>
+                    <div class="resource-description">Find nearby free and low-cost medical clinics, dental care, and vision services in your area.</div>
+                    <button class="btn" style="margin-top: 1rem;">Find Clinics</button>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">🧠</div>
+                    <div class="resource-title">Mental Health Support</div>
+                    <div class="resource-description">Access crisis hotlines, counseling services, and mental health resources available 24/7.</div>
+                    <button class="btn" style="margin-top: 1rem;">Get Support</button>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">👶</div>
+                    <div class="resource-title">Family Health Services</div>
+                    <div class="resource-description">Prenatal care, pediatric services, family planning, and WIC nutrition program information.</div>
+                    <button class="btn" style="margin-top: 1rem;">Family Resources</button>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">💊</div>
+                    <div class="resource-title">Prescription Assistance</div>
+                    <div class="resource-description">Programs to help with medication costs, patient assistance programs, and discount pharmacies.</div>
+                    <button class="btn" style="margin-top: 1rem;">Prescription Help</button>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">🚗</div>
+                    <div class="resource-title">Transportation</div>
+                    <div class="resource-description">Medical transportation services, ride-sharing programs, and mobility assistance resources.</div>
+                    <button class="btn" style="margin-top: 1rem;">Transportation Help</button>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">📱</div>
+                    <div class="resource-title">Emergency Resources</div>
+                    <div class="resource-description">Emergency contacts, crisis intervention services, and immediate assistance hotlines.</div>
+                    <button class="btn" style="margin-top: 1rem;">Emergency Help</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
