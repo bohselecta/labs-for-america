@@ -901,7 +901,7 @@
             function updateTheme() {
                 document.documentElement.style.setProperty('--primary-color', config.primaryColor);
                 // Apply academic theme class
-                document.body.className = \`academic-\${config.primaryColor.replace('#', '').substring(0, 3)}\`;
+                document.body.className = "academic-" + config.primaryColor.replace('#', '').substring(0, 3);
             }
 
             updateTheme();
@@ -1232,7 +1232,7 @@
                                                                 <div className="project-title">{project.title}</div>
                                                                 <div className="project-category">{project.category}</div>
                                                             </div>
-                                                            <div className={\`project-status \${project.status}\`}>
+                                                            <div className={"project-status " + project.status}>
                                                                 {project.status}
                                                             </div>
                                                         </div>
@@ -1245,7 +1245,7 @@
                                                         </div>
 
                                                         <div className="project-team">
-                                                            <strong>Team:</strong> {project.author} {project.team.length > 0 && `+ ${project.team.length} others`}
+                                                            <strong>Team:</strong> {project.author} {project.team.length > 0 && "+ " + project.team.length + " others"}
                                                         </div>
 
                                                         {/* Academic Integrity Panel */}
@@ -1253,7 +1253,7 @@
                                                             <div className="integrity-score">
                                                                 <span>Academic Integrity Score</span>
                                                                 <div className="score-bar">
-                                                                    <div className="score-fill" style={{width: \`\${project.integrityScore}%\`}}></div>
+                                                                    <div className="score-fill" style={{width: project.integrityScore + '%'}}></div>
                                                                 </div>
                                                                 <span>{project.integrityScore}%</span>
                                                             </div>
