@@ -8,7 +8,7 @@
       try {
         const color = t.color || '#2563EB';
         const features = (t.features || []).slice(0, 3).join(' • ');
-        const hasReplit = t.replitUrl && t.replitUrl.length > 4;
+        const hasGithubPages = t.githubPagesUrl && t.githubPagesUrl.length > 4;
         const previewUrl = `./static-previews/${t.id}-preview.html`;
 
         console.log('Template:', t.id, 'Preview URL:', previewUrl);
@@ -27,9 +27,9 @@
           <div class="template-actions">
             <a class="btn small" href="${previewUrl}" target="_blank" rel="noopener">View Template</a>
             ${
-              hasReplit
-                ? `<a class="btn small btn-primary" href="${t.replitUrl}" target="_blank" rel="noopener">Fork on Replit</a>`
-                : `<button class="btn small" disabled title="Admin hasn't set Replit link yet">Fork on Replit</button>`
+              hasGithubPages
+                ? `<a class="btn small btn-primary" href="${t.githubPagesUrl}" target="_blank" rel="noopener">🚀 Deploy to GitHub Pages</a>`
+                : `<button class="btn small" disabled title="GitHub Pages deployment not configured">Deploy to GitHub Pages</button>`
             }
             <a class="btn small" href="./${t.folder}/README.md" target="_blank" rel="noopener">README</a>
           </div>
