@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Preview — LabsForAmerica</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .bar{border-bottom:1px solid var(--line);background:#fff}
+    .bar .container{display:flex;align-items:center;gap:12px;padding:10px 0}
+    .info{color:var(--muted)}
+    .preview-note{background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:16px;margin:16px 0;max-width:600px}
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <div class="container">
+      <a class="btn" href="./">← Back</a>
+      <div class="info" id="info">Loading…</div>
+      <a id="openNew" class="btn btn-primary" href="#" target="_blank" rel="noopener">Open Template</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="preview-note">
+      <h3>Preview Mode</h3>
+      <p>These templates are full React applications that work best when opened directly. Click "Open Template" above to experience the full functionality.</p>
+      <p><strong>Note:</strong> The templates include admin panels, forms, and interactive features that require full page access.</p>
+    </div>
+  </div>
+
+  <script>
+    async function load() {
+      const params = new URLSearchParams(location.search);
+      const id = params.get('id');
+      if (!id) return fail('Missing ?id=');
+
+      const res = await fetch('./templates.json', { cache:'no-store' });
+      const list = await res.json();
+      const t = list.find(x => x.id === id);
+      if (!t) return fail('Unknown template id');
+
+      const info = document.getElementById('info');
+      const openNew = document.getElementById('openNew');
+
+      info.textContent = `${t.title} — ${t.tagline}`;
+      openNew.href = t.previewPath;
+    }
+    function fail(msg){
+      document.getElementById('info').textContent = msg;
+    }
+    load();
+  </script>
+</body>
+</html>

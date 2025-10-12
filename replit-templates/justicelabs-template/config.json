@@ -1,0 +1,95 @@
+{
+  "orgName": "Justice Department",
+  "primaryColor": "#dc2626",
+  "contactEmail": "justice@example.com",
+  "logoUrl": "",
+  "templateType": "justicelabs",
+  "description": "Advanced law enforcement technology platform for U.S. police departments featuring community engagement, anonymous tip reporting, emergency response coordination, data integration, and CJIS-compliant security",
+  "organizationType": "Police Department",
+  "jurisdiction": "City of Example",
+  "departmentSize": "Medium (50-200 officers)",
+  "emergencyMode": false,
+  "features": [
+    "Community engagement and transparency tools",
+    "Anonymous tip submission with multi-channel support",
+    "Public crime reporting and citizen input",
+    "Emergency response coordination and manhunt mode",
+    "Data integration with criminal databases (NCIC, state systems)",
+    "Crime mapping and data visualization",
+    "Interagency information sharing",
+    "Mobile access for officers and citizens",
+    "CJIS-compliant security and access controls",
+    "Comprehensive admin panel for law enforcement customization",
+    "Real-time alerts and notifications",
+    "Predictive analytics and crime pattern analysis"
+  ],
+  "activeIncidents": [],
+  "publicAlerts": [
+    {
+      "id": 1,
+      "title": "Community Meeting Tonight",
+      "content": "Join us at City Hall at 7 PM for our monthly community justice discussion.",
+      "priority": "normal",
+      "date": "2024-10-11T19:00:00.000Z",
+      "type": "community"
+    },
+    {
+      "id": 2,
+      "title": "New Community Resources Available",
+      "content": "We've added new legal aid resources and community support services.",
+      "priority": "low",
+      "date": "2024-10-10T10:00:00.000Z",
+      "type": "resources"
+    }
+  ],
+  "communityPrograms": [
+    {
+      "id": 1,
+      "title": "Neighborhood Watch Program",
+      "description": "Join our community watch program to help keep our neighborhoods safe.",
+      "status": "active",
+      "participants": 45,
+      "type": "Community Safety"
+    },
+    {
+      "id": 2,
+      "title": "Youth Outreach Initiative",
+      "description": "Programs connecting local youth with positive role models and career opportunities.",
+      "status": "active",
+      "participants": 32,
+      "type": "Youth Development"
+    }
+  ],
+  "tipCategories": [
+    "Suspicious Activity",
+    "Crime in Progress",
+    "Missing Person",
+    "Wanted Suspect",
+    "Drug Activity",
+    "Traffic Concerns",
+    "Community Concerns",
+    "Other"
+  ],
+  "features": {
+    "enableAnonymousTips": true,
+    "enablePublicReporting": true,
+    "enableEmergencyMode": true,
+    "enableCrimeMapping": true,
+    "enableDataIntegration": true,
+    "enableInteragencySharing": true,
+    "enableMobileAccess": true
+  },
+  "security": {
+    "cjisCompliant": true,
+    "requireAuthentication": true,
+    "enableAuditTrail": true,
+    "dataEncryption": true,
+    "accessLogging": true
+  },
+  "integrations": {
+    "enableNCIC": false,
+    "enableStateDatabases": false,
+    "enableCAD": false,
+    "enableRMS": false
+  }
+}

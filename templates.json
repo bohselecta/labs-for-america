@@ -1,0 +1,57 @@
+[
+  {
+    "id": "civic",
+    "title": "CivicLabs",
+    "tagline": "Community challenges & proposals",
+    "description": "Run time-boxed civic projects: gather ideas, compare options, and export clean summaries.",
+    "folder": "replit-templates/civiclabs-template",
+    "previewPath": "replit-templates/civiclabs-template/index.html",
+    "color": "#2563EB",
+    "replitUrl": "",
+    "features": ["Challenges & proposals", "Citizen submissions", "Voting & summaries", "CSV/JSON exports"]
+  },
+  {
+    "id": "justice",
+    "title": "JusticeLabs",
+    "tagline": "Anonymous tips & community discussions",
+    "description": "Privacy-first intake for tips and community safety threads with role-based moderation.",
+    "folder": "replit-templates/justicelabs-template",
+    "previewPath": "replit-templates/justicelabs-template/index.html",
+    "color": "#DC2626",
+    "replitUrl": "",
+    "features": ["Anonymous tips", "Discussion threads", "Basic moderation", "Audit trail"]
+  },
+  {
+    "id": "edu",
+    "title": "EduLabs",
+    "tagline": "Projects, mentoring & collaboration",
+    "description": "Student projects, mentor office hours, light peer review, and exportable outcomes.",
+    "folder": "replit-templates/edulabs-template",
+    "previewPath": "replit-templates/edulabs-template/index.html",
+    "color": "#0EA5E9",
+    "replitUrl": "",
+    "features": ["Project submissions", "Mentor slots", "Peer review", "Integrity checks (light)"]
+  },
+  {
+    "id": "health",
+    "title": "HealthLabs",
+    "tagline": "Community intake & resources (multilingual)",
+    "description": "Story intake, resource library, multilingual UI, and privacy-first defaults for clinics.",
+    "folder": "replit-templates/healthlabs-template",
+    "previewPath": "replit-templates/healthlabs-template/index.html",
+    "color": "#7C3AED",
+    "replitUrl": "",
+    "features": ["Intake form", "Resource library", "Language selector", "Privacy notices"]
+  },
+  {
+    "id": "alert",
+    "title": "AlertLabs",
+    "tagline": "Shareable info pages paired with alerts",
+    "description": "Create a small facts page for each alert with a short link/QR to distribute quickly.",
+    "folder": "replit-templates/alertlabs-template",
+    "previewPath": "replit-templates/alertlabs-template/index.html",
+    "color": "#F59E0B",
+    "replitUrl": "",
+    "features": ["Alert presets", "Required fields by type", "Permalinks", "Print/QR sheet"]
+  }
+]

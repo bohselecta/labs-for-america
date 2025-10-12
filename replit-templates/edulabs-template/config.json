@@ -1,0 +1,37 @@
+{
+  "orgName": "EduLabs",
+  "primaryColor": "#059669",
+  "contactEmail": "education@example.com",
+  "logoUrl": "",
+  "templateType": "edulabs",
+  "description": "Advanced educational collaboration platform for research, innovation, and academic excellence",
+  "institutionType": "University",
+  "features": [
+    "Project submission and showcase with academic integrity",
+    "Team collaboration and peer review workflows",
+    "Mentor office hours scheduling and booking",
+    "Multilingual resource library and knowledge sharing",
+    "Academic integrity tools and plagiarism detection",
+    "FERPA-compliant privacy controls",
+    "Role-based permissions and access management",
+    "Social sharing for approved projects",
+    "Real-time updates and collaboration",
+    "Comprehensive admin panel for institutional customization"
+  ],
+  "academicIntegrity": {
+    "enablePlagiarismCheck": true,
+    "requireApproval": true,
+    "enableAuditTrail": true
+  },
+  "privacySettings": {
+    "ferpaCompliant": true,
+    "showStudentNames": false,
+    "allowPublicSharing": true
+  },
+  "platformFeatures": {
+    "enableTeamCollaboration": true,
+    "enablePeerReview": true,
+    "enableSocialSharing": true,
+    "enableResourceLibrary": true
+  }
+}

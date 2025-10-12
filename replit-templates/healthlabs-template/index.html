@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthLabs - Community Health Platform</title>
+    <meta name="description" content="HealthLabs - Comprehensive community health platform for local clinics, public health departments, and community organizations. Share health stories, access multilingual resources, and connect with wellness programs.">
+    <meta name="keywords" content="community health, public health, health resources, wellness programs, multilingual health, health equity, community wellness, health platform">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f8fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            background: var(--primary-color, #7c3aed);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--primary-color, #7c3aed), #6d28d9);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            background: white;
+            color: var(--primary-color, #7c3aed);
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: #1f2937;
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .program-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 4px solid var(--primary-color, #7c3aed);
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .program-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color, #7c3aed);
+        }
+
+        .program-description {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+
+        .program-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        .intake-form {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .resources {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .resource {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary-color, #7c3aed);
+        }
+
+        .resource-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .resource-title {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .resource-language {
+            background: var(--primary-color, #7c3aed);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .resource-content {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .resource-library {
+            background: #faf5ff;
+            border: 1px solid #e9d5ff;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .resource-library h3 {
+            color: #7c3aed;
+            margin-bottom: 1rem;
+        }
+
+        .resource-item {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-left: 4px solid #7c3aed;
+        }
+
+        .admin-panel {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 2px solid #e5e7eb;
+        }
+
+        .admin-btn {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+        .admin-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .admin-modal {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .admin-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #6b7280;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .privacy-notice {
+            background: #eff6ff;
+            border: 1px solid #3b82f6;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+        }
+
+        .disclaimer {
+            background: #fffbeb;
+            border: 1px solid #f59e0b;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .programs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Load Fireproof from ESM.sh
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.textContent = `
+            import { useFireproof } from "https://esm.sh/use-fireproof";
+
+            // Initialize Fireproof database
+            const { database, useDocument, useLiveQuery } = useFireproof('healthlabs');
+
+            // Configuration
+            let config = {
+                orgName: "HealthLabs",
+                primaryColor: "#7c3aed",
+                contactEmail: "health@example.com",
+                logoUrl: "",
+                organizationType: "Community Health Clinic",
+                welcomeMessage: "Welcome to our community health platform. Together, we're building healthier communities through shared knowledge, support, and wellness resources.",
+                tagline: "Your health story matters - share, learn, and grow together",
+                programs: [
+                    {
+                        id: 1,
+                        title: "Mental Health Support",
+                        description: "Community-based mental health resources and support groups for stress management and wellness.",
+                        status: "active",
+                        participants: 45,
+                        type: "Wellness"
+                    },
+                    {
+                        id: 2,
+                        title: "Nutrition Education Program",
+                        description: "Educational workshops on healthy eating, meal planning, and nutrition for all ages.",
+                        status: "active",
+                        participants: 32,
+                        type: "Education"
+                    },
+                    {
+                        id: 3,
+                        title: "Chronic Disease Management",
+                        description: "Support groups and resources for managing diabetes, heart disease, and other chronic conditions.",
+                        status: "planning",
+                        participants: 18,
+                        type: "Support"
+                    }
+                ],
+                featuredResources: [
+                    {
+                        id: 1,
+                        title: "Nutrition Guide (English/Español)",
+                        description: "Comprehensive guide to healthy eating and meal planning",
+                        category: "Nutrition",
+                        language: "English, Español",
+                        author: "Health Department",
+                        type: "Guide"
+                    },
+                    {
+                        id: 2,
+                        title: "Mental Health Toolkit",
+                        description: "Resources for stress management and emotional wellness",
+                        category: "Mental Health",
+                        language: "English, Français",
+                        author: "Community Health Workers",
+                        type: "Toolkit"
+                    },
+                    {
+                        id: 3,
+                        title: "Exercise Programs",
+                        description: "Age-appropriate physical activity recommendations",
+                        category: "Exercise",
+                        language: "English, 中文",
+                        author: "Wellness Committee",
+                        type: "Program Guide"
+                    }
+                ],
+                supportCategories: [
+                    "Mental Health Support",
+                    "Nutrition Guidance",
+                    "Chronic Disease Management",
+                    "Preventive Care",
+                    "Community Resources",
+                    "Other"
+                ],
+                languages: [
+                    "English",
+                    "Español",
+                    "Français",
+                    "中文",
+                    "العربية",
+                    "Other"
+                ],
+                privacySettings: {
+                    allowAnonymous: true,
+                    requireConsent: true,
+                    dataRetention: "As needed for community health planning",
+                    disclaimer: "This is not medical advice. For emergencies, call 911 or visit your nearest emergency room."
+                },
+                features: {
+                    enablePrograms: true,
+                    enableStoryIntake: true,
+                    enableResourceLibrary: true,
+                    enableMultilingual: true,
+                    enableCommunityContributions: true
+                }
+            };
+
+            // Load config from localStorage or use defaults
+            const savedConfig = localStorage.getItem('healthlabs-config');
+            if (savedConfig) {
+                config = { ...config, ...JSON.parse(savedConfig) };
+            }
+
+            // Update CSS custom properties
+            function updateTheme() {
+                document.documentElement.style.setProperty('--primary-color', config.primaryColor);
+            }
+
+            updateTheme();
+
+            function HealthLabsApp() {
+                const [activeTab, setActiveTab] = React.useState('home');
+                const [showAdmin, setShowAdmin] = React.useState(false);
+                const [resources, setResources] = React.useState([]);
+                const [programs, setPrograms] = React.useState([
+                    {
+                        id: 1,
+                        title: "Mental Health Support",
+                        description: "Community-based mental health resources and support groups for stress management and wellness.",
+                        status: "active",
+                        participants: 45,
+                        type: "Wellness"
+                    },
+                    {
+                        id: 2,
+                        title: "Nutrition Education Program",
+                        description: "Educational workshops on healthy eating, meal planning, and nutrition for all ages.",
+                        status: "active",
+                        participants: 32,
+                        type: "Education"
+                    },
+                    {
+                        id: 3,
+                        title: "Chronic Disease Management",
+                        description: "Support groups and resources for managing diabetes, heart disease, and other chronic conditions.",
+                        status: "planning",
+                        participants: 18,
+                        type: "Support"
+                    }
+                ]);
+
+                // Load resources from Fireproof
+                React.useEffect(() => {
+                    const loadResources = async () => {
+                        try {
+                            const { docs } = database.useLiveQuery("_id", { descending: true });
+                            setResources(docs || []);
+                        } catch (error) {
+                            console.error('Error loading resources:', error);
+                        }
+                    };
+                    loadResources();
+                }, []);
+
+                const handleSubmitIntake = async (formData) => {
+                    try {
+                        const { submit } = database.useDocument({
+                            title: formData.title,
+                            content: formData.content,
+                            type: 'community_intake',
+                            author: formData.author,
+                            language: formData.language,
+                            needs: formData.needs,
+                            anonymous: formData.anonymous,
+                            createdAt: new Date().toISOString()
+                        });
+
+                        await submit();
+
+                        // Refresh resources
+                        const { docs } = database.useLiveQuery("_id", { descending: true });
+                        setResources(docs || []);
+
+                        setActiveTab('resources');
+                        alert('Thank you for sharing your story. We appreciate your trust.');
+                    } catch (error) {
+                        console.error('Error submitting intake:', error);
+                        alert('Error submitting intake. Please try again.');
+                    }
+                };
+
+                const handleSubmitResource = async (formData) => {
+                    try {
+                        const { submit } = database.useDocument({
+                            title: formData.title,
+                            content: formData.content,
+                            type: 'resource',
+                            author: formData.author,
+                            language: formData.language,
+                            category: formData.category,
+                            createdAt: new Date().toISOString()
+                        });
+
+                        await submit();
+
+                        // Refresh resources
+                        const { docs } = database.useLiveQuery("_id", { descending: true });
+                        setResources(docs || []);
+
+                        setActiveTab('resources');
+                    } catch (error) {
+                        console.error('Error submitting resource:', error);
+                        alert('Error submitting resource. Please try again.');
+                    }
+                };
+
+                const handleSaveConfig = (newConfig) => {
+                    config = { ...config, ...newConfig };
+                    localStorage.setItem('healthlabs-config', JSON.stringify(config));
+                    updateTheme();
+                    setShowAdmin(false);
+                };
+
+                return (
+                    <div>
+                        {/* Header */}
+                        <header className="header">
+                            <div className="nav">
+                                <div className="logo">{config.orgName}</div>
+                                <nav className="nav-links">
+                                    <a href="#" onClick={() => setActiveTab('home')}>Home</a>
+                                    <a href="#" onClick={() => setActiveTab('programs')}>Programs</a>
+                                    <a href="#" onClick={() => setActiveTab('intake')}>Share Story</a>
+                                    <a href="#" onClick={() => setActiveTab('resources')}>Resources</a>
+                                </nav>
+                            </div>
+                        </header>
+
+                        {/* Admin Panel Button */}
+                        <div className="admin-panel">
+                            <button className="admin-btn" onClick={() => setShowAdmin(true)}>
+                                ⚙️ Admin
+                            </button>
+                        </div>
+
+                        {/* Main Content */}
+                        <main>
+                            {/* Home Tab */}
+                            {activeTab === 'home' && (
+                                <div>
+                                    <div className="hero">
+                                        <div className="container">
+                                            <div className="hero-content">
+                                                <h1>Welcome to {config.orgName}</h1>
+                                                <p>{config.welcomeMessage}</p>
+                                                <p style={{fontSize: '1.1rem', marginBottom: '2rem', opacity: 0.9}}>
+                                                    {config.tagline}
+                                                </p>
+                                                <div style={{display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap'}}>
+                                                    <button className="btn btn-primary" onClick={() => setActiveTab('programs')}>
+                                                        Explore Health Programs
+                                                    </button>
+                                                    <button className="btn btn-outline" onClick={() => setActiveTab('intake')}>
+                                                        Share Your Health Story
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Featured Programs Preview */}
+                                    <section className="section">
+                                        <div className="container">
+                                            <div className="section-header">
+                                                <h2 className="section-title">Featured Health Programs</h2>
+                                                <p className="section-subtitle">Community initiatives supporting wellness and health education</p>
+                                            </div>
+
+                                            <div className="programs-grid">
+                                                {config.programs.filter(p => p.status === 'active').slice(0, 3).map(program => (
+                                                    <div key={program.id} className="program-card">
+                                                        <div className="program-header">
+                                                            <div>
+                                                                <div className="program-title">{program.title}</div>
+                                                                <div className="program-category">{program.type}</div>
+                                                            </div>
+                                                            <div className={`program-status ${program.status}`}>
+                                                                {program.status}
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="program-description">{program.description}</div>
+
+                                                        <div className="program-meta">
+                                                            <span>👥 {program.participants} participants</span>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            )}
+
+                            {/* Programs Tab */}
+                            {activeTab === 'programs' && (
+                                <section className="section">
+                                    <div className="container">
+                                        <div className="section-header">
+                                            <h2 className="section-title">Community Health Programs</h2>
+                                            <p className="section-subtitle">Wellness initiatives and support programs for our community</p>
+                                        </div>
+
+                                        <div className="programs-grid">
+                                            {config.programs.map(program => (
+                                                <div key={program.id} className="program-card">
+                                                    <div className="program-header">
+                                                        <div>
+                                                            <div className="program-title">{program.title}</div>
+                                                            <div className="program-category">{program.type} Program</div>
+                                                        </div>
+                                                        <div className={`program-status ${program.status}`}>
+                                                            {program.status}
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="program-description">{program.description}</div>
+
+                                                    <div className="program-meta">
+                                                        <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
+                                                            <span>👥 {program.participants} participants</span>
+                                                            <span>📅 Ongoing</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div style={{marginTop: '1.5rem'}}>
+                                                        <div style={{fontSize: '0.9rem', color: 'var(--gray-600)', marginBottom: '1rem'}}>
+                                                            <strong>Program Focus:</strong> Community wellness and health education
+                                                        </div>
+
+                                                        <div style={{display: 'flex', gap: '0.5rem', flexWrap: 'wrap'}}>
+                                                            <button className="btn btn-primary" style={{fontSize: '0.9rem', padding: '0.5rem 1rem'}}>
+                                                                Join Program
+                                                            </button>
+                                                            <button className="btn btn-secondary" style={{fontSize: '0.9rem', padding: '0.5rem 1rem'}}>
+                                                                Get More Info
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </section>
+                            )}
+
+                            {/* Community Intake Tab */}
+                            {activeTab === 'intake' && (
+                                <section className="section">
+                                    <div className="container">
+                                        <div className="section-header">
+                                            <h2 className="section-title">Share Your Health Story</h2>
+                                            <p className="section-subtitle">Help us understand community health needs and experiences</p>
+                                        </div>
+
+                                        <div style={{maxWidth: '800px', margin: '0 auto'}}>
+                                            <div style={{
+                                                background: 'white',
+                                                borderRadius: '1.5rem',
+                                                padding: '3rem',
+                                                boxShadow: '0 10px 40px rgba(0,0,0,0.05)',
+                                                border: '2px solid var(--gray-100)'
+                                            }}>
+                                                <div style={{textAlign: 'center', marginBottom: '2rem'}}>
+                                                    <h3 style={{fontSize: '1.5rem', fontWeight: '600', color: 'var(--gray-900)', marginBottom: '0.5rem'}}>
+                                                        💙 Your Health Story Matters
+                                                    </h3>
+                                                    <p style={{color: 'var(--gray-600)'}}>
+                                                        Sharing your experiences helps us understand what our community needs most.
+                                                        Your story can guide better health services and support for everyone.
+                                                    </p>
+                                                </div>
+
+                                                {/* Privacy Notice */}
+                                                <div className="privacy-notice">
+                                                    <h4>🔒 Your Privacy & Trust</h4>
+                                                    <p>
+                                                        <strong>Your privacy matters:</strong> You control what information you share.
+                                                        Anonymous submissions are welcome and encouraged.
+                                                    </p>
+                                                    <p style={{marginTop: '0.5rem'}}>
+                                                        <strong>Important:</strong> {config.privacySettings.disclaimer}
+                                                    </p>
+                                                </div>
+
+                                                <CommunityIntakeForm onSubmit={handleSubmitIntake} />
+
+                                                <div style={{
+                                                    background: 'var(--gray-50)',
+                                                    borderRadius: '0.75rem',
+                                                    padding: '1.5rem',
+                                                    marginTop: '2rem',
+                                                    fontSize: '0.9rem',
+                                                    color: 'var(--gray-600)',
+                                                    textAlign: 'center'
+                                                }}>
+                                                    <p>
+                                                        <strong>How your story helps:</strong> Community health leaders use these stories to identify
+                                                        common challenges, improve services, and advocate for better health resources.
+                                                        Your experience can make a real difference in our community's health and wellness.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            )}
+
+                            {/* Resources Tab */}
+                            {activeTab === 'resources' && (
+                                <section className="section">
+                                    <div className="container">
+                                        <div className="section-header">
+                                            <h2 className="section-title">Health Resource Library</h2>
+                                            <p className="section-subtitle">Educational materials and community-shared health resources</p>
+                                        </div>
+
+                                        <div className="resource-library">
+                                            {/* Featured Resources */}
+                                            <div style={{marginBottom: '4rem'}}>
+                                                <h3 style={{fontSize: '1.5rem', fontWeight: '600', marginBottom: '1.5rem'}}>
+                                                    📚 Featured Health Resources
+                                                </h3>
+
+                                                <div className="resources-grid">
+                                                    {config.featuredResources.map(resource => (
+                                                        <div key={resource.id} className="resource-card">
+                                                            <div className="resource-header">
+                                                                <div className="resource-title">{resource.title}</div>
+                                                                <div className="resource-type">{resource.type}</div>
+                                                            </div>
+
+                                                            <div className="resource-description">{resource.description}</div>
+
+                                                            <div className="resource-meta">
+                                                                <span>👤 {resource.author}</span>
+                                                                <span>🌐 {resource.language}</span>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Community-Contributed Resources */}
+                                            <div style={{marginBottom: '3rem'}}>
+                                                <h3 style={{fontSize: '1.5rem', fontWeight: '600', marginBottom: '1.5rem'}}>
+                                                    🤝 Community-Shared Resources
+                                                </h3>
+
+                                                {resources.filter(r => r.type === 'resource').length === 0 ? (
+                                                    <div style={{
+                                                        background: 'white',
+                                                        borderRadius: '1.5rem',
+                                                        padding: '3rem',
+                                                        textAlign: 'center',
+                                                        boxShadow: '0 10px 40px rgba(0,0,0,0.05)'
+                                                    }}>
+                                                        <div style={{fontSize: '4rem', marginBottom: '1rem'}}>📖</div>
+                                                        <h4 style={{fontSize: '1.25rem', fontWeight: '600', color: 'var(--gray-900)', marginBottom: '0.5rem'}}>
+                                                            Share Your Knowledge
+                                                        </h4>
+                                                        <p style={{color: 'var(--gray-600)', marginBottom: '2rem'}}>
+                                                            Be the first to contribute helpful health resources to our community library!
+                                                        </p>
+                                                    </div>
+                                                ) : (
+                                                    <div className="resources-grid">
+                                                        {resources.filter(r => r.type === 'resource').map(resource => (
+                                                            <div key={resource._id} className="resource-card">
+                                                                <div className="resource-header">
+                                                                    <div className="resource-title">{resource.title}</div>
+                                                                    <div className="resource-type">{resource.category}</div>
+                                                                </div>
+
+                                                                <div className="resource-description">{resource.content}</div>
+
+                                                                <div className="resource-meta">
+                                                                    <span>👤 {resource.author}</span>
+                                                                    <span>🌐 {resource.language}</span>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* Submit Resource Form */}
+                                            <div style={{marginTop: '3rem'}}>
+                                                <h3 style={{fontSize: '1.5rem', fontWeight: '600', marginBottom: '1.5rem'}}>
+                                                    Share a Health Resource
+                                                </h3>
+
+                                                <div style={{
+                                                    background: 'white',
+                                                    borderRadius: '1.5rem',
+                                                    padding: '2rem',
+                                                    boxShadow: '0 10px 40px rgba(0,0,0,0.05)',
+                                                    maxWidth: '600px',
+                                                    margin: '0 auto'
+                                                }}>
+                                                    <ResourceForm onSubmit={handleSubmitResource} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            )}
+                        </main>
+
+                        {/* Admin Modal */}
+                        {showAdmin && (
+                            <div className="admin-overlay">
+                                <div className="admin-modal">
+                                    <div className="admin-header">
+                                        <h2 className="admin-title">HealthLabs Administration</h2>
+                                        <p className="admin-subtitle">Configure your community health platform settings</p>
+                                    </div>
+
+                                    <div className="admin-body">
+                                        <form onSubmit={(e) => {
+                                            e.preventDefault();
+                                            const formData = new FormData(e.target);
+                                            handleSaveConfig({
+                                                orgName: formData.get('orgName'),
+                                                primaryColor: formData.get('primaryColor'),
+                                                contactEmail: formData.get('contactEmail'),
+                                                logoUrl: formData.get('logoUrl'),
+                                                organizationType: formData.get('organizationType'),
+                                                welcomeMessage: formData.get('welcomeMessage'),
+                                                tagline: formData.get('tagline'),
+                                                features: {
+                                                    enablePrograms: formData.get('enablePrograms') === 'on',
+                                                    enableStoryIntake: formData.get('enableStoryIntake') === 'on',
+                                                    enableResourceLibrary: formData.get('enableResourceLibrary') === 'on',
+                                                    enableMultilingual: formData.get('enableMultilingual') === 'on',
+                                                    enableCommunityContributions: formData.get('enableCommunityContributions') === 'on'
+                                                },
+                                                privacySettings: {
+                                                    allowAnonymous: formData.get('allowAnonymous') === 'on',
+                                                    requireConsent: formData.get('requireConsent') === 'on',
+                                                    dataRetention: formData.get('dataRetention'),
+                                                    disclaimer: formData.get('disclaimer')
+                                                }
+                                            });
+                                        }} className="admin-form">
+                                            <div className="admin-section">
+                                                <h3 className="admin-section-title">🏥 Organization Settings</h3>
+                                                <div className="form-row">
+                                                    <div className="form-group">
+                                                        <label htmlFor="orgName">Organization Name</label>
+                                                        <input
+                                                            type="text"
+                                                            id="orgName"
+                                                            name="orgName"
+                                                            defaultValue={config.orgName}
+                                                            placeholder="Your health organization name"
+                                                        />
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="organizationType">Organization Type</label>
+                                                        <select id="organizationType" name="organizationType" defaultValue={config.organizationType}>
+                                                            <option value="Community Health Clinic">Community Health Clinic</option>
+                                                            <option value="Public Health Department">Public Health Department</option>
+                                                            <option value="Nonprofit Health Organization">Nonprofit Health Organization</option>
+                                                            <option value="Hospital">Hospital</option>
+                                                            <option value="Private Practice">Private Practice</option>
+                                                            <option value="Community Center">Community Center</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-row">
+                                                    <div className="form-group">
+                                                        <label htmlFor="primaryColor">Brand Color</label>
+                                                        <input
+                                                            type="color"
+                                                            id="primaryColor"
+                                                            name="primaryColor"
+                                                            defaultValue={config.primaryColor}
+                                                        />
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="contactEmail">Contact Email</label>
+                                                        <input
+                                                            type="email"
+                                                            id="contactEmail"
+                                                            name="contactEmail"
+                                                            defaultValue={config.contactEmail}
+                                                            placeholder="health@yourorg.org"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label htmlFor="logoUrl">Logo URL</label>
+                                                    <input
+                                                        type="url"
+                                                        id="logoUrl"
+                                                        name="logoUrl"
+                                                        defaultValue={config.logoUrl}
+                                                        placeholder="https://yourorg.org/logo.png"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="admin-section">
+                                                <h3 className="admin-section-title">📝 Platform Content</h3>
+                                                <div className="form-group">
+                                                    <label htmlFor="welcomeMessage">Welcome Message</label>
+                                                    <textarea
+                                                        id="welcomeMessage"
+                                                        name="welcomeMessage"
+                                                        defaultValue={config.welcomeMessage}
+                                                        placeholder="Welcome message for visitors"
+                                                        rows="3"
+                                                    />
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label htmlFor="tagline">Platform Tagline</label>
+                                                    <input
+                                                        type="text"
+                                                        id="tagline"
+                                                        name="tagline"
+                                                        defaultValue={config.tagline}
+                                                        placeholder="Brief tagline for your platform"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="admin-section">
+                                                <h3 className="admin-section-title">⚙️ Health Platform Features</h3>
+                                                <div style={{display: 'grid', gap: '1rem'}}>
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="enablePrograms" defaultChecked={config.features.enablePrograms} />
+                                                        Enable community health programs listing
+                                                    </label>
+
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="enableStoryIntake" defaultChecked={config.features.enableStoryIntake} />
+                                                        Enable community health story intake
+                                                    </label>
+
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="enableResourceLibrary" defaultChecked={config.features.enableResourceLibrary} />
+                                                        Enable multilingual resource library
+                                                    </label>
+
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="enableMultilingual" defaultChecked={config.features.enableMultilingual} />
+                                                        Enable multilingual support (Spanish, French, Chinese, Arabic)
+                                                    </label>
+
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="enableCommunityContributions" defaultChecked={config.features.enableCommunityContributions} />
+                                                        Enable community-contributed resources
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div className="admin-section">
+                                                <h3 className="admin-section-title">🔒 Privacy & Trust Settings</h3>
+                                                <div style={{display: 'grid', gap: '1rem'}}>
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="allowAnonymous" defaultChecked={config.privacySettings.allowAnonymous} />
+                                                        Allow anonymous story submissions
+                                                    </label>
+
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="requireConsent" defaultChecked={config.privacySettings.requireConsent} />
+                                                        Require explicit consent for data collection
+                                                    </label>
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label htmlFor="dataRetention">Data Retention Policy</label>
+                                                    <input
+                                                        type="text"
+                                                        id="dataRetention"
+                                                        name="dataRetention"
+                                                        defaultValue={config.privacySettings.dataRetention}
+                                                        placeholder="How long data is retained for community health planning"
+                                                    />
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label htmlFor="disclaimer">Health Disclaimer</label>
+                                                    <textarea
+                                                        id="disclaimer"
+                                                        name="disclaimer"
+                                                        defaultValue={config.privacySettings.disclaimer}
+                                                        placeholder="Important disclaimer about medical advice and emergencies"
+                                                        rows="3"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="form-actions">
+                                                <button type="button" className="btn btn-secondary" onClick={() => setShowAdmin(false)}>
+                                                    Cancel
+                                                </button>
+                                                <button type="submit" className="btn btn-primary">
+                                                    Save Configuration
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Footer */}
+                        <footer className="footer">
+                            <div className="container">
+                                <div className="footer-content">
+                                    <div className="footer-section">
+                                        <h3>🏥 {config.orgName}</h3>
+                                        <p>{config.organizationType} - Building healthier communities through shared knowledge, support, and wellness resources.</p>
+                                        <p style={{marginTop: '1rem'}}>
+                                            <strong>Contact:</strong> {config.contactEmail}
+                                        </p>
+                                    </div>
+
+                                    <div className="footer-section">
+                                        <h3>💙 Community Health</h3>
+                                        <p>• Health programs & wellness initiatives</p>
+                                        <p>• Community story sharing & support</p>
+                                        <p>• Multilingual health resources</p>
+                                        <p>• Privacy-first health engagement</p>
+                                    </div>
+
+                                    <div className="footer-section">
+                                        <h3>🔗 Platform Features</h3>
+                                        <p><a href="#" onClick={() => setActiveTab('programs')}>Health Programs</a></p>
+                                        <p><a href="#" onClick={() => setActiveTab('intake')}>Share Health Stories</a></p>
+                                        <p><a href="#" onClick={() => setActiveTab('resources')}>Resource Library</a></p>
+                                        <p><a href="#" onClick={() => setShowAdmin(true)}>Admin Settings</a></p>
+                                    </div>
+                                </div>
+
+                                <div className="footer-bottom">
+                                    <p>&copy; 2024 {config.orgName}. Community health platform powered by LabsForAmerica and Fireproof Database.</p>
+                                </div>
+                            </div>
+                        </footer>
+                    </div>
+                );
+            }
+
+            // Community Intake Form Component
+            function CommunityIntakeForm({ onSubmit }) {
+                const [formData, setFormData] = React.useState({
+                    title: '',
+                    content: '',
+                    author: '',
+                    language: 'English',
+                    needs: '',
+                    anonymous: true
+                });
+
+                const handleSubmit = (e) => {
+                    e.preventDefault();
+                    if (formData.title && formData.content) {
+                        onSubmit(formData);
+                        setFormData({ title: '', content: '', author: '', language: 'English', needs: '', anonymous: true });
+                    }
+                };
+
+                const handleChange = (field, value) => {
+                    setFormData(prev => ({ ...prev, [field]: value }));
+                };
+
+                return (
+                    <form onSubmit={handleSubmit}>
+                        <div className="privacy-notice">
+                            <strong>Your Privacy Matters:</strong> Your story helps us understand community needs.
+                            You control what information you share. Anonymous submissions are welcome.
+                        </div>
+
+                        <div className="anonymous-checkbox">
+                            <input
+                                type="checkbox"
+                                id="anonymous"
+                                checked={formData.anonymous}
+                                onChange={(e) => handleChange('anonymous', e.target.checked)}
+                            />
+                            <label htmlFor="anonymous">Share anonymously</label>
+                        </div>
+
+                        {!formData.anonymous && (
+                            <div className="form-group">
+                                <label htmlFor="author">Your Name (if not anonymous)</label>
+                                <input
+                                    type="text"
+                                    id="author"
+                                    value={formData.author}
+                                    onChange={(e) => handleChange('author', e.target.value)}
+                                    placeholder="Enter your name"
+                                />
+                            </div>
+                        )}
+
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="language">Preferred Language</label>
+                                <select
+                                    id="language"
+                                    value={formData.language}
+                                    onChange={(e) => handleChange('language', e.target.value)}
+                                >
+                                    <option value="English">English</option>
+                                    <option value="Español">Español</option>
+                                    <option value="Français">Français</option>
+                                    <option value="中文">中文</option>
+                                    <option value="العربية">العربية</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="needs">What type of support are you seeking?</label>
+                                <select
+                                    id="needs"
+                                    value={formData.needs}
+                                    onChange={(e) => handleChange('needs', e.target.value)}
+                                >
+                                    <option value="">Select support type</option>
+                                    <option value="Mental Health">Mental Health Support</option>
+                                    <option value="Nutrition">Nutrition Guidance</option>
+                                    <option value="Chronic Disease">Chronic Disease Management</option>
+                                    <option value="Preventive Care">Preventive Care</option>
+                                    <option value="Community Resources">Community Resources</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="title">Story Title</label>
+                            <input
+                                type="text"
+                                id="title"
+                                value={formData.title}
+                                onChange={(e) => handleChange('title', e.target.value)}
+                                placeholder="Brief title for your story"
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="content">Share Your Story</label>
+                            <textarea
+                                id="content"
+                                value={formData.content}
+                                onChange={(e) => handleChange('content', e.target.value)}
+                                placeholder="Share your health journey, challenges, or successes. Your story can help others in similar situations..."
+                                required
+                                rows="6"
+                            />
+                        </div>
+
+                        <button type="submit" className="btn">
+                            Share My Story
+                        </button>
+                    </form>
+                );
+            }
+
+            // Resource Form Component
+            function ResourceForm({ onSubmit }) {
+                const [formData, setFormData] = React.useState({
+                    title: '',
+                    content: '',
+                    author: '',
+                    language: 'English',
+                    category: 'General'
+                });
+
+                const handleSubmit = (e) => {
+                    e.preventDefault();
+                    if (formData.title && formData.content && formData.author) {
+                        onSubmit(formData);
+                        setFormData({ title: '', content: '', author: '', language: 'English', category: 'General' });
+                    }
+                };
+
+                const handleChange = (field, value) => {
+                    setFormData(prev => ({ ...prev, [field]: value }));
+                };
+
+                return (
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="author">Your Name</label>
+                            <input
+                                type="text"
+                                id="author"
+                                value={formData.author}
+                                onChange={(e) => handleChange('author', e.target.value)}
+                                placeholder="Resource contributor"
+                                required
+                            />
+                        </div>
+
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="title">Resource Title</label>
+                                <input
+                                    type="text"
+                                    id="title"
+                                    value={formData.title}
+                                    onChange={(e) => handleChange('title', e.target.value)}
+                                    placeholder="Name of the resource"
+                                    required
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="language">Language</label>
+                                <select
+                                    id="language"
+                                    value={formData.language}
+                                    onChange={(e) => handleChange('language', e.target.value)}
+                                >
+                                    <option value="English">English</option>
+                                    <option value="Español">Español</option>
+                                    <option value="Français">Français</option>
+                                    <option value="中文">中文</option>
+                                    <option value="العربية">العربية</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="category">Category</label>
+                            <select
+                                id="category"
+                                value={formData.category}
+                                onChange={(e) => handleChange('category', e.target.value)}
+                            >
+                                <option value="General">General Health</option>
+                                <option value="Mental Health">Mental Health</option>
+                                <option value="Nutrition">Nutrition</option>
+                                <option value="Exercise">Exercise & Fitness</option>
+                                <option value="Chronic Disease">Chronic Disease</option>
+                                <option value="Preventive Care">Preventive Care</option>
+                                <option value="Community Resources">Community Resources</option>
+                            </select>
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="content">Resource Description</label>
+                            <textarea
+                                id="content"
+                                value={formData.content}
+                                onChange={(e) => handleChange('content', e.target.value)}
+                                placeholder="Describe the resource, how to access it, and who it helps..."
+                                required
+                                rows="4"
+                            />
+                        </div>
+
+                        <button type="submit" className="btn">
+                            Share Resource
+                        </button>
+                    </form>
+                );
+            }
+
+            // Admin Form Component (same as other templates)
+            function AdminForm({ config, onSave, onCancel }) {
+                const [formData, setFormData] = React.useState(config);
+
+                const handleChange = (field, value) => {
+                    setFormData(prev => ({ ...prev, [field]: value }));
+                };
+
+                const handleSubmit = (e) => {
+                    e.preventDefault();
+                    onSave(formData);
+                };
+
+                return (
+                    <form onSubmit={handleSubmit} className="admin-form">
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="orgName">Organization Name</label>
+                                <input
+                                    type="text"
+                                    id="orgName"
+                                    value={formData.orgName}
+                                    onChange={(e) => handleChange('orgName', e.target.value)}
+                                    placeholder="Your organization name"
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="primaryColor">Primary Color</label>
+                                <input
+                                    type="color"
+                                    id="primaryColor"
+                                    value={formData.primaryColor}
+                                    onChange={(e) => handleChange('primaryColor', e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="contactEmail">Contact Email</label>
+                                <input
+                                    type="email"
+                                    id="contactEmail"
+                                    value={formData.contactEmail}
+                                    onChange={(e) => handleChange('contactEmail', e.target.value)}
+                                    placeholder="health@example.com"
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="logoUrl">Logo URL (optional)</label>
+                                <input
+                                    type="url"
+                                    id="logoUrl"
+                                    value={formData.logoUrl}
+                                    onChange={(e) => handleChange('logoUrl', e.target.value)}
+                                    placeholder="https://example.com/logo.png"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="form-actions">
+                            <button type="button" className="btn btn-secondary" onClick={onCancel}>
+                                Cancel
+                            </button>
+                            <button type="submit" className="btn">
+                                Save Settings
+                            </button>
+                        </div>
+                    </form>
+                );
+            }
+
+            // Render the app
+            const root = ReactDOM.createRoot(document.getElementById('root'));
+            root.render(<HealthLabsApp />);
+        `;
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

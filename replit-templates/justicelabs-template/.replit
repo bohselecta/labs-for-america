@@ -1,0 +1,15 @@
+run = "python3 -m http.server 3000"
+
+[packager]
+language = "html"
+
+[files]
+hide_dotfiles = false
+
+[nix]
+channel = "stable-23_11"
+
+[deployment]
+run = ["python3", "-m", "http.server", "3000"]
+command = "python3 -m http.server 3000"
+healthcheck_path = "/"

@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLabs - Enhanced Educational Collaboration Platform</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <meta name="description" content="EduLabs - Advanced educational collaboration platform for project submission, team collaboration, mentor scheduling, and academic integrity. Perfect for universities, schools, and research institutions.">
+    <meta name="keywords" content="education, collaboration, project management, academic integrity, FERPA compliance, student projects, research showcase">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #059669;
+            --secondary-color: #10b981;
+            --accent-color: #3b82f6;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --success-color: #22c55e;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background: var(--gray-50);
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            background: white;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-weight: 800;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            transition: all 0.2s;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #047857 100%);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="10" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="90" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        /* Buttons */
+        .btn {
+            background: white;
+            color: var(--primary-color);
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--gray-600);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Projects Gallery */
+        .projects-showcase {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: var(--gray-50);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-color);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-category {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .project-status {
+            background: var(--warning-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .project-status.approved {
+            background: var(--success-color);
+        }
+
+        .project-status.rejected {
+            background: var(--danger-color);
+        }
+
+        .project-description {
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--gray-500);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-team {
+            background: white;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--gray-200);
+        }
+
+        /* Forms */
+        .form-container {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .form-section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--gray-100);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Team Management */
+        .team-section {
+            background: var(--gray-50);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .team-members {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .team-member {
+            background: white;
+            padding: 0.75rem 1rem;
+            border-radius: 2rem;
+            border: 2px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .team-member-remove {
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 1.5rem;
+            height: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* Office Hours Scheduler */
+        .scheduler {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        }
+
+        .scheduler-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .time-slot {
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .time-slot:hover {
+            border-color: var(--primary-color);
+            background: rgba(5, 150, 105, 0.05);
+        }
+
+        .time-slot.available {
+            border-color: var(--success-color);
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .time-slot.booked {
+            border-color: var(--warning-color);
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        /* Resource Library */
+        .resource-library {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .resource-card {
+            background: var(--gray-50);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .resource-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+        }
+
+        .resource-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .resource-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .resource-type {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+        }
+
+        .resource-description {
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+        }
+
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--gray-500);
+        }
+
+        /* Academic Integrity Panel */
+        .integrity-panel {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #f59e0b;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .integrity-score {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(245, 158, 11, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .score-fill {
+            height: 100%;
+            background: var(--warning-color);
+            transition: width 0.3s;
+        }
+
+        /* Social Sharing */
+        .social-share {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .social-btn {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .social-twitter { background: #1da1f2; color: white; }
+        .social-linkedin { background: #0077b5; color: white; }
+        .social-facebook { background: #1877f2; color: white; }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border: 2px solid var(--gray-200);
+            z-index: 1000;
+        }
+
+        .admin-btn {
+            background: var(--warning-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .admin-btn:hover {
+            background: #d97706;
+            transform: translateY(-1px);
+        }
+
+        .admin-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 2rem;
+        }
+
+        .admin-modal {
+            background: white;
+            border-radius: 1.5rem;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+
+        .admin-header {
+            padding: 2rem 2rem 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .admin-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-subtitle {
+            color: var(--gray-600);
+        }
+
+        .admin-body {
+            padding: 2rem;
+        }
+
+        .admin-form {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .admin-section {
+            background: var(--gray-50);
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+
+        .admin-section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pending { background: var(--warning-color); color: white; }
+        .status-approved { background: var(--success-color); color: white; }
+        .status-rejected { background: var(--danger-color); color: white; }
+        .status-draft { background: var(--gray-400); color: white; }
+
+        /* Loading & Error States */
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            color: var(--gray-500);
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid #dc2626;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid #16a34a;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--gray-400);
+            text-decoration: none;
+            line-height: 1.6;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-800);
+            color: var(--gray-400);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scheduler-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-panel {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 1rem;
+            }
+        }
+
+        /* Academic Theme Colors */
+        .academic-blue { --primary-color: #1e40af; }
+        .academic-green { --primary-color: #059669; }
+        .academic-purple { --primary-color: #7c3aed; }
+        .academic-red { --primary-color: #dc2626; }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Privacy Notice */
+        .privacy-notice {
+            background: #eff6ff;
+            border: 1px solid #3b82f6;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .privacy-notice h4 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .privacy-notice p {
+            color: #1e40af;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Load Fireproof from ESM.sh
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.textContent = `
+            import { useFireproof } from "https://esm.sh/use-fireproof";
+
+            // Initialize Fireproof database
+            const { database, useDocument, useLiveQuery } = useFireproof('edulabs');
+
+            // Configuration
+            let config = {
+                orgName: "EduLabs",
+                primaryColor: "#059669",
+                contactEmail: "education@example.com",
+                logoUrl: "",
+                institutionType: "University",
+                academicIntegrity: {
+                    enablePlagiarismCheck: true,
+                    requireApproval: true,
+                    enableAuditTrail: true
+                },
+                privacySettings: {
+                    ferpaCompliant: true,
+                    showStudentNames: false,
+                    allowPublicSharing: true
+                },
+                features: {
+                    enableTeamCollaboration: true,
+                    enablePeerReview: true,
+                    enableSocialSharing: true,
+                    enableResourceLibrary: true
+                }
+            };
+
+            // Load config from localStorage or use defaults
+            const savedConfig = localStorage.getItem('edulabs-config');
+            if (savedConfig) {
+                config = { ...config, ...JSON.parse(savedConfig) };
+            }
+
+            // Update CSS custom properties
+            function updateTheme() {
+                document.documentElement.style.setProperty('--primary-color', config.primaryColor);
+                // Apply academic theme class
+                document.body.className = \`academic-\${config.primaryColor.replace('#', '').substring(0, 3)}\`;
+            }
+
+            updateTheme();
+
+            function EduLabsApp() {
+                const [activeTab, setActiveTab] = React.useState('home');
+                const [showAdmin, setShowAdmin] = React.useState(false);
+                const [currentUser, setCurrentUser] = React.useState(null);
+                const [submissions, setSubmissions] = React.useState([]);
+                const [resources, setResources] = React.useState([]);
+                const [officeHours, setOfficeHours] = React.useState([]);
+                const [projects, setProjects] = React.useState([
+                    {
+                        id: 1,
+                        title: "AI-Powered Learning Analytics",
+                        description: "Developing machine learning models to analyze student learning patterns and provide personalized feedback for improved academic outcomes.",
+                        category: "Computer Science",
+                        status: "active",
+                        participants: 12,
+                        type: "Research",
+                        author: "Dr. Sarah Chen",
+                        team: ["Alice Johnson", "Bob Smith", "Carol Davis"],
+                        tags: ["AI", "Machine Learning", "Education Technology"],
+                        submissionDate: new Date(Date.now() - 86400000 * 7).toISOString(),
+                        lastModified: new Date(Date.now() - 86400000 * 2).toISOString(),
+                        integrityScore: 95,
+                        peerReviews: 3,
+                        publicUrl: "#"
+                    },
+                    {
+                        id: 2,
+                        title: "Sustainable Urban Planning Models",
+                        description: "Research project examining sustainable urban development patterns and their impact on community health and environmental sustainability.",
+                        category: "Environmental Science",
+                        status: "approved",
+                        participants: 8,
+                        type: "Research",
+                        author: "Prof. Michael Rodriguez",
+                        team: ["Elena Martinez", "David Kim"],
+                        tags: ["Sustainability", "Urban Planning", "Environmental Science"],
+                        submissionDate: new Date(Date.now() - 86400000 * 14).toISOString(),
+                        lastModified: new Date(Date.now() - 86400000 * 5).toISOString(),
+                        integrityScore: 98,
+                        peerReviews: 5,
+                        publicUrl: "#"
+                    },
+                    {
+                        id: 3,
+                        title: "Digital Humanities Archive",
+                        description: "Creating a comprehensive digital archive of historical documents with advanced search and analysis capabilities for humanities research.",
+                        category: "Digital Humanities",
+                        status: "pending",
+                        participants: 15,
+                        type: "Innovation",
+                        author: "Dr. Amanda Foster",
+                        team: ["James Wilson", "Lisa Chang", "Robert Taylor", "Maria Santos"],
+                        tags: ["Digital Humanities", "Archive", "Research Tools"],
+                        submissionDate: new Date(Date.now() - 86400000 * 3).toISOString(),
+                        lastModified: new Date(Date.now() - 86400000 * 1).toISOString(),
+                        integrityScore: 92,
+                        peerReviews: 2,
+                        publicUrl: "#"
+                    }
+                ]);
+
+                // Load submissions from Fireproof
+                React.useEffect(() => {
+                    const loadData = async () => {
+                        try {
+                            const submissionsResult = database.useLiveQuery("_id", { descending: true });
+                            const resourcesResult = database.useLiveQuery("type", { key: "resource" });
+                            const officeHoursResult = database.useLiveQuery("type", { key: "office_hours" });
+
+                            setSubmissions(submissionsResult.docs || []);
+                            setResources(resourcesResult.docs || []);
+                            setOfficeHours(officeHoursResult.docs || []);
+                        } catch (error) {
+                            console.error('Error loading data:', error);
+                        }
+                    };
+                    loadData();
+                }, []);
+
+                const handleSubmitProject = async (formData) => {
+                    try {
+                        // Academic integrity check
+                        let integrityScore = 100;
+                        let plagiarismFlags = [];
+
+                        if (config.academicIntegrity.enablePlagiarismCheck) {
+                            // Simulate plagiarism check (in real implementation, this would call an API)
+                            integrityScore = Math.floor(Math.random() * 10) + 90; // 90-100% score
+                            if (integrityScore < 95) {
+                                plagiarismFlags.push("Potential similarity detected");
+                            }
+                        }
+
+                        const { submit } = database.useDocument({
+                            title: formData.title,
+                            description: formData.description,
+                            content: formData.content,
+                            abstract: formData.abstract,
+                            category: formData.category,
+                            type: formData.type,
+                            author: formData.author,
+                            teamMembers: formData.teamMembers,
+                            tags: formData.tags,
+                            fileUrl: formData.fileUrl,
+                            status: config.academicIntegrity.requireApproval ? 'pending' : 'approved',
+                            integrityScore,
+                            plagiarismFlags,
+                            createdAt: new Date().toISOString(),
+                            lastModified: new Date().toISOString(),
+                            peerReviews: [],
+                            publicUrl: null,
+                            auditTrail: [{
+                                action: "created",
+                                timestamp: new Date().toISOString(),
+                                user: formData.author,
+                                details: "Project submitted"
+                            }]
+                        });
+
+                        await submit();
+
+                        // Refresh data
+                        const submissionsResult = database.useLiveQuery("_id", { descending: true });
+                        setSubmissions(submissionsResult.docs || []);
+
+                        setActiveTab('projects');
+                        alert('Project submitted successfully! ' + (config.academicIntegrity.requireApproval ? 'It will be reviewed before publication.' : ''));
+                    } catch (error) {
+                        console.error('Error submitting project:', error);
+                        alert('Error submitting project. Please try again.');
+                    }
+                };
+
+                const handleSubmitResource = async (formData) => {
+                    try {
+                        const { submit } = database.useDocument({
+                            title: formData.title,
+                            description: formData.description,
+                            content: formData.content,
+                            type: 'resource',
+                            category: formData.category,
+                            author: formData.author,
+                            tags: formData.tags,
+                            language: formData.language,
+                            fileUrl: formData.fileUrl,
+                            isPublic: formData.isPublic,
+                            createdAt: new Date().toISOString()
+                        });
+
+                        await submit();
+
+                        // Refresh resources
+                        const resourcesResult = database.useLiveQuery("type", { key: "resource" });
+                        setResources(resourcesResult.docs || []);
+
+                        setActiveTab('resources');
+                    } catch (error) {
+                        console.error('Error submitting resource:', error);
+                        alert('Error submitting resource. Please try again.');
+                    }
+                };
+
+                const handleBookOfficeHours = async (mentorId, timeSlot) => {
+                    try {
+                        const { submit } = database.useDocument({
+                            mentorId,
+                            studentName: currentUser?.name || 'Anonymous',
+                            timeSlot,
+                            status: 'booked',
+                            type: 'office_hours',
+                            createdAt: new Date().toISOString()
+                        });
+
+                        await submit();
+
+                        // Refresh office hours
+                        const officeHoursResult = database.useLiveQuery("type", { key: "office_hours" });
+                        setOfficeHours(officeHoursResult.docs || []);
+
+                        alert('Office hours booked successfully!');
+                    } catch (error) {
+                        console.error('Error booking office hours:', error);
+                        alert('Error booking office hours. Please try again.');
+                    }
+                };
+
+                const handleSaveConfig = (newConfig) => {
+                    config = { ...config, ...newConfig };
+                    localStorage.setItem('edulabs-config', JSON.stringify(config));
+                    updateTheme();
+                    setShowAdmin(false);
+                };
+
+                const handleSocialShare = (project) => {
+                    if (navigator.share) {
+                        navigator.share({
+                            title: project.title,
+                            text: project.description,
+                            url: window.location.origin + project.publicUrl
+                        });
+                    } else {
+                        // Fallback for browsers that don't support Web Share API
+                        const url = window.location.origin + project.publicUrl;
+                        navigator.clipboard.writeText(url).then(() => {
+                            alert('Project link copied to clipboard!');
+                        });
+                    }
+                };
+
+                return (
+                    <div>
+                        {/* Header */}
+                        <header className="header">
+                            <div className="nav">
+                                <div className="logo">
+                                    <div className="logo-icon">E</div>
+                                    {config.orgName}
+                                </div>
+                                <nav className="nav-links">
+                                    <a href="#" onClick={() => setActiveTab('home')} className={activeTab === 'home' ? 'active' : ''}>Home</a>
+                                    <a href="#" onClick={() => setActiveTab('projects')} className={activeTab === 'projects' ? 'active' : ''}>Projects</a>
+                                    <a href="#" onClick={() => setActiveTab('submit')} className={activeTab === 'submit' ? 'active' : ''}>Submit</a>
+                                    <a href="#" onClick={() => setActiveTab('office-hours')} className={activeTab === 'office-hours' ? 'active' : ''}>Office Hours</a>
+                                    <a href="#" onClick={() => setActiveTab('resources')} className={activeTab === 'resources' ? 'active' : ''}>Resources</a>
+                                </nav>
+                            </div>
+                        </header>
+
+                        {/* Admin Panel Button */}
+                        <div className="admin-panel">
+                            <button className="admin-btn" onClick={() => setShowAdmin(true)}>
+                                ⚙️ Admin
+                            </button>
+                        </div>
+
+                        {/* Main Content */}
+                        <main>
+                            {/* Home Tab */}
+                            {activeTab === 'home' && (
+                                <div>
+                                    <div className="hero">
+                                        <div className="container">
+                                            <div className="hero-content">
+                                                <h1>Welcome to {config.orgName}</h1>
+                                                <p>Your comprehensive educational collaboration platform for research, innovation, and academic excellence</p>
+                                                <div style={{display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap'}}>
+                                                    <button className="btn btn-primary" onClick={() => setActiveTab('projects')}>
+                                                        Explore Projects
+                                                    </button>
+                                                    <button className="btn btn-outline" onClick={() => setActiveTab('submit')}>
+                                                        Submit Project
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Featured Projects */}
+                                    <section className="section">
+                                        <div className="container">
+                                            <div className="section-header">
+                                                <h2 className="section-title">Featured Research</h2>
+                                                <p className="section-subtitle">Showcasing outstanding academic work from our community</p>
+                                            </div>
+
+                                            <div className="projects-grid">
+                                                {projects.filter(p => p.status === 'approved').slice(0, 3).map(project => (
+                                                    <div key={project.id} className="project-card">
+                                                        <div className="project-header">
+                                                            <div>
+                                                                <div className="project-title">{project.title}</div>
+                                                                <div className="project-category">{project.category}</div>
+                                                            </div>
+                                                            <div className="project-status approved">Approved</div>
+                                                        </div>
+
+                                                        <div className="project-description">{project.description}</div>
+
+                                                        <div className="project-meta">
+                                                            <span>👥 {project.team.length} team members</span>
+                                                            <span>⭐ {project.integrityScore}% integrity</span>
+                                                        </div>
+
+                                                        <div className="project-team">
+                                                            <strong>Team:</strong> {project.team.join(', ')}
+                                                        </div>
+
+                                                        {config.features.enableSocialSharing && (
+                                                            <div className="social-share">
+                                                                <button className="social-btn social-twitter" onClick={() => handleSocialShare(project)}>
+                                                                    𝕏
+                                                                </button>
+                                                                <button className="social-btn social-linkedin" onClick={() => handleSocialShare(project)}>
+                                                                    in
+                                                                </button>
+                                                                <button className="social-btn social-facebook" onClick={() => handleSocialShare(project)}>
+                                                                    f
+                                                                </button>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            )}
+
+                            {/* Projects Gallery Tab */}
+                            {activeTab === 'projects' && (
+                                <section className="section">
+                                    <div className="container">
+                                        <div className="section-header">
+                                            <h2 className="section-title">Research Showcase</h2>
+                                            <p className="section-subtitle">Browse all submitted projects and research work</p>
+                                        </div>
+
+                                        <div className="projects-showcase">
+                                            <div className="projects-grid">
+                                                {projects.map(project => (
+                                                    <div key={project.id} className="project-card">
+                                                        <div className="project-header">
+                                                            <div>
+                                                                <div className="project-title">{project.title}</div>
+                                                                <div className="project-category">{project.category}</div>
+                                                            </div>
+                                                            <div className={\`project-status \${project.status}\`}>
+                                                                {project.status}
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="project-description">{project.description}</div>
+
+                                                        <div className="project-meta">
+                                                            <span>👥 {project.team.length} contributors</span>
+                                                            <span>📅 {new Date(project.submissionDate).toLocaleDateString()}</span>
+                                                        </div>
+
+                                                        <div className="project-team">
+                                                            <strong>Team:</strong> {project.author} {project.team.length > 0 && `+ ${project.team.length} others`}
+                                                        </div>
+
+                                                        {/* Academic Integrity Panel */}
+                                                        <div className="integrity-panel">
+                                                            <div className="integrity-score">
+                                                                <span>Academic Integrity Score</span>
+                                                                <div className="score-bar">
+                                                                    <div className="score-fill" style={{width: \`\${project.integrityScore}%\`}}></div>
+                                                                </div>
+                                                                <span>{project.integrityScore}%</span>
+                                                            </div>
+                                                            {project.plagiarismFlags && project.plagiarismFlags.length > 0 && (
+                                                                <div style={{fontSize: '0.9rem', color: '#d97706'}}>
+                                                                    ⚠️ {project.plagiarismFlags.join(', ')}
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* Peer Review Count */}
+                                                        {project.peerReviews > 0 && (
+                                                            <div style={{fontSize: '0.9rem', color: '#6b7280'}}>
+                                                                👥 {project.peerReviews} peer reviews completed
+                                                            </div>
+                                                        )}
+
+                                                        {config.features.enableSocialSharing && project.status === 'approved' && (
+                                                            <div className="social-share">
+                                                                <button className="social-btn social-twitter" onClick={() => handleSocialShare(project)}>
+                                                                    𝕏
+                                                                </button>
+                                                                <button className="social-btn social-linkedin" onClick={() => handleSocialShare(project)}>
+                                                                    in
+                                                                </button>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            )}
+
+                            {/* Submit Project Tab */}
+                            {activeTab === 'submit' && (
+                                <section className="section">
+                                    <div className="container">
+                                        <div className="section-header">
+                                            <h2 className="section-title">Submit Your Research</h2>
+                                            <p className="section-subtitle">Share your academic work with the community</p>
+                                        </div>
+
+                                        <div className="form-container">
+                                            <form onSubmit={(e) => {
+                                                e.preventDefault();
+                                                const formData = new FormData(e.target);
+                                                handleSubmitProject({
+                                                    title: formData.get('title'),
+                                                    description: formData.get('description'),
+                                                    abstract: formData.get('abstract'),
+                                                    content: formData.get('content'),
+                                                    category: formData.get('category'),
+                                                    type: formData.get('type'),
+                                                    author: formData.get('author'),
+                                                    teamMembers: formData.get('teamMembers')?.split(',').map(s => s.trim()).filter(Boolean) || [],
+                                                    tags: formData.get('tags')?.split(',').map(s => s.trim()).filter(Boolean) || [],
+                                                    fileUrl: formData.get('fileUrl')
+                                                });
+                                                e.target.reset();
+                                            }}>
+                                                <div className="form-section">
+                                                    <h3 className="form-section-title">Project Information</h3>
+                                                    <div className="form-grid">
+                                                        <div className="form-group">
+                                                            <label htmlFor="author">Project Lead *</label>
+                                                            <input
+                                                                type="text"
+                                                                id="author"
+                                                                name="author"
+                                                                placeholder="Your full name"
+                                                                required
+                                                            />
+                                                        </div>
+
+                                                        <div className="form-group">
+                                                            <label htmlFor="category">Academic Field *</label>
+                                                            <select id="category" name="category" required>
+                                                                <option value="">Select field</option>
+                                                                <option value="Computer Science">Computer Science</option>
+                                                                <option value="Engineering">Engineering</option>
+                                                                <option value="Natural Sciences">Natural Sciences</option>
+                                                                <option value="Social Sciences">Social Sciences</option>
+                                                                <option value="Humanities">Humanities</option>
+                                                                <option value="Mathematics">Mathematics</option>
+                                                                <option value="Medicine">Medicine</option>
+                                                                <option value="Arts">Arts</option>
+                                                                <option value="Other">Other</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="title">Project Title *</label>
+                                                        <input
+                                                            type="text"
+                                                            id="title"
+                                                            name="title"
+                                                            placeholder="Enter your project title"
+                                                            required
+                                                        />
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="description">Brief Description *</label>
+                                                        <textarea
+                                                            id="description"
+                                                            name="description"
+                                                            placeholder="Provide a concise summary of your project (2-3 sentences)"
+                                                            required
+                                                        />
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="abstract">Abstract</label>
+                                                        <textarea
+                                                            id="abstract"
+                                                            name="abstract"
+                                                            placeholder="Detailed abstract or executive summary"
+                                                            rows="4"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-section">
+                                                    <h3 className="form-section-title">Team & Collaboration</h3>
+
+                                                    {config.features.enableTeamCollaboration && (
+                                                        <div className="form-group">
+                                                            <label htmlFor="teamMembers">Team Members</label>
+                                                            <input
+                                                                type="text"
+                                                                id="teamMembers"
+                                                                name="teamMembers"
+                                                                placeholder="Enter team member names separated by commas"
+                                                            />
+                                                            <small style={{color: '#6b7280'}}>Separate multiple names with commas</small>
+                                                        </div>
+                                                    )}
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="tags">Keywords/Tags</label>
+                                                        <input
+                                                            type="text"
+                                                            id="tags"
+                                                            name="tags"
+                                                            placeholder="Enter relevant keywords separated by commas"
+                                                        />
+                                                        <small style={{color: '#6b7280'}}>Help others find your project</small>
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-section">
+                                                    <h3 className="form-section-title">Project Details</h3>
+                                                    <div className="form-grid">
+                                                        <div className="form-group">
+                                                            <label htmlFor="type">Project Type *</label>
+                                                            <select id="type" name="type" required>
+                                                                <option value="Research">🔬 Research</option>
+                                                                <option value="Innovation">💡 Innovation</option>
+                                                                <option value="Case Study">📊 Case Study</option>
+                                                                <option value="Literature Review">📚 Literature Review</option>
+                                                                <option value="Experimental">🧪 Experimental</option>
+                                                                <option value="Other">📝 Other</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div className="form-group">
+                                                            <label htmlFor="fileUrl">Project Files/Documents</label>
+                                                            <input
+                                                                type="url"
+                                                                id="fileUrl"
+                                                                name="fileUrl"
+                                                                placeholder="https://drive.google.com/..."
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="content">Full Project Description</label>
+                                                        <textarea
+                                                            id="content"
+                                                            name="content"
+                                                            placeholder="Provide detailed information about your methodology, findings, conclusions, and future work..."
+                                                            rows="8"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* Academic Integrity Notice */}
+                                                <div className="privacy-notice">
+                                                    <h4>🎓 Academic Integrity</h4>
+                                                    <p>
+                                                        By submitting this project, you confirm that:
+                                                        <br />• This work is original and properly cited
+                                                        <br />• All sources are appropriately referenced
+                                                        <br />• You have permission to use any included materials
+                                                        <br />• The work complies with your institution's academic integrity policies
+                                                    </p>
+                                                    {config.academicIntegrity.enablePlagiarismCheck && (
+                                                        <p style={{marginTop: '0.5rem'}}>
+                                                            <strong>Note:</strong> Submitted work may be automatically checked for originality.
+                                                        </p>
+                                                    )}
+                                                </div>
+
+                                                <div className="form-actions">
+                                                    <button type="submit" className="btn btn-primary">
+                                                        Submit Project
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </section>
+                            )}
+
+                            {/* Office Hours Tab */}
+                            {activeTab === 'office-hours' && (
+                                <section className="section">
+                                    <div className="container">
+                                        <div className="section-header">
+                                            <h2 className="section-title">Mentor Office Hours</h2>
+                                            <p className="section-subtitle">Schedule one-on-one sessions with faculty and mentors</p>
+                                        </div>
+
+                                        <div className="scheduler">
+                                            <div className="scheduler-grid">
+                                                <div style={{gridColumn: 'span 2'}}>
+                                                    <h3 style={{marginBottom: '1.5rem', color: 'var(--gray-900)'}}>Available Mentors</h3>
+
+                                                    {/* Mock mentor data */}
+                                                    {[
+                                                        {
+                                                            id: 1,
+                                                            name: "Dr. Sarah Chen",
+                                                            title: "Associate Professor of Computer Science",
+                                                            expertise: "AI, Machine Learning, Data Science",
+                                                            availableSlots: ["Mon 2-3 PM", "Wed 10-11 AM", "Fri 3-4 PM"],
+                                                            bio: "Specializes in AI ethics and social impact research"
+                                                        },
+                                                        {
+                                                            id: 2,
+                                                            name: "Prof. Michael Rodriguez",
+                                                            title: "Professor of Environmental Science",
+                                                            expertise: "Sustainability, Urban Planning, Climate Science",
+                                                            availableSlots: ["Tue 1-2 PM", "Thu 2-3 PM"],
+                                                            bio: "Leads research on sustainable urban development"
+                                                        },
+                                                        {
+                                                            id: 3,
+                                                            name: "Dr. Amanda Foster",
+                                                            title: "Assistant Professor of Digital Humanities",
+                                                            expertise: "Digital Archives, Text Analysis, Cultural Studies",
+                                                            availableSlots: ["Mon 11-12 PM", "Wed 3-4 PM", "Fri 1-2 PM"],
+                                                            bio: "Expert in digital humanities methodologies"
+                                                        }
+                                                    ].map(mentor => (
+                                                        <div key={mentor.id} style={{
+                                                            background: 'white',
+                                                            borderRadius: '1rem',
+                                                            padding: '2rem',
+                                                            marginBottom: '1.5rem',
+                                                            border: '2px solid var(--gray-200)'
+                                                        }}>
+                                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem'}}>
+                                                                <div>
+                                                                    <h4 style={{fontSize: '1.25rem', fontWeight: '600', color: 'var(--gray-900)'}}>
+                                                                        {mentor.name}
+                                                                    </h4>
+                                                                    <p style={{color: 'var(--gray-600)', marginBottom: '0.5rem'}}>{mentor.title}</p>
+                                                                    <p style={{fontSize: '0.9rem', color: 'var(--gray-500)'}}>
+                                                                        <strong>Expertise:</strong> {mentor.expertise}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+
+                                                            <p style={{color: 'var(--gray-600)', marginBottom: '1.5rem'}}>
+                                                                {mentor.bio}
+                                                            </p>
+
+                                                            <div>
+                                                                <h5 style={{fontSize: '1rem', fontWeight: '600', marginBottom: '1rem'}}>
+                                                                    Available Time Slots
+                                                                </h5>
+                                                                <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.5rem'}}>
+                                                                    {mentor.availableSlots.map((slot, index) => (
+                                                                        <button
+                                                                            key={index}
+                                                                            className="time-slot available"
+                                                                            onClick={() => handleBookOfficeHours(mentor.id, slot)}
+                                                                        >
+                                                                            {slot}
+                                                                        </button>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            )}
+
+                            {/* Resources Tab */}
+                            {activeTab === 'resources' && (
+                                <section className="section">
+                                    <div className="container">
+                                        <div className="section-header">
+                                            <h2 className="section-title">Resource Library</h2>
+                                            <p className="section-subtitle">Educational materials, research resources, and references</p>
+                                        </div>
+
+                                        <div className="resource-library">
+                                            <div style={{marginBottom: '3rem'}}>
+                                                <h3 style={{fontSize: '1.5rem', fontWeight: '600', marginBottom: '1.5rem'}}>
+                                                    📚 Featured Resources
+                                                </h3>
+
+                                                <div className="resources-grid">
+                                                    {[
+                                                        {
+                                                            id: 1,
+                                                            title: "Research Methodology Handbook",
+                                                            description: "Comprehensive guide to research design, data collection, and analysis methods",
+                                                            category: "Methodology",
+                                                            language: "English",
+                                                            author: "Academic Resources Committee",
+                                                            type: "Guide"
+                                                        },
+                                                        {
+                                                            id: 2,
+                                                            title: "Guía de Metodología de Investigación",
+                                                            description: "Versión en español de la guía completa de metodología de investigación",
+                                                            category: "Methodology",
+                                                            language: "Español",
+                                                            author: "Comité de Recursos Académicos",
+                                                            type: "Guide"
+                                                        },
+                                                        {
+                                                            id: 3,
+                                                            title: "Statistical Analysis Toolkit",
+                                                            description: "Open-source tools and tutorials for statistical data analysis",
+                                                            category: "Tools",
+                                                            language: "English",
+                                                            author: "Data Science Lab",
+                                                            type: "Software"
+                                                        }
+                                                    ].map(resource => (
+                                                        <div key={resource.id} className="resource-card">
+                                                            <div className="resource-header">
+                                                                <div className="resource-title">{resource.title}</div>
+                                                                <div className="resource-type">{resource.type}</div>
+                                                            </div>
+
+                                                            <div className="resource-description">{resource.description}</div>
+
+                                                            <div className="resource-meta">
+                                                                <span>👤 {resource.author}</span>
+                                                                <span>🌐 {resource.language}</span>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Submit Resource Form */}
+                                            <div className="form-container">
+                                                <h3 style={{fontSize: '1.5rem', fontWeight: '600', marginBottom: '1.5rem'}}>
+                                                    Share a Resource
+                                                </h3>
+
+                                                <form onSubmit={(e) => {
+                                                    e.preventDefault();
+                                                    const formData = new FormData(e.target);
+                                                    handleSubmitResource({
+                                                        title: formData.get('title'),
+                                                        description: formData.get('description'),
+                                                        content: formData.get('content'),
+                                                        category: formData.get('category'),
+                                                        author: formData.get('author'),
+                                                        tags: formData.get('tags')?.split(',').map(s => s.trim()).filter(Boolean) || [],
+                                                        language: formData.get('language'),
+                                                        fileUrl: formData.get('fileUrl'),
+                                                        isPublic: formData.get('isPublic') === 'on'
+                                                    });
+                                                    e.target.reset();
+                                                }}>
+                                                    <div className="form-grid">
+                                                        <div className="form-group">
+                                                            <label htmlFor="author">Your Name *</label>
+                                                            <input
+                                                                type="text"
+                                                                id="author"
+                                                                name="author"
+                                                                placeholder="Resource contributor"
+                                                                required
+                                                            />
+                                                        </div>
+
+                                                        <div className="form-group">
+                                                            <label htmlFor="category">Category *</label>
+                                                            <select id="category" name="category" required>
+                                                                <option value="">Select category</option>
+                                                                <option value="Methodology">Methodology</option>
+                                                                <option value="Tools">Tools & Software</option>
+                                                                <option value="Literature">Literature & References</option>
+                                                                <option value="Datasets">Datasets</option>
+                                                                <option value="Tutorials">Tutorials</option>
+                                                                <option value="Other">Other</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="title">Resource Title *</label>
+                                                        <input
+                                                            type="text"
+                                                            id="title"
+                                                            name="title"
+                                                            placeholder="Name of the resource"
+                                                            required
+                                                        />
+                                                    </div>
+
+                                                    <div className="form-row">
+                                                        <div className="form-group">
+                                                            <label htmlFor="language">Language</label>
+                                                            <select id="language" name="language">
+                                                                <option value="English">English</option>
+                                                                <option value="Español">Español</option>
+                                                                <option value="Français">Français</option>
+                                                                <option value="中文">中文</option>
+                                                                <option value="العربية">العربية</option>
+                                                                <option value="Other">Other</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div className="form-group">
+                                                            <label htmlFor="fileUrl">Resource URL</label>
+                                                            <input
+                                                                type="url"
+                                                                id="fileUrl"
+                                                                name="fileUrl"
+                                                                placeholder="https://example.com/resource"
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="description">Description *</label>
+                                                        <textarea
+                                                            id="description"
+                                                            name="description"
+                                                            placeholder="Describe the resource and how it can help others"
+                                                            required
+                                                        />
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="tags">Tags</label>
+                                                        <input
+                                                            type="text"
+                                                            id="tags"
+                                                            name="tags"
+                                                            placeholder="Enter relevant tags separated by commas"
+                                                        />
+                                                    </div>
+
+                                                    <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" id="isPublic" name="isPublic" defaultChecked />
+                                                        <label htmlFor="isPublic">Make this resource publicly available</label>
+                                                    </div>
+
+                                                    <div className="form-actions">
+                                                        <button type="submit" className="btn btn-primary">
+                                                            Share Resource
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            )}
+                        </main>
+
+                        {/* Admin Modal */}
+                        {showAdmin && (
+                            <div className="admin-overlay">
+                                <div className="admin-modal">
+                                    <div className="admin-header">
+                                        <h2 className="admin-title">EduLabs Administration</h2>
+                                        <p className="admin-subtitle">Configure your educational platform settings</p>
+                                    </div>
+
+                                    <div className="admin-body">
+                                        <form onSubmit={(e) => {
+                                            e.preventDefault();
+                                            const formData = new FormData(e.target);
+                                            handleSaveConfig({
+                                                orgName: formData.get('orgName'),
+                                                primaryColor: formData.get('primaryColor'),
+                                                contactEmail: formData.get('contactEmail'),
+                                                logoUrl: formData.get('logoUrl'),
+                                                institutionType: formData.get('institutionType'),
+                                                academicIntegrity: {
+                                                    enablePlagiarismCheck: formData.get('enablePlagiarismCheck') === 'on',
+                                                    requireApproval: formData.get('requireApproval') === 'on',
+                                                    enableAuditTrail: formData.get('enableAuditTrail') === 'on'
+                                                },
+                                                privacySettings: {
+                                                    ferpaCompliant: formData.get('ferpaCompliant') === 'on',
+                                                    showStudentNames: formData.get('showStudentNames') === 'on',
+                                                    allowPublicSharing: formData.get('allowPublicSharing') === 'on'
+                                                },
+                                                features: {
+                                                    enableTeamCollaboration: formData.get('enableTeamCollaboration') === 'on',
+                                                    enablePeerReview: formData.get('enablePeerReview') === 'on',
+                                                    enableSocialSharing: formData.get('enableSocialSharing') === 'on',
+                                                    enableResourceLibrary: formData.get('enableResourceLibrary') === 'on'
+                                                }
+                                            });
+                                        }} className="admin-form">
+                                            <div className="admin-section">
+                                                <h3 className="admin-section-title">🏫 Institution Settings</h3>
+                                                <div className="form-row">
+                                                    <div className="form-group">
+                                                        <label htmlFor="orgName">Institution Name</label>
+                                                        <input
+                                                            type="text"
+                                                            id="orgName"
+                                                            name="orgName"
+                                                            defaultValue={config.orgName}
+                                                            placeholder="Your institution name"
+                                                        />
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="institutionType">Institution Type</label>
+                                                        <select id="institutionType" name="institutionType" defaultValue={config.institutionType}>
+                                                            <option value="University">University</option>
+                                                            <option value="College">College</option>
+                                                            <option value="K-12 School">K-12 School</option>
+                                                            <option value="Research Institute">Research Institute</option>
+                                                            <option value="Nonprofit">Nonprofit</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-row">
+                                                    <div className="form-group">
+                                                        <label htmlFor="primaryColor">Brand Color</label>
+                                                        <input
+                                                            type="color"
+                                                            id="primaryColor"
+                                                            name="primaryColor"
+                                                            defaultValue={config.primaryColor}
+                                                        />
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="contactEmail">Contact Email</label>
+                                                        <input
+                                                            type="email"
+                                                            id="contactEmail"
+                                                            name="contactEmail"
+                                                            defaultValue={config.contactEmail}
+                                                            placeholder="admin@institution.edu"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label htmlFor="logoUrl">Logo URL</label>
+                                                    <input
+                                                        type="url"
+                                                        id="logoUrl"
+                                                        name="logoUrl"
+                                                        defaultValue={config.logoUrl}
+                                                        placeholder="https://institution.edu/logo.png"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="admin-section">
+                                                <h3 className="admin-section-title">🎓 Academic Integrity</h3>
+                                                <div style={{display: 'grid', gap: '1rem'}}>
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="enablePlagiarismCheck" defaultChecked={config.academicIntegrity.enablePlagiarismCheck} />
+                                                        Enable plagiarism detection
+                                                    </label>
+
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="requireApproval" defaultChecked={config.academicIntegrity.requireApproval} />
+                                                        Require admin approval before publication
+                                                    </label>
+
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="enableAuditTrail" defaultChecked={config.academicIntegrity.enableAuditTrail} />
+                                                        Enable detailed audit trails
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div className="admin-section">
+                                                <h3 className="admin-section-title">🔒 Privacy & FERPA Compliance</h3>
+                                                <div style={{display: 'grid', gap: '1rem'}}>
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="ferpaCompliant" defaultChecked={config.privacySettings.ferpaCompliant} />
+                                                        FERPA compliant data handling
+                                                    </label>
+
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="showStudentNames" defaultChecked={config.privacySettings.showStudentNames} />
+                                                        Show student names publicly
+                                                    </label>
+
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="allowPublicSharing" defaultChecked={config.privacySettings.allowPublicSharing} />
+                                                        Allow public sharing of approved projects
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div className="admin-section">
+                                                <h3 className="admin-section-title">⚡ Platform Features</h3>
+                                                <div style={{display: 'grid', gap: '1rem'}}>
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="enableTeamCollaboration" defaultChecked={config.features.enableTeamCollaboration} />
+                                                        Enable team collaboration features
+                                                    </label>
+
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="enablePeerReview" defaultChecked={config.features.enablePeerReview} />
+                                                        Enable peer review workflows
+                                                    </label>
+
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="enableSocialSharing" defaultChecked={config.features.enableSocialSharing} />
+                                                        Enable social media sharing
+                                                    </label>
+
+                                                    <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" name="enableResourceLibrary" defaultChecked={config.features.enableResourceLibrary} />
+                                                        Enable resource library
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div className="form-actions">
+                                                <button type="button" className="btn btn-secondary" onClick={() => setShowAdmin(false)}>
+                                                    Cancel
+                                                </button>
+                                                <button type="submit" className="btn btn-primary">
+                                                    Save Configuration
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Footer */}
+                        <footer className="footer">
+                            <div className="container">
+                                <div className="footer-content">
+                                    <div className="footer-section">
+                                        <h3>🏫 {config.orgName}</h3>
+                                        <p>Advanced educational collaboration platform for research, innovation, and academic excellence.</p>
+                                        <p style={{marginTop: '1rem'}}>
+                                            <strong>Contact:</strong> {config.contactEmail}
+                                        </p>
+                                    </div>
+
+                                    <div className="footer-section">
+                                        <h3>📚 Academic Features</h3>
+                                        <p>• Project submission & showcase</p>
+                                        <p>• Team collaboration tools</p>
+                                        <p>• Academic integrity protection</p>
+                                        <p>• FERPA-compliant privacy</p>
+                                    </div>
+
+                                    <div className="footer-section">
+                                        <h3>🔗 Quick Links</h3>
+                                        <p><a href="#" onClick={() => setActiveTab('projects')}>Research Projects</a></p>
+                                        <p><a href="#" onClick={() => setActiveTab('office-hours')}>Office Hours</a></p>
+                                        <p><a href="#" onClick={() => setActiveTab('resources')}>Resource Library</a></p>
+                                        <p><a href="#" onClick={() => setShowAdmin(true)}>Admin Panel</a></p>
+                                    </div>
+                                </div>
+
+                                <div className="footer-bottom">
+                                    <p>&copy; 2024 {config.orgName}. Educational collaboration platform powered by LabsForAmerica and Fireproof Database.</p>
+                                </div>
+                            </div>
+                        </footer>
+                    </div>
+                );
+            }
+
+            // Render the app
+            const root = ReactDOM.createRoot(document.getElementById('root'));
+            root.render(<EduLabsApp />);
+        `;
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

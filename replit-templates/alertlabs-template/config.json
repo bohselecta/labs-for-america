@@ -1,0 +1,158 @@
+{
+  "orgName": "AlertLabs",
+  "primaryColor": "#dc2626",
+  "contactEmail": "alerts@example.com",
+  "logoUrl": "",
+  "templateType": "alertlabs",
+  "description": "Comprehensive civic alert management platform for emergency response, community notifications, and public safety communications. Supports AMBER, Silver, Blue alerts and general purpose community alerts.",
+  "organizationType": "Emergency Management",
+  "jurisdiction": "City/County",
+  "emergencyMode": false,
+  "features": [
+    "Emergency alert management (AMBER, Silver, Blue alerts)",
+    "Anonymous tip reporting and citizen input",
+    "Emergency response coordination and manhunt mode",
+    "Data integration with criminal databases",
+    "Crime mapping and data visualization",
+    "Interagency information sharing",
+    "Mobile access for officers and citizens",
+    "CJIS-compliant security and access controls",
+    "Comprehensive admin panel for emergency management",
+    "Real-time alerts and notifications",
+    "Community engagement and transparency tools",
+    "Multilingual support for diverse communities"
+  ],
+  "alertTypes": [
+    {
+      "id": "amber",
+      "name": "AMBER Alert",
+      "description": "Child abduction emergencies",
+      "color": "#f59e0b",
+      "criteria": "Children ≤ 17, believed to be in imminent danger",
+      "requiredFields": ["subject", "vehicle", "lastKnownLocation"],
+      "urgency": "critical"
+    },
+    {
+      "id": "silver",
+      "name": "Silver Alert",
+      "description": "Missing senior citizens with dementia or cognitive impairment",
+      "color": "#6b7280",
+      "criteria": "Person with Alzheimer’s/dementia or cognitive decline at risk",
+      "requiredFields": ["subject", "lastKnownLocation"],
+      "urgency": "high"
+    },
+    {
+      "id": "blue",
+      "name": "Blue Alert",
+      "description": "Law enforcement officer harmed, suspect at large",
+      "color": "#1e40af",
+      "criteria": "Violent suspect who killed or seriously injured officer, still at large",
+      "requiredFields": ["subject", "vehicle", "lastKnownLocation"],
+      "urgency": "critical"
+    },
+    {
+      "id": "ashanti",
+      "name": "Ashanti Alert",
+      "description": "Missing adults (ages 18–64)",
+      "color": "#7c3aed",
+      "criteria": "Abducted adults in immediate danger",
+      "requiredFields": ["subject", "lastKnownLocation"],
+      "urgency": "high"
+    },
+    {
+      "id": "clear",
+      "name": "CLEAR Alert",
+      "description": "Missing or abducted adults in immediate danger",
+      "color": "#059669",
+      "criteria": "Adults 18–64 missing in danger",
+      "requiredFields": ["subject", "lastKnownLocation"],
+      "urgency": "high"
+    },
+    {
+      "id": "ema",
+      "name": "Endangered Missing Alert",
+      "description": "Any missing person in danger or with vulnerabilities",
+      "color": "#ef4444",
+      "criteria": "Missing person of any age under dangerous conditions",
+      "requiredFields": ["subject", "lastKnownLocation"],
+      "urgency": "high"
+    },
+    {
+      "id": "camo",
+      "name": "Camo Alert",
+      "description": "Missing current or former military/veterans",
+      "color": "#166534",
+      "criteria": "Missing veteran or military-affiliated with mental health issues",
+      "requiredFields": ["subject", "lastKnownLocation"],
+      "urgency": "medium"
+    },
+    {
+      "id": "turquoise",
+      "name": "Turquoise Alert",
+      "description": "Missing endangered tribal or Indigenous persons",
+      "color": "#0891b2",
+      "criteria": "Missing endangered tribal persons under 65 under suspicious conditions",
+      "requiredFields": ["subject", "lastKnownLocation"],
+      "urgency": "high"
+    },
+    {
+      "id": "national",
+      "name": "National Alert",
+      "description": "Major national emergency",
+      "color": "#dc2626",
+      "criteria": "National emergencies, natural disasters, security threats",
+      "requiredFields": ["description", "scope"],
+      "urgency": "critical"
+    },
+    {
+      "id": "disaster",
+      "name": "Local Disaster Alert",
+      "description": "Natural disasters, evacuations, active threats",
+      "color": "#f59e0b",
+      "criteria": "Floods, tornadoes, active threats, evacuations",
+      "requiredFields": ["description", "scope"],
+      "urgency": "critical"
+    },
+    {
+      "id": "general",
+      "name": "General Community Alert",
+      "description": "Community notifications, lost pets, general warnings",
+      "color": "#059669",
+      "criteria": "Community notifications, lost pets, general warnings",
+      "requiredFields": ["title", "description"],
+      "urgency": "low"
+    }
+  ],
+  "tipCategories": [
+    "Suspicious Activity",
+    "Crime in Progress",
+    "Missing Person",
+    "Wanted Suspect",
+    "Drug Activity",
+    "Traffic Concerns",
+    "Community Concerns",
+    "Other"
+  ],
+  "features": {
+    "enableAnonymousTips": true,
+    "enablePublicReporting": true,
+    "enableEmergencyMode": true,
+    "enableCrimeMapping": true,
+    "enableDataIntegration": true,
+    "enableInteragencySharing": true,
+    "enableMobileAccess": true
+  },
+  "security": {
+    "cjisCompliant": true,
+    "requireAuthentication": true,
+    "enableAuditTrail": true,
+    "dataEncryption": true,
+    "accessLogging": true
+  },
+  "integrations": {
+    "enableNCIC": false,
+    "enableStateDatabases": false,
+    "enableCAD": false,
+    "enableRMS": false
+  }
+}

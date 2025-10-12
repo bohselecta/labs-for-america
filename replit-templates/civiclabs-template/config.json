@@ -1,0 +1,33 @@
+{
+  "orgName": "My Civic Organization",
+  "primaryColor": "#2563eb",
+  "contactEmail": "contact@example.com",
+  "logoUrl": "",
+  "templateType": "civiclabs",
+  "description": "Comprehensive community engagement platform for local governments and civic organizations",
+  "organizationType": "Local Government",
+  "welcomeMessage": "Welcome to our community engagement platform. Help us shape the future of our community by sharing your ideas and participating in local initiatives.",
+  "tagline": "Your voice matters in building a stronger community",
+  "features": [
+    "Public consultations and community challenges",
+    "Two-way feedback and idea submission",
+    "Community dialogue and transparent discussions",
+    "Volunteer signup and management",
+    "Survey integration and polling",
+    "Real-time progress tracking",
+    "Comprehensive admin panel for civic organizations",
+    "Mobile-responsive design for all citizens",
+    "Privacy controls and anonymous participation",
+    "Fireproof database for reliable data storage"
+  ],
+  "engagementFeatures": {
+    "enableSurveys": true,
+    "enableVolunteering": true,
+    "enablePublicConsultations": true
+  },
+  "moderationSettings": {
+    "requireApproval": false,
+    "enableModeration": true,
+    "allowAnonymous": true
+  }
+}

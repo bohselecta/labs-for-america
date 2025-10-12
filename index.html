@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LabsForAmerica — Launch a civic lab in 30 seconds</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <meta name="description" content="One-click civic templates for communities, departments, schools, and clinics. Fork on Replit, customize, share." />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container row">
+      <div class="brand">
+        <img src="./assets/logo.svg" alt="" class="logo" />
+        <span class="brand-text">LabsForAmerica</span>
+      </div>
+      <nav class="nav">
+        <a href="#how">How it works</a>
+        <a href="#templates">Templates</a>
+        <a href="#democracy">Democracy Tools</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-wrap">
+        <div class="hero-copy">
+          <h1>Build civic tools your community can actually use.</h1>
+          <p class="sub">Fork a template on Replit, customize in minutes, and share a link. Privacy-first, export-friendly, and offline-capable.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#templates">Browse Templates</a>
+            <a class="btn btn-ghost" href="#how">How it works</a>
+          </div>
+          <ul class="badges">
+            <li>Privacy-first</li>
+            <li>CSV/JSON exports</li>
+            <li>Works on mobile</li>
+          </ul>
+        </div>
+        <div class="hero-art" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="section">
+      <div class="container">
+        <h2>How it works</h2>
+        <div class="grid-3">
+          <div class="card">
+            <h3>1) Pick a template</h3>
+            <p>Civic, Justice, Edu, Health, or AlertLabs. Each is purpose-built for its audience.</p>
+          </div>
+          <div class="card">
+            <h3>2) Fork & customize</h3>
+            <p>One-click fork on Replit. Adjust name, logo, colors, and toggle modules in the admin panel.</p>
+          </div>
+          <div class="card">
+            <h3>3) Engage & export</h3>
+            <p>Collect input. Print summaries. Export data to CSV/JSON for your internal systems.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEMPLATES -->
+    <section id="templates" class="section alt">
+      <div class="container">
+        <h2>Templates</h2>
+        <p class="lead">Five focused templates that launch in seconds. Click preview to open the live page from this repo, or fork on Replit to create your own.</p>
+
+        <div id="templates-grid" class="grid-3 templates-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- DEMOCRACY TOOLS PREVIEW -->
+    <section id="democracy" class="section">
+      <div class="container">
+        <h2>Democracy Tools (optional)</h2>
+        <p class="lead">Safe, practical modules to test community decisions in low-risk contexts.</p>
+        <div class="grid-4">
+          <div class="card">
+            <h3>Polls & Ranked Polls</h3>
+            <p>Quick sentiment checks or HOA-style votes. Anonymized ballots + audit exports.</p>
+          </div>
+          <div class="card">
+            <h3>Proposals</h3>
+            <p>Draft → review → vote → decision summary. Build institutional memory.</p>
+          </div>
+          <div class="card">
+            <h3>PB (Lite)</h3>
+            <p>Participatory budgeting with points to make tradeoffs visible.</p>
+          </div>
+          <div class="card">
+            <h3>Dashboards</h3>
+            <p>Participation, turnout, proposal status—simple metrics, printable.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST & SAFETY -->
+    <section class="section alt">
+      <div class="container">
+        <h2>Built for public trust</h2>
+        <div class="grid-3">
+          <div class="card">
+            <h3>Privacy</h3>
+            <p>Consent prompts, anonymous modes, and minimal data capture by default.</p>
+          </div>
+          <div class="card">
+            <h3>Moderation</h3>
+            <p>Flagging, rate limits, role gates, and simple profanity filters. You stay in control.</p>
+          </div>
+          <div class="card">
+            <h3>Auditability</h3>
+            <p>Timestamped logs, printable summaries, and structured CSV/JSON exports.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section">
+      <div class="container">
+        <h2>FAQ</h2>
+        <details class="faq">
+          <summary>Do I need a developer?</summary>
+          <p>No. Fork on Replit, click the ⚙️ admin button, and fill in your org name/email/colors.</p>
+        </details>
+        <details class="faq">
+          <summary>Can I preview before forking?</summary>
+          <p>Yes—use the "Preview" button on any template card.</p>
+        </details>
+        <details class="faq">
+          <summary>How do I integrate with internal systems?</summary>
+          <p>Start with exports (CSV/JSON). For larger orgs, replace Fireproof with your store and POST to your ingestion endpoints—each template's README lists touch points.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container row spread">
+      <span>© 2025 LabsForAmerica — sister sites for civic life</span>
+      <a class="small" href="#templates">Launch a Lab →</a>
+    </div>
+  </footer>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>

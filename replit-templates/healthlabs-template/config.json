@@ -1,0 +1,107 @@
+{
+  "orgName": "HealthLabs",
+  "primaryColor": "#7c3aed",
+  "contactEmail": "health@example.com",
+  "logoUrl": "",
+  "templateType": "healthlabs",
+  "description": "Comprehensive community health platform for local clinics, public health departments, and wellness organizations",
+  "organizationType": "Community Health Clinic",
+  "welcomeMessage": "Welcome to our community health platform. Together, we're building healthier communities through shared knowledge, support, and wellness resources.",
+  "tagline": "Your health story matters - share, learn, and grow together",
+  "features": [
+    "Community health programs and wellness initiatives",
+    "Confidential health story intake and needs assessment",
+    "Multilingual resource library (English, Spanish, French, Chinese, Arabic)",
+    "Community-contributed health resources and knowledge sharing",
+    "Privacy-first design with anonymous participation options",
+    "Local-first data storage with Fireproof database",
+    "Comprehensive admin panel for health organization customization",
+    "Trust-building features with clear privacy disclaimers",
+    "Community engagement and health literacy empowerment",
+    "Offline-capable platform for low-connectivity areas"
+  ],
+  "programs": [
+    {
+      "id": 1,
+      "title": "Mental Health Support",
+      "description": "Community-based mental health resources and support groups for stress management and wellness.",
+      "status": "active",
+      "participants": 45,
+      "type": "Wellness"
+    },
+    {
+      "id": 2,
+      "title": "Nutrition Education Program",
+      "description": "Educational workshops on healthy eating, meal planning, and nutrition for all ages.",
+      "status": "active",
+      "participants": 32,
+      "type": "Education"
+    },
+    {
+      "id": 3,
+      "title": "Chronic Disease Management",
+      "description": "Support groups and resources for managing diabetes, heart disease, and other chronic conditions.",
+      "status": "planning",
+      "participants": 18,
+      "type": "Support"
+    }
+  ],
+  "featuredResources": [
+    {
+      "id": 1,
+      "title": "Nutrition Guide (English/Español)",
+      "description": "Comprehensive guide to healthy eating and meal planning",
+      "category": "Nutrition",
+      "language": "English, Español",
+      "author": "Health Department",
+      "type": "Guide"
+    },
+    {
+      "id": 2,
+      "title": "Mental Health Toolkit",
+      "description": "Resources for stress management and emotional wellness",
+      "category": "Mental Health",
+      "language": "English, Français",
+      "author": "Community Health Workers",
+      "type": "Toolkit"
+    },
+    {
+      "id": 3,
+      "title": "Exercise Programs",
+      "description": "Age-appropriate physical activity recommendations",
+      "category": "Exercise",
+      "language": "English, 中文",
+      "author": "Wellness Committee",
+      "type": "Program Guide"
+    }
+  ],
+  "supportCategories": [
+    "Mental Health Support",
+    "Nutrition Guidance",
+    "Chronic Disease Management",
+    "Preventive Care",
+    "Community Resources",
+    "Other"
+  ],
+  "languages": [
+    "English",
+    "Español",
+    "Français",
+    "中文",
+    "العربية",
+    "Other"
+  ],
+  "privacySettings": {
+    "allowAnonymous": true,
+    "requireConsent": true,
+    "dataRetention": "As needed for community health planning",
+    "disclaimer": "This is not medical advice. For emergencies, call 911 or visit your nearest emergency room."
+  },
+  "platformFeatures": {
+    "enablePrograms": true,
+    "enableStoryIntake": true,
+    "enableResourceLibrary": true,
+    "enableMultilingual": true,
+    "enableCommunityContributions": true
+  }
+}
